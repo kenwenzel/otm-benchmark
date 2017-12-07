@@ -1,0 +1,136 @@
+package cz.cvut.kbss.benchmark.jopa.model;
+
+import cz.cvut.kbss.benchmark.model.Vocabulary;
+import cz.cvut.kbss.jopa.model.annotations.*;
+
+import java.net.URI;
+import java.util.Date;
+
+@OWLClass(iri = Vocabulary.s_c_occurrence_report)
+public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person> {
+
+    @Id
+    private URI uri;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_has_file_number)
+    private Long fileNumber;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_documents, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Occurrence occurrence;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_author, fetch = FetchType.EAGER)
+    private Person author;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_created)
+    private Date dateCreated;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_modified)
+    private Date lastModified;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_has_last_editor, fetch = FetchType.EAGER)
+    private Person lastModifiedBy;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_has_revision)
+    private Integer revision;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_description)
+    private String summary;
+
+    public URI getUri() {
+        return uri;
+    }
+
+    public void setUri(URI uri) {
+        this.uri = uri;
+    }
+
+    @Override
+    public Long getFileNumber() {
+        return fileNumber;
+    }
+
+    @Override
+    public void setFileNumber(Long fileNumber) {
+        this.fileNumber = fileNumber;
+    }
+
+    @Override
+    public Occurrence getOccurrence() {
+        return occurrence;
+    }
+
+    @Override
+    public void setOccurrence(Occurrence occurrence) {
+        this.occurrence = occurrence;
+    }
+
+    @Override
+    public Person getAuthor() {
+        return author;
+    }
+
+    @Override
+    public void setAuthor(Person author) {
+        this.author = author;
+    }
+
+    @Override
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    @Override
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    @Override
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    @Override
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    @Override
+    public Person getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    @Override
+    public void setLastModifiedBy(Person lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    @Override
+    public Integer getRevision() {
+        return revision;
+    }
+
+    @Override
+    public void setRevision(Integer revision) {
+        this.revision = revision;
+    }
+
+    @Override
+    public String getSummary() {
+        return summary;
+    }
+
+    @Override
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    @Override
+    public String toString() {
+        return "OccurrenceReport{" +
+                "uri=" + uri +
+                ", fileNumber=" + fileNumber +
+                ", revision=" + revision +
+                ", occurrence=" + occurrence +
+                '}';
+    }
+}
