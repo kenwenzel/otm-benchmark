@@ -10,11 +10,8 @@ import javax.persistence.Persistence;
 
 class PersistenceFactory {
 
-    static String CONFIG_FILE = "config.properties";
-    private static String EMPIRE_CONFIG_FILE =
-            "/home/ledvima1/Development/Java/Projects/JOPA-Empire-Alibaba/empire-benchmark/src/main/resources/" +
-                    CONFIG_FILE;
-//    static String EMPIRE_CONFIG_FILE = "src/main/resources/config.properties";
+    // Rely on Empire's configuration file naming convention
+    static String CONFIG_FILE = "empire.configuration";
 
     /*
     In Empire, the EntityManager is the manager of the repository connection, so e.g. when two entity managers
@@ -22,10 +19,6 @@ class PersistenceFactory {
     Accessing remote store probably shouldn't cause such problems. But the behavior is certainly not correct (w.r.t. JPA).
      */
     private final EntityManager em;
-
-    static {
-        System.setProperty("empire.configuration.file", EMPIRE_CONFIG_FILE);
-    }
 
     PersistenceFactory() {
         // When running in a jar, Sesame for some reason does not register appropriate RDF writer factories

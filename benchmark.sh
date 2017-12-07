@@ -17,10 +17,10 @@ echo "|               AliBaba               |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
 
 echo "Create..."
-echo "CREATE" >> ../../${OUTPUT}
+echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
 echo "Retrieve..."
-echo "RETRIEVE" >> ../../${OUTPUT}
+echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
 cd ../..
 
@@ -32,10 +32,10 @@ echo "|               Empire                |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
 
 echo "Create..."
-echo "CREATE" >> ../../${OUTPUT}
+echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
 echo "Retrieve..."
-echo "CREATE" >> ../../${OUTPUT}
+echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
 cd ../..
 
@@ -47,10 +47,10 @@ echo "|               JOPA                  |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
 
 echo "Create..."
-echo "CREATE" >> ../../${OUTPUT}
+echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
 echo "Retrieve..."
-echo "RETRIEVE" >> ../../${OUTPUT}
+echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
 cd ../..
 
