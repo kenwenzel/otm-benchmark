@@ -1,13 +1,12 @@
 package cz.cvut.kbss.benchmark.alibaba.util;
 
 import cz.cvut.kbss.benchmark.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.util.AbstractBenchmarkUtil;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.object.ObjectConnection;
 
 import java.util.List;
-
-import static org.junit.Assert.assertNotNull;
 
 public class BenchmarkUtil {
 
@@ -37,10 +36,7 @@ public class BenchmarkUtil {
         for (OccurrenceReport report : reports) {
             final cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport r = (cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport) report;
             final OccurrenceReport result = connection.getObject(OccurrenceReport.class, r.getUri().toString());
-            assertNotNull(result);
-            assertNotNull(result.getAuthor());
-            assertNotNull(result.getLastModifiedBy());
-            assertNotNull(result.getOccurrence());
+            AbstractBenchmarkUtil.checkReport(result);
         }
     }
 }
