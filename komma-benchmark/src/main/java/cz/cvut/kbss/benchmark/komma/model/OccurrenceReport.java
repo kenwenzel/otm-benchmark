@@ -4,10 +4,6 @@ import cz.cvut.kbss.benchmark.model.Vocabulary;
 import net.enilink.composition.annotations.Iri;
 
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static cz.cvut.kbss.benchmark.komma.util.BenchmarkUtil.datatypeFactory;
 
 @Iri(Vocabulary.s_c_occurrence_report)
 public interface OccurrenceReport {
@@ -27,35 +23,15 @@ public interface OccurrenceReport {
 
     void setAuthor(Person author);
 
-    default Date getDateCreated() {
-        return getCreated().toGregorianCalendar().getTime();
-    }
-
-    default void setDateCreated(Date dateCreated) {
-        final GregorianCalendar gCal = new GregorianCalendar();
-        gCal.setTime(dateCreated);
-        setCreated(datatypeFactory().newXMLGregorianCalendar(gCal));
-    }
-
     @Iri(Vocabulary.s_p_created)
-    XMLGregorianCalendar getCreated();
+    XMLGregorianCalendar getDateCreated();
 
-    void setCreated(XMLGregorianCalendar created);
-
-    default Date getLastModified() {
-        return getLastMod().toGregorianCalendar().getTime();
-    }
-
-    default void setLastModified(Date lastModified) {
-        final GregorianCalendar gCal = new GregorianCalendar();
-        gCal.setTime(lastModified);
-        setLastMod(datatypeFactory().newXMLGregorianCalendar(gCal));
-    }
+    void setDateCreated(XMLGregorianCalendar created);
 
     @Iri(Vocabulary.s_p_modified)
-    XMLGregorianCalendar getLastMod();
+    XMLGregorianCalendar getLastModified();
 
-    void setLastMod(XMLGregorianCalendar calendar);
+    void setLastModified(XMLGregorianCalendar calendar);
 
     @Iri(Vocabulary.s_p_has_last_editor)
     Person getLastModifiedBy();

@@ -9,16 +9,10 @@ import cz.cvut.kbss.benchmark.model.Vocabulary;
 import java.net.URI;
 import java.util.*;
 
+import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
+import static cz.cvut.kbss.benchmark.util.Constants.SUMMARY;
+
 public abstract class DataGenerator {
-
-    private static final int COUNT = 300;
-
-    private static final String SUMMARY =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" +
-                    " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris" +
-                    " nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum" +
-                    " dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt" +
-                    " mollit anim id est laborum.";
 
     protected final Random random = new Random();
 
@@ -32,7 +26,7 @@ public abstract class DataGenerator {
 
     protected List<OccurrenceReport> generateReports() {
         final List<OccurrenceReport> reports = new ArrayList<>();
-        for (int i = 0; i < COUNT; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             final OccurrenceReport r = report();
             r.setOccurrence(generateOccurrence());
             r.setAuthor(randomItem(persons));
@@ -40,7 +34,7 @@ public abstract class DataGenerator {
             r.setDateCreated(new Date());
             r.setLastModified(new Date());
             r.setLastModifiedBy(randomItem(persons));
-            r.setRevision(random.nextInt(COUNT));
+            r.setRevision(random.nextInt(ITEM_COUNT));
             r.setSummary(SUMMARY + System.currentTimeMillis() + i);
             reports.add(r);
         }
@@ -65,7 +59,7 @@ public abstract class DataGenerator {
 
     protected List<Person> generatePersons() {
         final List<Person> list = new ArrayList<>();
-        for (int i = 0; i < COUNT; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             final Person p = person();
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);
