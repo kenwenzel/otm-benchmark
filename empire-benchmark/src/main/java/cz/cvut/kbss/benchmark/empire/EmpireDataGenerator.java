@@ -5,33 +5,31 @@ import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.empire.model.Occurrence;
 import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.empire.model.Person;
-import cz.cvut.kbss.benchmark.model.Vocabulary;
-
-import java.net.URI;
 
 public class EmpireDataGenerator extends DataGenerator {
 
+    EmpireDataGenerator() {
+        generate();
+    }
+
     @Override
-    protected cz.cvut.kbss.benchmark.model.OccurrenceReport report() {
+    protected OccurrenceReport report() {
         final OccurrenceReport r = new OccurrenceReport();
-        r.setRdfId(new SupportsRdfId.URIKey(URI.create(
-                Vocabulary.BASE_URI + OccurrenceReport.class.getSimpleName() + random.nextInt())));
+        r.setRdfId(new SupportsRdfId.URIKey(generateUri(OccurrenceReport.class)));
         return r;
     }
 
     @Override
-    protected cz.cvut.kbss.benchmark.model.Occurrence occurrence() {
+    protected Occurrence occurrence() {
         final Occurrence occurrence = new Occurrence();
-        occurrence.setRdfId(new SupportsRdfId.URIKey(
-                URI.create(Vocabulary.BASE_URI + Occurrence.class.getSimpleName() + random.nextInt())));
+        occurrence.setRdfId(new SupportsRdfId.URIKey(generateUri(Occurrence.class)));
         return occurrence;
     }
 
     @Override
-    protected cz.cvut.kbss.benchmark.model.Person person() {
+    protected Person person() {
         final Person p = new Person();
-        p.setRdfId(new SupportsRdfId.URIKey(
-                URI.create(Vocabulary.BASE_URI + Person.class.getSimpleName() + random.nextInt())));
+        p.setRdfId(new SupportsRdfId.URIKey(generateUri(Person.class)));
         return p;
     }
 }

@@ -21,12 +21,6 @@ public class BenchmarkUtil {
             final cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport r = (cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport) report;
             connection.addObject(r.getUri().toString(), r);
             connection.addObject(r.getOccurrence().getUri().toString(), r.getOccurrence());
-            if (connection.getObject(r.getAuthor().getUri().toString()) == null) {
-                connection.addObject(r.getAuthor().getUri().toString(), r.getAuthor());
-            }
-            if (connection.getObject(r.getLastModifiedBy().getUri().toString()) == null) {
-                connection.addObject(r.getLastModifiedBy().getUri().toString(), r.getAuthor());
-            }
         }
         connection.commit();
     }

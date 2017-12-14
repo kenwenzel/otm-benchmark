@@ -15,6 +15,8 @@ public class KommaBenchmark extends AbstractBenchmark {
         switch (type) {
             case CREATE:
                 return new CreateBenchmarkRunner();
+            case RETRIEVE:
+                return new RetrieveBenchmarkRunner();
             default:
                 throw new IllegalArgumentException("Unsupported benchmark type " + type + ".");
         }

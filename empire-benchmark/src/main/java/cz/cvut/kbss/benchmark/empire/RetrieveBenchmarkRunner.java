@@ -1,6 +1,7 @@
 package cz.cvut.kbss.benchmark.empire;
 
-import cz.cvut.kbss.benchmark.empire.util.BenchmarkUtil;
+import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.util.AbstractBenchmarkUtil;
 
 import javax.persistence.EntityManager;
 
@@ -12,13 +13,14 @@ public class RetrieveBenchmarkRunner extends EmpireBenchmarkRunner {
         super.setUp();
         final EntityManager em = persistenceFactory.entityManager();
 //        em.getTransaction().begin();
-        BenchmarkUtil.persistAll(em, generator.getReports());
+        AbstractBenchmarkUtil.persistAll(generator, em::persist);
 //        em.getTransaction().commit(); // Empire executes each persist in a transaction. A global transaction is of no use
     }
 
     @Override
     public void execute() {
         final EntityManager em = persistenceFactory.entityManager();
-        BenchmarkUtil.readAll(em, generator.getReports());
+        AbstractBenchmarkUtil
+                .findAndVerifyAll(generator, r -> em.find(OccurrenceReport.class, ((OccurrenceReport) r).getRdfId()));
     }
 }

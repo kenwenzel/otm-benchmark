@@ -10,26 +10,27 @@ import java.util.GregorianCalendar;
 import static cz.cvut.kbss.benchmark.komma.util.BenchmarkUtil.datatypeFactory;
 
 @Iri(Vocabulary.s_c_occurrence_report)
-public interface OccurrenceReport extends cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person> {
+public interface OccurrenceReport {
 
     @Iri(Vocabulary.s_p_has_file_number)
-    @Override
     Long getFileNumber();
 
+    void setFileNumber(Long fileNumber);
+
     @Iri(Vocabulary.s_p_documents)
-    @Override
     Occurrence getOccurrence();
 
+    void setOccurrence(Occurrence occurrence);
+
     @Iri(Vocabulary.s_p_has_author)
-    @Override
     Person getAuthor();
 
-    @Override
+    void setAuthor(Person author);
+
     default Date getDateCreated() {
         return getCreated().toGregorianCalendar().getTime();
     }
 
-    @Override
     default void setDateCreated(Date dateCreated) {
         final GregorianCalendar gCal = new GregorianCalendar();
         gCal.setTime(dateCreated);
@@ -41,12 +42,10 @@ public interface OccurrenceReport extends cz.cvut.kbss.benchmark.model.Occurrenc
 
     void setCreated(XMLGregorianCalendar created);
 
-    @Override
     default Date getLastModified() {
         return getLastMod().toGregorianCalendar().getTime();
     }
 
-    @Override
     default void setLastModified(Date lastModified) {
         final GregorianCalendar gCal = new GregorianCalendar();
         gCal.setTime(lastModified);
@@ -59,14 +58,17 @@ public interface OccurrenceReport extends cz.cvut.kbss.benchmark.model.Occurrenc
     void setLastMod(XMLGregorianCalendar calendar);
 
     @Iri(Vocabulary.s_p_has_last_editor)
-    @Override
     Person getLastModifiedBy();
 
+    void setLastModifiedBy(Person lastModifiedBy);
+
     @Iri(Vocabulary.s_p_has_revision)
-    @Override
     Integer getRevision();
 
+    void setRevision(Integer revision);
+
     @Iri(Vocabulary.s_p_description)
-    @Override
     String getSummary();
+
+    void setSummary(String summary);
 }

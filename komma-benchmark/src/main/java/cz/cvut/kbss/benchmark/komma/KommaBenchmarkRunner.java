@@ -13,6 +13,12 @@ abstract class KommaBenchmarkRunner extends BenchmarkRunner {
     static final Logger LOG = LoggerFactory.getLogger(KommaBenchmarkRunner.class);
 
     PersistenceFactory persistenceFactory;
+    KommaGenerator generator;
+
+    @Override
+    public void setUpBeforeBenchmark() {
+        this.generator = new KommaGenerator();
+    }
 
     @Override
     public void setUp() {

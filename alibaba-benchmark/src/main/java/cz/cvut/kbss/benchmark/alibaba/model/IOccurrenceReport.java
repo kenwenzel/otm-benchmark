@@ -7,7 +7,7 @@ import org.openrdf.annotations.Iri;
 import java.util.Date;
 
 @Iri(Vocabulary.s_c_occurrence_report)
-public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person> {
+public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person>, HasUri {
 
     @Iri(Vocabulary.s_p_has_file_number)
     @Override

@@ -17,6 +17,9 @@ public interface Occurrence extends cz.cvut.kbss.benchmark.model.Occurrence {
     String getName();
 
     @Override
+    void setName(String name);
+
+    @Override
     default Date getStartTime() {
         return getStart().toGregorianCalendar().getTime();
     }

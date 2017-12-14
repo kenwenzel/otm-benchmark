@@ -1,15 +1,24 @@
-package cz.cvut.kbss.benchmark.data;
+package cz.cvut.kbss.benchmark.komma;
 
-
-import cz.cvut.kbss.benchmark.model.Occurrence;
-import cz.cvut.kbss.benchmark.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.model.Person;
+import cz.cvut.kbss.benchmark.komma.model.Occurrence;
+import cz.cvut.kbss.benchmark.komma.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.komma.model.Person;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
+import net.enilink.komma.core.IEntityManager;
+import net.enilink.komma.core.URI;
+import net.enilink.komma.core.URIs;
 
-import java.net.URI;
 import java.util.*;
 
-public abstract class DataGenerator {
+public class KommaGenerator {
+
+    private IEntityManager em;
+
+    private Map<OccurrenceReport, URI> instances;
+
+    public void setEm(IEntityManager em) {
+        this.em = em;
+    }
 
     private static final int COUNT = 300;
 
@@ -20,20 +29,21 @@ public abstract class DataGenerator {
                     " dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt" +
                     " mollit anim id est laborum.";
 
-    protected final Random random = new Random();
+    private final Random random = new Random();
 
     private List<OccurrenceReport> reports;
     private List<Person> persons;
 
     public void generate() {
+        this.instances = new IdentityHashMap<>();
         this.persons = generatePersons();
         this.reports = generateReports();
     }
 
-    protected List<OccurrenceReport> generateReports() {
+    private List<OccurrenceReport> generateReports() {
         final List<OccurrenceReport> reports = new ArrayList<>();
         for (int i = 0; i < COUNT; i++) {
-            final OccurrenceReport r = report();
+            OccurrenceReport r = report();
             r.setOccurrence(generateOccurrence());
             r.setAuthor(randomItem(persons));
             r.setFileNumber(random.nextLong());
@@ -47,26 +57,23 @@ public abstract class DataGenerator {
         return reports;
     }
 
-    protected abstract OccurrenceReport report();
-
-    protected <T> T randomItem(List<T> items) {
+    private <T> T randomItem(List<T> items) {
         return items.get(random.nextInt(items.size()));
     }
 
-    protected Occurrence generateOccurrence() {
-        final Occurrence occurrence = occurrence();
+    private Occurrence generateOccurrence() {
+        final Occurrence occurrence = em
+                .createNamed(URIs.createURI(generateUri(Occurrence.class).toString()), Occurrence.class);
         occurrence.setName("Occurrence" + random.nextInt());
         occurrence.setStartTime(new Date(System.currentTimeMillis() - 10000));
         occurrence.setEndTime(new Date());
         return occurrence;
     }
 
-    protected abstract Occurrence occurrence();
-
-    protected List<Person> generatePersons() {
+    private List<Person> generatePersons() {
         final List<Person> list = new ArrayList<>();
         for (int i = 0; i < COUNT; i++) {
-            final Person p = person();
+            final Person p = em.createNamed(URIs.createURI(generateUri(Person.class).toString()), Person.class);
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);
             p.setLastName("lastName" + i);
@@ -76,17 +83,22 @@ public abstract class DataGenerator {
         return list;
     }
 
-    protected abstract Person person();
-
-    protected URI generateUri(Class<?> type) {
-        return URI.create(Vocabulary.BASE_URI + type.getSimpleName() + random.nextInt());
-    }
-
-    public List<Person> getPersons() {
-        return Collections.unmodifiableList(persons);
+    private java.net.URI generateUri(Class<?> type) {
+        return java.net.URI.create(Vocabulary.BASE_URI + type.getSimpleName() + random.nextInt());
     }
 
     public List<OccurrenceReport> getReports() {
         return Collections.unmodifiableList(reports);
+    }
+
+    private OccurrenceReport report() {
+        final URI uri = URIs.createURI(generateUri(OccurrenceReport.class).toString());
+        final OccurrenceReport r = em.createNamed(uri, OccurrenceReport.class);
+        instances.put(r, uri);
+        return r;
+    }
+
+    public URI getUri(OccurrenceReport report) {
+        return instances.get(report);
     }
 }

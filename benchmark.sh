@@ -3,8 +3,8 @@
 JAVA=/opt/java-8-oracle/bin/java
 OUTPUT=benchmark.log
 LOGFILE=logback.xml
-WARMUPS=10
-ROUNDS=100
+WARMUPS=1
+ROUNDS=1
 
 > ${OUTPUT}
 echo "Running benchmark..."
@@ -52,6 +52,21 @@ ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMU
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
+cd ../..
+
+# Komma Benchmark
+echo "Running KOMMA..."
+cd komma-benchmark/target
+echo "---------------------------------------" >> ../../${OUTPUT}
+echo "|               KOMMA                 |" >> ../../${OUTPUT}
+echo "---------------------------------------" >> ../../${OUTPUT}
+
+echo "Create..."
+echo "*** CREATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
+echo "Retrieve..."
+echo "*** RETRIEVE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
 cd ../..
 
 echo "Benchmark finished."

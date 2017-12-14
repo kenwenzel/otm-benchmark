@@ -5,7 +5,7 @@ import cz.cvut.kbss.benchmark.model.Vocabulary;
 import org.openrdf.annotations.Iri;
 
 @Iri(Vocabulary.s_c_Person)
-public interface IPerson extends Person {
+public interface IPerson extends Person, HasUri {
     @Iri(Vocabulary.s_p_firstName)
     @Override
     String getFirstName();
