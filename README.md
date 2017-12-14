@@ -6,4 +6,7 @@ Currently supported libraries:
 * [AliBaba](https://bitbucket.org/openrdf/alibaba/)
 * [Empire](https://github.com/mhgrove/Empire)
 * [JOPA](https://github.com/kbss-cvut/jopa)
+* [KOMMA](https://github.com/komma/komma)
+
+The benchmark is executed against a locally running RDF4J server.
 
