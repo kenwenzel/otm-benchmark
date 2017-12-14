@@ -34,6 +34,11 @@
         <appender-ref ref="STDOUT" />
     </logger>
 
+    <!-- Logger for KOMMA -->
+    <logger name="net.enilink" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
     <!-- Restrict RDF4J client logging -->
     <logger name="org.eclipse.rdf4j.http" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
