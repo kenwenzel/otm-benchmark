@@ -33,11 +33,6 @@
             <artifactId>rdf4j-rio-binary</artifactId>
             <version>2.2.4</version>
         </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
     </dependencies>
 
     <build>

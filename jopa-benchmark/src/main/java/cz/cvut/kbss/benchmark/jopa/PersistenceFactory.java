@@ -34,6 +34,7 @@ class PersistenceFactory {
         properties.put(OntoDriverProperties.ONTOLOGY_LANGUAGE, "en");
         properties.put(SCAN_PACKAGE, "cz.cvut.kbss.benchmark.jopa.model");
         properties.put(JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
+        properties.put(CACHE_ENABLED, Boolean.FALSE.toString());
         this.emf = Persistence.createEntityManagerFactory("benchmarkPU", properties);
     }
 

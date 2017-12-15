@@ -48,11 +48,6 @@
             <artifactId>sesame-rio-binary</artifactId>
             <version>${org.openrdf.sesame.version}</version>
         </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
     </dependencies>
 
     <build>

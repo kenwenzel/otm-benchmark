@@ -3,8 +3,8 @@
 JAVA=/opt/java-8-oracle/bin/java
 OUTPUT=benchmark.log
 LOGFILE=logback.xml
-WARMUPS=1
-ROUNDS=1
+WARMUPS=10
+ROUNDS=100
 
 > ${OUTPUT}
 echo "Running benchmark..."

@@ -18,3 +18,5 @@ Also could not inherit `OccurrenceReport` from the core one, because class gener
 in class.
 This also meant that the `KommaGenerator` could not reuse code from core, but had to copy it with correct types.
 Curiously, this issue did not apply to `Person` and `Occurrence`.
+
+Have to explicitly register entity classes.
