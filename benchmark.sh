@@ -69,4 +69,19 @@ echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
 cd ../..
 
+# RDFBeans Benchmark
+echo "Running RDFBeans..."
+cd rdfbeans-benchmark/target
+echo "---------------------------------------" >> ../../${OUTPUT}
+echo "|               RDFBeans              |" >> ../../${OUTPUT}
+echo "---------------------------------------" >> ../../${OUTPUT}
+
+echo "Create..."
+echo "*** CREATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
+echo "Retrieve..."
+echo "*** RETRIEVE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
+cd ../..
+
 echo "Benchmark finished."

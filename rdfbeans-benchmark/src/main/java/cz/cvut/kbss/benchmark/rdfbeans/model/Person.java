@@ -1,41 +1,33 @@
-package cz.cvut.kbss.benchmark.jopa.model;
+package cz.cvut.kbss.benchmark.rdfbeans.model;
 
 import cz.cvut.kbss.benchmark.model.Vocabulary;
-import cz.cvut.kbss.jopa.model.annotations.Id;
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
+import org.cyberborean.rdfbeans.annotations.RDF;
+import org.cyberborean.rdfbeans.annotations.RDFBean;
+import org.cyberborean.rdfbeans.annotations.RDFSubject;
 
-import java.net.URI;
-
-@OWLClass(iri = Vocabulary.s_c_Person)
+@RDFBean(Vocabulary.s_c_Person)
 public class Person implements cz.cvut.kbss.benchmark.model.Person {
 
-    @Id
-    private URI uri;
+    private String uri;
 
-    @OWLDataProperty(iri = Vocabulary.s_p_firstName)
     private String firstName;
 
-    @OWLDataProperty(iri = Vocabulary.s_p_lastName)
     private String lastName;
 
-    @OWLDataProperty(iri = Vocabulary.s_p_accountName)
     private String username;
 
-    @OWLDataProperty(iri = Vocabulary.s_p_password)
     private String password;
 
-    public Person() {
-    }
-
-    public URI getUri() {
+    @RDFSubject
+    public String getUri() {
         return uri;
     }
 
-    public void setUri(URI uri) {
+    public void setUri(String uri) {
         this.uri = uri;
     }
 
+    @RDF(Vocabulary.s_p_firstName)
     @Override
     public String getFirstName() {
         return firstName;
@@ -46,6 +38,7 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
         this.firstName = firstName;
     }
 
+    @RDF(Vocabulary.s_p_lastName)
     @Override
     public String getLastName() {
         return lastName;
@@ -56,6 +49,7 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
         this.lastName = lastName;
     }
 
+    @RDF(Vocabulary.s_p_accountName)
     @Override
     public String getUsername() {
         return username;
@@ -66,6 +60,7 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
         this.username = username;
     }
 
+    @RDF(Vocabulary.s_p_password)
     @Override
     public String getPassword() {
         return password;
@@ -74,10 +69,5 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     @Override
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return firstName + " " + lastName + " <" + uri + ">";
     }
 }

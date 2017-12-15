@@ -3,6 +3,7 @@ package cz.cvut.kbss.benchmark.util;
 import cz.cvut.kbss.benchmark.BenchmarkException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -15,7 +16,11 @@ public class Config {
 
     static {
         try {
-            configuration.load(Config.class.getClassLoader().getResourceAsStream(CONFIG_FILE));
+            final InputStream is = Config.class.getClassLoader().getResourceAsStream(CONFIG_FILE);
+            if (is == null) {
+                throw new BenchmarkException("Benchmark configuration file is missing.");
+            }
+            configuration.load(is);
         } catch (IOException e) {
             throw new BenchmarkException("Unable to load configuration.", e);
         }
