@@ -19,6 +19,8 @@ public abstract class RDFBeansBenchmarkRunner extends BenchmarkRunner {
     @Override
     public void setUp() {
         this.persistenceFactory = new PersistenceFactory();
+        System.gc();
+        System.gc();
     }
 
     @Override

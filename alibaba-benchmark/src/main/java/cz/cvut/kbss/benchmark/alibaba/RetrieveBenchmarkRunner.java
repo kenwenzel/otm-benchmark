@@ -15,6 +15,8 @@ public class RetrieveBenchmarkRunner extends AlibabaBenchmarkRunner {
         } catch (Exception e) {
             throw new BenchmarkException(e);
         }
+        System.gc();
+        System.gc();
     }
 
     @Override

@@ -17,6 +17,7 @@ public abstract class JopaBenchmarkRunner extends BenchmarkRunner {
     @Override
     public void setUp() {
         this.persistenceFactory = new PersistenceFactory();
+        super.setUp();
     }
 
     @Override

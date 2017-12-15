@@ -14,6 +14,8 @@ public class RetrieveBenchmarkRunner extends KommaBenchmarkRunner {
         generator.generate();
         em.getTransaction().commit();
         em.close();
+        System.gc();
+        System.gc();
     }
 
     @Override

@@ -15,6 +15,8 @@ public class RetrieveBenchmarkRunner extends EmpireBenchmarkRunner {
 //        em.getTransaction().begin();
         AbstractBenchmarkUtil.persistAll(generator, em::persist);
 //        em.getTransaction().commit(); // Empire executes each persist in a transaction. A global transaction is of no use
+        System.gc();
+        System.gc();
     }
 
     @Override

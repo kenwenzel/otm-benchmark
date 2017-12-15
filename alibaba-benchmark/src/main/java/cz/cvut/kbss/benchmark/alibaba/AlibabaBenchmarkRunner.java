@@ -28,6 +28,7 @@ abstract class AlibabaBenchmarkRunner extends BenchmarkRunner {
             LOG.error("Unable to setup repository.", e);
             throw new BenchmarkException(e);
         }
+        super.setUp();
     }
 
     @Override

@@ -14,6 +14,8 @@ public class RetrieveBenchmarkRunner extends JopaBenchmarkRunner {
         AbstractBenchmarkUtil.persistAll(generator, em::persist);
         em.getTransaction().commit();
         em.close();
+        System.gc();
+        System.gc();
     }
 
     @Override

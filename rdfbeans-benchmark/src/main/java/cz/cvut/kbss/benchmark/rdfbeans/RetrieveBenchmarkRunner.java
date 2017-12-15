@@ -21,6 +21,8 @@ public class RetrieveBenchmarkRunner extends RDFBeansBenchmarkRunner {
             }
         });
         beanManager.getRepositoryConnection().commit();
+        System.gc();
+        System.gc();
     }
 
     @Override
