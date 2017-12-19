@@ -5,6 +5,8 @@ import org.cyberborean.rdfbeans.annotations.RDF;
 import org.cyberborean.rdfbeans.annotations.RDFBean;
 import org.cyberborean.rdfbeans.annotations.RDFSubject;
 
+import java.util.Set;
+
 @RDFBean(Vocabulary.s_c_Person)
 public class Person implements cz.cvut.kbss.benchmark.model.Person {
 
@@ -17,6 +19,8 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     private String username;
 
     private String password;
+
+    private Set<String> contacts;
 
     @RDFSubject
     public String getUri() {
@@ -69,5 +73,16 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     @Override
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @RDF(Vocabulary.s_p_contact)
+    @Override
+    public Set<String> getContacts() {
+        return contacts;
+    }
+
+    @Override
+    public void setContacts(Set<String> contacts) {
+        this.contacts = contacts;
     }
 }

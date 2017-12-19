@@ -4,6 +4,8 @@ import cz.cvut.kbss.benchmark.model.Person;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import org.openrdf.annotations.Iri;
 
+import java.util.Set;
+
 @Iri(Vocabulary.s_c_Person)
 public interface IPerson extends Person, HasUri {
     @Iri(Vocabulary.s_p_firstName)
@@ -37,4 +39,12 @@ public interface IPerson extends Person, HasUri {
     @Iri(Vocabulary.s_p_password)
     @Override
     void setPassword(String password);
+
+    @Iri(Vocabulary.s_p_contact)
+    @Override
+    Set<String> getContacts();
+
+    @Iri(Vocabulary.s_p_contact)
+    @Override
+    void setContacts(Set<String> contacts);
 }

@@ -6,23 +6,21 @@ import com.clarkparsia.empire.annotation.RdfsClass;
 import com.clarkparsia.empire.annotation.SupportsRdfIdImpl;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @RdfsClass(Vocabulary.s_c_occurrence_report)
 public class OccurrenceReport
-        implements SupportsRdfId, cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person> {
+        implements SupportsRdfId, cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person, Resource> {
 
     private SupportsRdfId mIdSupport = new SupportsRdfIdImpl();
 
     @RdfProperty(Vocabulary.s_p_has_file_number)
     private Long fileNumber;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @RdfProperty(Vocabulary.s_p_documents)
     private Occurrence occurrence;
 
@@ -39,6 +37,10 @@ public class OccurrenceReport
     @ManyToOne(fetch = FetchType.EAGER)
     @RdfProperty(Vocabulary.s_p_has_last_editor)
     private Person lastModifiedBy;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @RdfProperty(Vocabulary.s_p_references)
+    private Set<Resource> attachments;
 
     @RdfProperty(Vocabulary.s_p_has_revision)
     private Integer revision;
@@ -104,6 +106,15 @@ public class OccurrenceReport
     @Override
     public void setLastModifiedBy(Person lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
+    }
+
+    @Override
+    public Set<Resource> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Set<Resource> attachments) {
+        this.attachments = attachments;
     }
 
     @Override

@@ -3,6 +3,7 @@ package cz.cvut.kbss.benchmark.alibaba;
 import cz.cvut.kbss.benchmark.alibaba.model.Occurrence;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.alibaba.model.Person;
+import cz.cvut.kbss.benchmark.alibaba.model.Resource;
 import cz.cvut.kbss.benchmark.data.DataGenerator;
 
 public class AlibabaDataGenerator extends DataGenerator {
@@ -23,6 +24,13 @@ public class AlibabaDataGenerator extends DataGenerator {
         final Occurrence o = new Occurrence();
         o.setUri(generateUri(Occurrence.class));
         return o;
+    }
+
+    @Override
+    protected Resource resource() {
+        final Resource r = new Resource();
+        r.setUri(generateUri(Resource.class));
+        return r;
     }
 
     @Override

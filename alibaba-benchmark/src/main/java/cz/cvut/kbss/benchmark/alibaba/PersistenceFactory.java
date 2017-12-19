@@ -3,6 +3,7 @@ package cz.cvut.kbss.benchmark.alibaba;
 import cz.cvut.kbss.benchmark.alibaba.model.Occurrence;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.alibaba.model.Person;
+import cz.cvut.kbss.benchmark.alibaba.model.Resource;
 import cz.cvut.kbss.benchmark.util.Config;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryException;
@@ -38,6 +39,7 @@ class PersistenceFactory {
         config.addConcept(Occurrence.class);
         config.addConcept(OccurrenceReport.class);
         config.addConcept(Person.class);
+        config.addConcept(Resource.class);
         this.objectRepository = factory.createRepository(config, repository);
         objectRepository.initialize();
     }

@@ -4,6 +4,7 @@ import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.jopa.model.Occurrence;
 import cz.cvut.kbss.benchmark.jopa.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.jopa.model.Person;
+import cz.cvut.kbss.benchmark.jopa.model.Resource;
 
 public class JopaDataGenerator extends DataGenerator {
 
@@ -23,6 +24,13 @@ public class JopaDataGenerator extends DataGenerator {
         final Occurrence o = new Occurrence();
         o.setUri(generateUri(Occurrence.class));
         return o;
+    }
+
+    @Override
+    protected Resource resource() {
+        final Resource r = new Resource();
+        r.setUri(generateUri(Resource.class));
+        return r;
     }
 
     @Override

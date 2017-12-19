@@ -7,6 +7,7 @@ import com.clarkparsia.empire.annotation.SupportsRdfIdImpl;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 
 import javax.persistence.Entity;
+import java.util.Set;
 
 @Entity
 @RdfsClass(Vocabulary.s_c_Person)
@@ -26,14 +27,8 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
     @RdfProperty(Vocabulary.s_p_password)
     private String password;
 
-    public Person() {
-    }
-
-    public Person(String firstName, String lastName, String username) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-    }
+    @RdfProperty(Vocabulary.s_p_contact)
+    private Set<String> contacts;
 
     @Override
     public String getFirstName() {
@@ -73,6 +68,16 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
     @Override
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public Set<String> getContacts() {
+        return contacts;
+    }
+
+    @Override
+    public void setContacts(Set<String> contacts) {
+        this.contacts = contacts;
     }
 
     @Override

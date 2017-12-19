@@ -3,6 +3,8 @@ package cz.cvut.kbss.benchmark.komma.model;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import net.enilink.composition.annotations.Iri;
 
+import java.util.Set;
+
 @Iri(Vocabulary.s_c_Person)
 public interface Person extends cz.cvut.kbss.benchmark.model.Person {
 
@@ -33,4 +35,11 @@ public interface Person extends cz.cvut.kbss.benchmark.model.Person {
 
     @Override
     void setPassword(String password);
+
+    @Iri(Vocabulary.s_p_contact)
+    @Override
+    Set<String> getContacts();
+
+    @Override
+    void setContacts(Set<String> contacts);
 }

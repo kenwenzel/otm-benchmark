@@ -8,6 +8,7 @@ import net.enilink.komma.core.IEntityManager;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class BenchmarkUtil {
@@ -33,6 +34,9 @@ public class BenchmarkUtil {
             assertNotNull(result.getAuthor());
             assertNotNull(result.getLastModifiedBy());
             assertNotNull(result.getOccurrence());
+            assertEquals(r.getAttachments().size(), result.getAttachments().size());
+            assertEquals(r.getAuthor().getContacts(), result.getAuthor().getContacts());
+            assertEquals(r.getLastModifiedBy().getContacts(), result.getLastModifiedBy().getContacts());
         });
     }
 }

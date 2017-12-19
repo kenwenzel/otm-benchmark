@@ -3,6 +3,7 @@ package cz.cvut.kbss.benchmark.komma;
 import cz.cvut.kbss.benchmark.komma.model.Occurrence;
 import cz.cvut.kbss.benchmark.komma.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.komma.model.Person;
+import cz.cvut.kbss.benchmark.komma.model.Resource;
 import cz.cvut.kbss.benchmark.komma.util.BenchmarkUtil;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import cz.cvut.kbss.benchmark.util.Constants;
@@ -11,6 +12,8 @@ import net.enilink.komma.core.URI;
 import net.enilink.komma.core.URIs;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
 
@@ -45,6 +48,7 @@ public class KommaGenerator {
             r.setDateCreated(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(new GregorianCalendar()));
             r.setLastModified(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(new GregorianCalendar()));
             r.setLastModifiedBy(randomItem(persons));
+            r.setAttachments(generateAttachments());
             r.setRevision(random.nextInt(ITEM_COUNT));
             r.setSummary(Constants.SUMMARY + System.currentTimeMillis() + i);
             reports.add(r);
@@ -57,6 +61,16 @@ public class KommaGenerator {
         final OccurrenceReport r = em.createNamed(uri, OccurrenceReport.class);
         instances.put(r, uri);
         return r;
+    }
+
+    private Set<Resource> generateAttachments() {
+        return IntStream.range(0, 3).mapToObj(i -> {
+            final Resource attachment = em
+                    .createNamed(URIs.createURI(generateUri(Resource.class).toString()), Resource.class);
+            attachment.setIdentifier("resource" + i + ".doc");
+            attachment.setDescription("This resource was attached to further document the reported occurrence.");
+            return attachment;
+        }).collect(Collectors.toSet());
     }
 
     private <T> T randomItem(List<T> items) {
@@ -79,7 +93,10 @@ public class KommaGenerator {
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);
             p.setLastName("lastName" + i);
-            p.setUsername("user" + i + "@krizik.felk.cvut.cz");
+            p.setUsername("user" + i);
+            p.setContacts(IntStream.range(0, 5)
+                                   .mapToObj(j -> String.format("%s_%d@kbss.felk.cvut.cz", p.getUsername(), j))
+                                   .collect(Collectors.toSet()));
             list.add(p);
         }
         return list;

@@ -1,13 +1,12 @@
 package cz.cvut.kbss.benchmark.data;
 
 
-import cz.cvut.kbss.benchmark.model.Occurrence;
-import cz.cvut.kbss.benchmark.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.model.Person;
-import cz.cvut.kbss.benchmark.model.Vocabulary;
+import cz.cvut.kbss.benchmark.model.*;
 
 import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
 import static cz.cvut.kbss.benchmark.util.Constants.SUMMARY;
@@ -34,6 +33,7 @@ public abstract class DataGenerator {
             r.setDateCreated(new Date());
             r.setLastModified(new Date());
             r.setLastModifiedBy(randomItem(persons));
+            r.setAttachments(generateAttachments());
             r.setRevision(random.nextInt(ITEM_COUNT));
             r.setSummary(SUMMARY + System.currentTimeMillis() + i);
             reports.add(r);
@@ -57,6 +57,17 @@ public abstract class DataGenerator {
 
     protected abstract Occurrence occurrence();
 
+    protected Set<Resource> generateAttachments() {
+        return IntStream.range(0, 3).mapToObj(i -> {
+            final Resource attachment = resource();
+            attachment.setIdentifier("resource" + i + ".doc");
+            attachment.setDescription("This resource was attached to further document the reported occurrence.");
+            return attachment;
+        }).collect(Collectors.toSet());
+    }
+
+    protected abstract Resource resource();
+
     protected List<Person> generatePersons() {
         final List<Person> list = new ArrayList<>();
         for (int i = 0; i < ITEM_COUNT; i++) {
@@ -64,7 +75,10 @@ public abstract class DataGenerator {
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);
             p.setLastName("lastName" + i);
-            p.setUsername("user" + i + "@krizik.felk.cvut.cz");
+            p.setUsername("user" + i);
+            p.setContacts(IntStream.range(0, 5)
+                                   .mapToObj(j -> String.format("%s_%d@kbss.felk.cvut.cz", p.getUsername(), j))
+                                   .collect(Collectors.toSet()));
             list.add(p);
         }
         return list;

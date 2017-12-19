@@ -5,6 +5,7 @@ import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.empire.model.Occurrence;
 import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.empire.model.Person;
+import cz.cvut.kbss.benchmark.empire.model.Resource;
 
 public class EmpireDataGenerator extends DataGenerator {
 
@@ -24,6 +25,13 @@ public class EmpireDataGenerator extends DataGenerator {
         final Occurrence occurrence = new Occurrence();
         occurrence.setRdfId(new SupportsRdfId.URIKey(generateUri(Occurrence.class)));
         return occurrence;
+    }
+
+    @Override
+    protected Resource resource() {
+        final Resource resource = new Resource();
+        resource.setRdfId(new SupportsRdfId.URIKey(generateUri(Resource.class)));
+        return resource;
     }
 
     @Override

@@ -2,8 +2,9 @@ package cz.cvut.kbss.benchmark.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
-public interface OccurrenceReport<O extends Occurrence, P extends Person> extends Serializable {
+public interface OccurrenceReport<O extends Occurrence, P extends Person, R extends Resource> extends Serializable {
 
     Long getFileNumber();
 
@@ -28,6 +29,10 @@ public interface OccurrenceReport<O extends Occurrence, P extends Person> extend
     Person getLastModifiedBy();
 
     void setLastModifiedBy(P lastModifiedBy);
+
+    Set<R> getAttachments();
+
+    void setAttachments(Set<R> attachments);
 
     Integer getRevision();
 

@@ -5,9 +5,10 @@ import cz.cvut.kbss.benchmark.model.Vocabulary;
 import org.openrdf.annotations.Iri;
 
 import java.util.Date;
+import java.util.Set;
 
 @Iri(Vocabulary.s_c_occurrence_report)
-public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person>, HasUri {
+public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person, Resource>, HasUri {
 
     @Iri(Vocabulary.s_p_has_file_number)
     @Override
@@ -56,6 +57,14 @@ public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person>,
     @Iri(Vocabulary.s_p_has_last_editor)
     @Override
     void setLastModifiedBy(Person lastModifiedBy);
+
+    @Iri(Vocabulary.s_p_references)
+    @Override
+    Set<Resource> getAttachments();
+
+    @Iri(Vocabulary.s_p_references)
+    @Override
+    void setAttachments(Set<Resource> attachments);
 
     @Iri(Vocabulary.s_p_has_revision)
     @Override

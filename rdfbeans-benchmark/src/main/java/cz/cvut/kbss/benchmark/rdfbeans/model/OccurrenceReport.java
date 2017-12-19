@@ -6,9 +6,10 @@ import org.cyberborean.rdfbeans.annotations.RDFBean;
 import org.cyberborean.rdfbeans.annotations.RDFSubject;
 
 import java.util.Date;
+import java.util.Set;
 
 @RDFBean(Vocabulary.s_c_occurrence_report)
-public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person> {
+public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person, Resource> {
 
     private String uri;
 
@@ -23,6 +24,8 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     private Date lastModified;
 
     private Person lastModifiedBy;
+
+    private Set<Resource> attachments;
 
     private Integer revision;
 
@@ -101,6 +104,17 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     @Override
     public void setLastModifiedBy(Person lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
+    }
+
+    @RDF(Vocabulary.s_p_references)
+    @Override
+    public Set<Resource> getAttachments() {
+        return attachments;
+    }
+
+    @Override
+    public void setAttachments(Set<Resource> attachments) {
+        this.attachments = attachments;
     }
 
     @RDF(Vocabulary.s_p_has_revision)

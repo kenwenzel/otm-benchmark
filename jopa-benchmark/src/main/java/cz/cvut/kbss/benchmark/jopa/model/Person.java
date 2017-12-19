@@ -6,6 +6,7 @@ import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 
 import java.net.URI;
+import java.util.Set;
 
 @OWLClass(iri = Vocabulary.s_c_Person)
 public class Person implements cz.cvut.kbss.benchmark.model.Person {
@@ -24,6 +25,9 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
 
     @OWLDataProperty(iri = Vocabulary.s_p_password)
     private String password;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_contact)
+    private Set<String> contacts;
 
     public Person() {
     }
@@ -74,6 +78,16 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     @Override
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public Set<String> getContacts() {
+        return contacts;
+    }
+
+    @Override
+    public void setContacts(Set<String> contacts) {
+        this.contacts = contacts;
     }
 
     @Override

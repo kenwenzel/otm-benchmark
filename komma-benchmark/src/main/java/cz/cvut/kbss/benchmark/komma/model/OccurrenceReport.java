@@ -4,6 +4,7 @@ import cz.cvut.kbss.benchmark.model.Vocabulary;
 import net.enilink.composition.annotations.Iri;
 
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Set;
 
 @Iri(Vocabulary.s_c_occurrence_report)
 public interface OccurrenceReport {
@@ -37,6 +38,11 @@ public interface OccurrenceReport {
     Person getLastModifiedBy();
 
     void setLastModifiedBy(Person lastModifiedBy);
+
+    @Iri(Vocabulary.s_p_references)
+    Set<Resource> getAttachments();
+
+    void setAttachments(Set<Resource> attachments);
 
     @Iri(Vocabulary.s_p_has_revision)
     Integer getRevision();

@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class AbstractBenchmarkUtil {
@@ -23,14 +24,17 @@ public class AbstractBenchmarkUtil {
     }
 
     public static void findAndVerifyAll(DataGenerator data, Function<OccurrenceReport, OccurrenceReport> finder) {
-        data.getReports().forEach(r -> checkReport(finder.apply(r)));
+        data.getReports().forEach(r -> checkReport(r, finder.apply(r)));
     }
 
-    public static void checkReport(OccurrenceReport report) {
-        assertNotNull(report);
-        assertNotNull(report.getAuthor());
-        assertNotNull(report.getLastModifiedBy());
-        assertNotNull(report.getOccurrence());
+    public static void checkReport(OccurrenceReport expected, OccurrenceReport actual) {
+        assertNotNull(actual);
+        assertNotNull(actual.getAuthor());
+        assertNotNull(actual.getLastModifiedBy());
+        assertNotNull(actual.getOccurrence());
+        assertEquals(expected.getAttachments().size(), actual.getAttachments().size());
+        assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
+        assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
     }
 
     public static void clearRepository(String repoUrl) {

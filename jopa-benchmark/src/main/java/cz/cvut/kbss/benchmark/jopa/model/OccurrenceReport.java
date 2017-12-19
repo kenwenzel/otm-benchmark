@@ -5,9 +5,10 @@ import cz.cvut.kbss.jopa.model.annotations.*;
 
 import java.net.URI;
 import java.util.Date;
+import java.util.Set;
 
 @OWLClass(iri = Vocabulary.s_c_occurrence_report)
-public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person> {
+public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.OccurrenceReport<Occurrence, Person, Resource> {
 
     @Id
     private URI uri;
@@ -29,6 +30,9 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
 
     @OWLObjectProperty(iri = Vocabulary.s_p_has_last_editor, fetch = FetchType.EAGER)
     private Person lastModifiedBy;
+
+    @OWLObjectProperty(iri = Vocabulary.s_p_references, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Resource> attachments;
 
     @OWLDataProperty(iri = Vocabulary.s_p_has_revision)
     private Integer revision;
@@ -102,6 +106,16 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     @Override
     public void setLastModifiedBy(Person lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
+    }
+
+    @Override
+    public Set<Resource> getAttachments() {
+        return attachments;
+    }
+
+    @Override
+    public void setAttachments(Set<Resource> attachments) {
+        this.attachments = attachments;
     }
 
     @Override
