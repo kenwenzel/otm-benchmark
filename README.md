@@ -21,10 +21,15 @@ The following types of operations are benchmarked (each separately):
 
 #### Model
 
-The benchmark uses a relatively simple model consisting of three entity classes:
+The benchmark uses a relatively simple model consisting of the following entity classes:
 * **Person** contains basic information about a person, all modelled as data properties,
 * **Occurrence** contains basic information about an occurrence, its temporal specification and name,
-* **OccurrenceReport** represents a report documenting an occurrence. It references the occurrence (a 1:1 relationship) and person as its creator and last editor.
+* **OccurrenceReport** represents a report documenting an occurrence. It references the occurrence (a 1:1 relationship), person as its creator and last editor and a set of resources as attachments,
+* **Resource** represents a reference to an external resource, be it a file stored on local file system or a remote URL.
+
+The model is depicted in a diagram below:
+
+![Model diagram](model.png "Diagram of the object model used in the benchmark.")
 
 
 #### Data
