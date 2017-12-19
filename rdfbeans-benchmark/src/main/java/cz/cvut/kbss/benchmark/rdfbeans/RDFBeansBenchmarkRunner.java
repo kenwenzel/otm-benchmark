@@ -5,7 +5,7 @@ import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.util.AbstractBenchmarkUtil;
 import cz.cvut.kbss.benchmark.util.Config;
 
-public abstract class RDFBeansBenchmarkRunner extends BenchmarkRunner {
+public abstract class RDFBeansBenchmarkRunner implements BenchmarkRunner {
 
     PersistenceFactory persistenceFactory;
     DataGenerator generator;
@@ -19,8 +19,7 @@ public abstract class RDFBeansBenchmarkRunner extends BenchmarkRunner {
     @Override
     public void setUp() {
         this.persistenceFactory = new PersistenceFactory();
-        System.gc();
-        System.gc();
+        BenchmarkRunner.super.setUp();
     }
 
     @Override

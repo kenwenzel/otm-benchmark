@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import static cz.cvut.kbss.benchmark.empire.PersistenceFactory.CONFIG_FILE;
 
-public abstract class EmpireBenchmarkRunner extends BenchmarkRunner {
+public abstract class EmpireBenchmarkRunner implements BenchmarkRunner {
 
     private static final String SERVER_URL_PROPERTY = "0.url";
     private static final String REPO_NAME_PROPERTY = "0.repo";
@@ -36,7 +36,7 @@ public abstract class EmpireBenchmarkRunner extends BenchmarkRunner {
     @Override
     public void setUp() {
         this.persistenceFactory = new PersistenceFactory();
-        super.setUp();
+        BenchmarkRunner.super.setUp();
     }
 
     @Override

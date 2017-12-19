@@ -46,5 +46,8 @@ Number of executions can be configured using the **-w** and **-r** parameters, w
 * **-w** is the number of warmup rounds, which are not measured,
 * **-r** is the number of measured rounds.
 
+In addition, it is possible to configure the benchmark to output each round's execution time into a file for further investigation.
+This is done using **-o** parameter with value specifying the target file.
+
 `benchmark.sh` contains a predefined configuration. It executes the benchmark on all supported libraries and outputs the results into `benchmark.log`.
 

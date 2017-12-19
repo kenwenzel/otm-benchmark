@@ -4,7 +4,7 @@ import cz.cvut.kbss.benchmark.BenchmarkRunner;
 import cz.cvut.kbss.benchmark.util.AbstractBenchmarkUtil;
 import cz.cvut.kbss.benchmark.util.Config;
 
-public abstract class JopaBenchmarkRunner extends BenchmarkRunner {
+public abstract class JopaBenchmarkRunner implements BenchmarkRunner {
 
     PersistenceFactory persistenceFactory;
     JopaDataGenerator generator;
@@ -17,7 +17,7 @@ public abstract class JopaBenchmarkRunner extends BenchmarkRunner {
     @Override
     public void setUp() {
         this.persistenceFactory = new PersistenceFactory();
-        super.setUp();
+        BenchmarkRunner.super.setUp();
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.eclipse.rdf4j.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class KommaBenchmarkRunner extends BenchmarkRunner {
+abstract class KommaBenchmarkRunner implements BenchmarkRunner {
 
     static final Logger LOG = LoggerFactory.getLogger(KommaBenchmarkRunner.class);
 
@@ -28,7 +28,7 @@ abstract class KommaBenchmarkRunner extends BenchmarkRunner {
             LOG.error("Unable to setup repository.", e);
             throw new BenchmarkException(e);
         }
-        super.setUp();
+        BenchmarkRunner.super.setUp();
     }
 
     @Override

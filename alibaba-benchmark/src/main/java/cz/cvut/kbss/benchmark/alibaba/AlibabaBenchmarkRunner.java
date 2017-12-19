@@ -8,7 +8,7 @@ import org.openrdf.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class AlibabaBenchmarkRunner extends BenchmarkRunner {
+abstract class AlibabaBenchmarkRunner implements BenchmarkRunner {
 
     static final Logger LOG = LoggerFactory.getLogger(CreateBenchmarkRunner.class);
 
@@ -28,7 +28,7 @@ abstract class AlibabaBenchmarkRunner extends BenchmarkRunner {
             LOG.error("Unable to setup repository.", e);
             throw new BenchmarkException(e);
         }
-        super.setUp();
+        BenchmarkRunner.super.setUp();
     }
 
     @Override
