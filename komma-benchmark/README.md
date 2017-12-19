@@ -20,3 +20,5 @@ This also meant that the `KommaGenerator` could not reuse code from core, but ha
 Curiously, this issue did not apply to `Person` and `Occurrence`.
 
 Have to explicitly register entity classes.
+
+Implemented and used a disabled cache to have comparable test conditions.

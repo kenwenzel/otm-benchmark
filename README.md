@@ -38,9 +38,11 @@ The benchmark generates a number of persons, occurrences and reports. The exact 
 All of these are persisted either as part of the Create benchmark or during setup of other types of benchmark.
 
 Each report is assigned a random person as creator and another as last editor. An occurrence is generated for each report since they 
-are in a 1:1 relationship.
+are in a 1:1 relationship. Each report is also assigned three randomly generated attachments, which are persisted with it.
 
 All attributes of all entities are set, none is left empty. Also, lazy loading is disabled on entities.
+
+The data are generated in `DataGenerator`.
 
 
 #### Execution

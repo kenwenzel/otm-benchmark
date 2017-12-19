@@ -6,7 +6,6 @@ import net.enilink.komma.core.IUnitOfWork;
 import net.enilink.komma.core.KommaModule;
 import net.enilink.komma.dm.IDataManager;
 import net.enilink.komma.dm.IDataManagerFactory;
-import net.enilink.komma.em.CacheModule;
 import net.enilink.komma.em.CachingEntityManagerModule;
 import net.enilink.komma.em.EntityManagerFactoryModule;
 import net.enilink.komma.em.util.UnitOfWork;
@@ -27,7 +26,7 @@ public class BenchmarkModule extends AbstractModule {
     protected void configure() {
         install(new RDF4JModule());
         install(new EntityManagerFactoryModule(kommaModule, null, new CachingEntityManagerModule()));
-        install(new CacheModule("myCache"));
+        install(new DisabledCacheModule());
 
         UnitOfWork uow = new UnitOfWork();
         uow.begin();
