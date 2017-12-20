@@ -11,22 +11,22 @@ import java.util.stream.IntStream;
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
 import static cz.cvut.kbss.benchmark.util.Constants.SUMMARY;
 
-public abstract class DataGenerator {
+public abstract class DataGenerator<P extends Person, R extends OccurrenceReport> {
 
     protected final Random random = new Random();
 
-    private List<OccurrenceReport> reports;
-    private List<Person> persons;
+    private List<R> reports;
+    private List<P> persons;
 
     public void generate() {
         this.persons = generatePersons();
         this.reports = generateReports();
     }
 
-    protected List<OccurrenceReport> generateReports() {
-        final List<OccurrenceReport> reports = new ArrayList<>();
+    protected List<R> generateReports() {
+        final List<R> reports = new ArrayList<>();
         for (int i = 0; i < ITEM_COUNT; i++) {
-            final OccurrenceReport r = report();
+            final R r = report();
             r.setOccurrence(generateOccurrence());
             r.setAuthor(randomItem(persons));
             r.setFileNumber(random.nextLong());
@@ -41,7 +41,7 @@ public abstract class DataGenerator {
         return reports;
     }
 
-    protected abstract OccurrenceReport report();
+    protected abstract R report();
 
     protected <T> T randomItem(List<T> items) {
         return items.get(random.nextInt(items.size()));
@@ -68,10 +68,10 @@ public abstract class DataGenerator {
 
     protected abstract Resource resource();
 
-    protected List<Person> generatePersons() {
-        final List<Person> list = new ArrayList<>();
+    protected List<P> generatePersons() {
+        final List<P> list = new ArrayList<>();
         for (int i = 0; i < ITEM_COUNT; i++) {
-            final Person p = person();
+            final P p = person();
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);
             p.setLastName("lastName" + i);
@@ -84,17 +84,17 @@ public abstract class DataGenerator {
         return list;
     }
 
-    protected abstract Person person();
+    protected abstract P person();
 
     protected URI generateUri(Class<?> type) {
         return URI.create(Vocabulary.BASE_URI + type.getSimpleName() + random.nextInt());
     }
 
-    public List<Person> getPersons() {
+    public List<P> getPersons() {
         return Collections.unmodifiableList(persons);
     }
 
-    public List<OccurrenceReport> getReports() {
+    public List<R> getReports() {
         return Collections.unmodifiableList(reports);
     }
 }

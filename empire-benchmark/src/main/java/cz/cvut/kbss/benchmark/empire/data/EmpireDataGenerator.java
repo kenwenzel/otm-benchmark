@@ -1,4 +1,4 @@
-package cz.cvut.kbss.benchmark.empire;
+package cz.cvut.kbss.benchmark.empire.data;
 
 import com.clarkparsia.empire.SupportsRdfId;
 import cz.cvut.kbss.benchmark.data.DataGenerator;
@@ -7,9 +7,9 @@ import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.empire.model.Person;
 import cz.cvut.kbss.benchmark.empire.model.Resource;
 
-public class EmpireDataGenerator extends DataGenerator {
+public class EmpireDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    EmpireDataGenerator() {
+    public EmpireDataGenerator() {
         generate();
     }
 

@@ -2,8 +2,14 @@ package cz.cvut.kbss.benchmark.util;
 
 public class Constants {
 
+    /**
+     * Number of items of one kind to use in one round.
+     */
     public static final int ITEM_COUNT = 300;
 
+    /**
+     * Randomly generated string usable as report summary.
+     */
     public static final String SUMMARY =
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" +
                     " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris" +

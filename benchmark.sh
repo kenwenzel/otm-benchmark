@@ -6,6 +6,8 @@ LOGFILE=logback.xml
 WARMUPS=10
 ROUNDS=100
 
+# TODO Restart rdf4j tomcat between benchmarks?
+
 > ${OUTPUT}
 echo "Running benchmark..."
 

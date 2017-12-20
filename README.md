@@ -18,6 +18,17 @@ The following types of operations are benchmarked (each separately):
 * Create
 * Retrieve
 
+##### Create
+
+Create benchmark persists all the persons in one transaction. Then, to simulate a different mode of operation, the reports
+are persisted one by one in separate transactions. This means that each transaction persists the report, its occurrence and attachments.
+
+
+##### Retrieve
+
+Retrieve benchmark retrieves all the reports, checking for their attributes and some attributes of the referenced entities (e.g. contacts
+of the report's author and last editor, name of the reported occurrence).
+
 
 #### Model
 
@@ -45,7 +56,7 @@ All attributes of all entities are set, none is left empty. Also, lazy loading i
 The data are generated in `DataGenerator`.
 
 
-#### Execution
+### Execution
 
 The benchmark cleans up the repository after each round and uses a new persistence context for each round.
 

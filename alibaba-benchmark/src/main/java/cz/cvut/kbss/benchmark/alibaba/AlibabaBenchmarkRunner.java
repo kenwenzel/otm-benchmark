@@ -2,17 +2,20 @@ package cz.cvut.kbss.benchmark.alibaba;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.BenchmarkRunner;
-import cz.cvut.kbss.benchmark.util.AbstractBenchmarkUtil;
+import cz.cvut.kbss.benchmark.alibaba.data.AlibabaDataGenerator;
+import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.alibaba.model.Person;
+import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
+import cz.cvut.kbss.benchmark.AbstractRunner;
 import cz.cvut.kbss.benchmark.util.Config;
 import org.openrdf.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class AlibabaBenchmarkRunner implements BenchmarkRunner {
+abstract class AlibabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceReport> implements BenchmarkRunner {
 
     static final Logger LOG = LoggerFactory.getLogger(CreateBenchmarkRunner.class);
 
-    AlibabaDataGenerator generator;
     PersistenceFactory persistenceFactory;
 
     @Override
@@ -38,6 +41,6 @@ abstract class AlibabaBenchmarkRunner implements BenchmarkRunner {
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);
         }
-        Config.getRepoUrl().ifPresent(rUrl -> AbstractBenchmarkUtil.clearRepository(rUrl + "/statements"));
+        Config.getRepoUrl().ifPresent(rUrl -> BenchmarkUtil.clearRepository(rUrl + "/statements"));
     }
 }

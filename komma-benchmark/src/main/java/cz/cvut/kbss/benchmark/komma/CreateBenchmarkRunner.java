@@ -15,9 +15,7 @@ public class CreateBenchmarkRunner extends KommaBenchmarkRunner {
     @Override
     public void execute() {
         final IEntityManager em = persistenceFactory.entityManager();
-        em.getTransaction().begin();
         generator.setEm(em);
-        generator.generate();
-        em.getTransaction().commit();
+        generator.executeCreate();
     }
 }

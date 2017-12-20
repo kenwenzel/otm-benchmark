@@ -1,14 +1,14 @@
-package cz.cvut.kbss.benchmark.jopa;
+package cz.cvut.kbss.benchmark.alibaba.data;
 
+import cz.cvut.kbss.benchmark.alibaba.model.Occurrence;
+import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.alibaba.model.Person;
+import cz.cvut.kbss.benchmark.alibaba.model.Resource;
 import cz.cvut.kbss.benchmark.data.DataGenerator;
-import cz.cvut.kbss.benchmark.jopa.model.Occurrence;
-import cz.cvut.kbss.benchmark.jopa.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.jopa.model.Person;
-import cz.cvut.kbss.benchmark.jopa.model.Resource;
 
-public class JopaDataGenerator extends DataGenerator {
+public class AlibabaDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    JopaDataGenerator() {
+    public AlibabaDataGenerator() {
         generate();
     }
 

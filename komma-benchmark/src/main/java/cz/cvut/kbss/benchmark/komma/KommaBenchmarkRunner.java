@@ -2,7 +2,7 @@ package cz.cvut.kbss.benchmark.komma;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.BenchmarkRunner;
-import cz.cvut.kbss.benchmark.util.AbstractBenchmarkUtil;
+import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
 import cz.cvut.kbss.benchmark.util.Config;
 import org.eclipse.rdf4j.repository.RepositoryException;
 import org.slf4j.Logger;
@@ -38,6 +38,6 @@ abstract class KommaBenchmarkRunner implements BenchmarkRunner {
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);
         }
-        Config.getRepoUrl().ifPresent(rUrl -> AbstractBenchmarkUtil.clearRepository(rUrl + "/statements"));
+        Config.getRepoUrl().ifPresent(rUrl -> BenchmarkUtil.clearRepository(rUrl + "/statements"));
     }
 }

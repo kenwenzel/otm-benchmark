@@ -19,7 +19,7 @@ public class BenchmarkUtil {
         try {
             return DatatypeFactory.newInstance();
         } catch (DatatypeConfigurationException e) {
-            throw new BenchmarkException("Unable to initialize Komma model.", e);
+            throw new BenchmarkException("Unable to initialize KOMMA model.", e);
         }
     }
 
@@ -34,6 +34,7 @@ public class BenchmarkUtil {
             assertNotNull(result.getAuthor());
             assertNotNull(result.getLastModifiedBy());
             assertNotNull(result.getOccurrence());
+            assertEquals(r.getOccurrence().getName(), result.getOccurrence().getName());
             assertEquals(r.getAttachments().size(), result.getAttachments().size());
             assertEquals(r.getAuthor().getContacts(), result.getAuthor().getContacts());
             assertEquals(r.getLastModifiedBy().getContacts(), result.getLastModifiedBy().getContacts());

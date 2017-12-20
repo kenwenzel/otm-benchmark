@@ -9,10 +9,8 @@ public class RetrieveBenchmarkRunner extends KommaBenchmarkRunner {
     public void setUp() {
         super.setUp();
         final IEntityManager em = persistenceFactory.entityManager();
-        em.getTransaction().begin();
         generator.setEm(em);
-        generator.generate();
-        em.getTransaction().commit();
+        generator.persistData();
         em.close();
         System.gc();
         System.gc();

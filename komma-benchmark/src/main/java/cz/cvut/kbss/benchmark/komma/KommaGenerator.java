@@ -32,25 +32,33 @@ public class KommaGenerator {
     private List<OccurrenceReport> reports;
     private List<Person> persons;
 
-    public void generate() {
+    public void persistData() {
         this.instances = new IdentityHashMap<>();
+        em.getTransaction().begin();
         this.persons = generatePersons();
         this.reports = generateReports();
+        em.getTransaction().commit();
+    }
+
+    public void executeCreate() {
+        this.instances = new IdentityHashMap<>();
+        em.getTransaction().begin();
+        this.persons = generatePersons();
+        em.getTransaction().commit();
+
+        this.reports = new ArrayList<>(ITEM_COUNT);
+        for (int i = 0; i < ITEM_COUNT; i++) {
+            em.getTransaction().begin();
+            final OccurrenceReport report = report();
+            reports.add(report);
+            em.getTransaction().commit();
+        }
     }
 
     private List<OccurrenceReport> generateReports() {
         final List<OccurrenceReport> reports = new ArrayList<>();
         for (int i = 0; i < ITEM_COUNT; i++) {
             OccurrenceReport r = report();
-            r.setOccurrence(generateOccurrence());
-            r.setAuthor(randomItem(persons));
-            r.setFileNumber(random.nextLong());
-            r.setDateCreated(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(new GregorianCalendar()));
-            r.setLastModified(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(new GregorianCalendar()));
-            r.setLastModifiedBy(randomItem(persons));
-            r.setAttachments(generateAttachments());
-            r.setRevision(random.nextInt(ITEM_COUNT));
-            r.setSummary(Constants.SUMMARY + System.currentTimeMillis() + i);
             reports.add(r);
         }
         return reports;
@@ -59,6 +67,15 @@ public class KommaGenerator {
     private OccurrenceReport report() {
         final URI uri = URIs.createURI(generateUri(OccurrenceReport.class).toString());
         final OccurrenceReport r = em.createNamed(uri, OccurrenceReport.class);
+        r.setOccurrence(generateOccurrence());
+        r.setAuthor(randomItem(persons));
+        r.setFileNumber(random.nextLong());
+        r.setDateCreated(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(new GregorianCalendar()));
+        r.setLastModified(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(new GregorianCalendar()));
+        r.setLastModifiedBy(randomItem(persons));
+        r.setAttachments(generateAttachments());
+        r.setRevision(random.nextInt(ITEM_COUNT));
+        r.setSummary(Constants.SUMMARY + System.currentTimeMillis());
         instances.put(r, uri);
         return r;
     }

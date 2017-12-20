@@ -2,14 +2,19 @@ package cz.cvut.kbss.benchmark.empire;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.BenchmarkRunner;
-import cz.cvut.kbss.benchmark.util.AbstractBenchmarkUtil;
+import cz.cvut.kbss.benchmark.empire.data.EmpireDataGenerator;
+import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.empire.model.Person;
+import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
+import cz.cvut.kbss.benchmark.AbstractRunner;
 
 import java.io.IOException;
 import java.util.Properties;
 
 import static cz.cvut.kbss.benchmark.empire.PersistenceFactory.CONFIG_FILE;
 
-public abstract class EmpireBenchmarkRunner implements BenchmarkRunner {
+public abstract class EmpireBenchmarkRunner extends AbstractRunner<Person, OccurrenceReport>
+        implements BenchmarkRunner {
 
     private static final String SERVER_URL_PROPERTY = "0.url";
     private static final String REPO_NAME_PROPERTY = "0.repo";
@@ -17,7 +22,6 @@ public abstract class EmpireBenchmarkRunner implements BenchmarkRunner {
     private static Properties properties;
 
     PersistenceFactory persistenceFactory;
-    EmpireDataGenerator generator;
 
     static {
         properties = new Properties();
@@ -45,7 +49,7 @@ public abstract class EmpireBenchmarkRunner implements BenchmarkRunner {
         if (properties.containsKey(SERVER_URL_PROPERTY)) {
             final String repoUrl = properties.getProperty(SERVER_URL_PROPERTY) + "repositories/" +
                     properties.getProperty(REPO_NAME_PROPERTY) + "/statements";
-            AbstractBenchmarkUtil.clearRepository(repoUrl);
+            BenchmarkUtil.clearRepository(repoUrl);
         }
     }
 }
