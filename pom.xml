@@ -47,6 +47,14 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
             </plugin>
+
+            <!-- Set project version (recursively) -->
+            <!-- Usage mvn versions:set -DnewVersion=$version and then mvn versions:commit to confirm changes -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
         </plugins>
     </build>
 </project>
