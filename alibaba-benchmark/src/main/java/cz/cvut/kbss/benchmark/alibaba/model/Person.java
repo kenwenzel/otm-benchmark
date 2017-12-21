@@ -1,8 +1,13 @@
 package cz.cvut.kbss.benchmark.alibaba.model;
 
+import cz.cvut.kbss.benchmark.model.Vocabulary;
+import org.openrdf.annotations.Iri;
+
 import java.net.URI;
+import java.util.Objects;
 import java.util.Set;
 
+@Iri(Vocabulary.s_c_Person)
 public class Person implements IPerson {
 
     private URI uri;
@@ -78,7 +83,22 @@ public class Person implements IPerson {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return Objects.equals(getFirstName(), person.getFirstName()) &&
+                Objects.equals(getLastName(), person.getLastName()) &&
+                Objects.equals(getUsername(), person.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getUsername());
+    }
+
+    @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return getFirstName() + " " + getLastName();
     }
 }

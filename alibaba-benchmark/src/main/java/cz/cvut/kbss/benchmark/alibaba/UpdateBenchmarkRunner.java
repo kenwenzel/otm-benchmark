@@ -3,20 +3,35 @@ package cz.cvut.kbss.benchmark.alibaba;
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.alibaba.util.AliBabaSaver;
+import cz.cvut.kbss.benchmark.alibaba.util.AliBabaUpdater;
+import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.object.ObjectConnection;
 
-public class CreateBenchmarkRunner extends AliBabaBenchmarkRunner {
+public class UpdateBenchmarkRunner extends AliBabaBenchmarkRunner {
+
+    @Override
+    public void setUp() {
+        super.setUp();
+        generator.generate();
+        try {
+            final ObjectConnection connection = persistenceFactory.objectConnection();
+            persistData(new AliBabaSaver(connection));
+        } catch (Exception e) {
+            throw new BenchmarkException(e);
+        }
+        System.gc();
+        System.gc();
+    }
 
     @Override
     public void tearDown() {
         try {
             final ObjectConnection connection = persistenceFactory.objectConnection();
-            findAndVerifyAll(report -> {
+            verifyUpdates(r -> {
                 try {
-                    return connection
-                            .getObject(OccurrenceReport.class, report.getUri().toString());
-                } catch (Exception e) {
+                    return connection.getObject(OccurrenceReport.class, r.getUri().toString());
+                } catch (RepositoryException | QueryEvaluationException e) {
                     throw new BenchmarkException(e);
                 }
             });
@@ -30,8 +45,7 @@ public class CreateBenchmarkRunner extends AliBabaBenchmarkRunner {
     public void execute() {
         try {
             final ObjectConnection connection = persistenceFactory.objectConnection();
-            final AliBabaSaver saver = new AliBabaSaver(connection);
-            executeCreate(saver);
+            executeUpdate(new AliBabaUpdater(connection));
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);
         }

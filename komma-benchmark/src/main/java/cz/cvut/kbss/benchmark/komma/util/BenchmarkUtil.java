@@ -30,14 +30,20 @@ public class BenchmarkUtil {
     public static void findAllAndVerify(KommaGenerator generator, IEntityManager em) {
         generator.getReports().forEach(r -> {
             final OccurrenceReport result = em.find(generator.getUri(r), OccurrenceReport.class);
-            assertNotNull(result);
-            assertNotNull(result.getAuthor());
-            assertNotNull(result.getLastModifiedBy());
-            assertNotNull(result.getOccurrence());
-            assertEquals(r.getOccurrence().getName(), result.getOccurrence().getName());
-            assertEquals(r.getAttachments().size(), result.getAttachments().size());
-            assertEquals(r.getAuthor().getContacts(), result.getAuthor().getContacts());
-            assertEquals(r.getLastModifiedBy().getContacts(), result.getLastModifiedBy().getContacts());
+            checkReport(r, result);
         });
+    }
+
+    public static void checkReport(OccurrenceReport expected, OccurrenceReport actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getRevision(), actual.getRevision());
+        assertEquals(expected.getLastModified(), actual.getLastModified());
+        assertNotNull(actual.getOccurrence());
+        assertEquals(expected.getOccurrence().getName(), actual.getOccurrence().getName());
+        assertEquals(expected.getAttachments(), actual.getAttachments());
+        assertEquals(expected.getAuthor(), actual.getAuthor());
+        assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
+        assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
+        assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
     }
 }

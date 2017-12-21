@@ -46,11 +46,13 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
 
     protected void checkReport(OccurrenceReport expected, OccurrenceReport actual) {
         assertNotNull(actual);
-        assertNotNull(actual.getAuthor());
-        assertNotNull(actual.getLastModifiedBy());
+        assertEquals(expected.getRevision(), actual.getRevision());
+        assertEquals(expected.getLastModified(), actual.getLastModified());
         assertNotNull(actual.getOccurrence());
         assertEquals(expected.getOccurrence().getName(), actual.getOccurrence().getName());
-        assertEquals(expected.getAttachments().size(), actual.getAttachments().size());
+        assertEquals(expected.getAttachments(), actual.getAttachments());
+        assertEquals(expected.getAuthor(), actual.getAuthor());
+        assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
         assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
         assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
     }
@@ -77,11 +79,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
     public void verifyUpdates(Function<R, R> finder) {
         updated.forEach(r -> {
             final R result = finder.apply(r);
-            assertEquals(r.getLastModifiedBy(), result.getLastModifiedBy());    // Must override equals
-            assertEquals(r.getLastModified(), result.getLastModified());
-            assertEquals(r.getRevision(), result.getRevision());
-            assertEquals(r.getAuthor().getContacts(), result.getAuthor().getContacts());
-            assertEquals(r.getAttachments(), result.getAttachments());  // Must override equals
+            checkReport(r, result);
         });
     }
 }

@@ -5,6 +5,7 @@ import org.cyberborean.rdfbeans.annotations.RDF;
 import org.cyberborean.rdfbeans.annotations.RDFBean;
 import org.cyberborean.rdfbeans.annotations.RDFSubject;
 
+import java.util.Objects;
 import java.util.Set;
 
 @RDFBean(Vocabulary.s_c_Person)
@@ -84,5 +85,26 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     @Override
     public void setContacts(Set<String> contacts) {
         this.contacts = contacts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return Objects.equals(uri, person.uri) &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(username, person.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uri, firstName, lastName, username);
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
     }
 }

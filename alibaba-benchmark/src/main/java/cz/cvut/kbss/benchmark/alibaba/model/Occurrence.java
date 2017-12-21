@@ -1,9 +1,12 @@
 package cz.cvut.kbss.benchmark.alibaba.model;
 
+import cz.cvut.kbss.benchmark.model.Vocabulary;
+import org.openrdf.annotations.Iri;
+
 import java.net.URI;
 import java.util.Date;
 
-
+@Iri(Vocabulary.s_c_Occurrence)
 public class Occurrence implements IOccurrence {
 
     private URI uri;

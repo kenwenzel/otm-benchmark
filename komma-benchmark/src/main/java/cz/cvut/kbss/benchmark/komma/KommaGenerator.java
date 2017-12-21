@@ -81,16 +81,18 @@ public class KommaGenerator {
     }
 
     private Set<Resource> generateAttachments() {
-        return IntStream.range(0, 3).mapToObj(i -> {
-            final Resource attachment = em
-                    .createNamed(URIs.createURI(generateUri(Resource.class).toString()), Resource.class);
-            attachment.setIdentifier("resource" + i + ".doc");
-            attachment.setDescription("This resource was attached to further document the reported occurrence.");
-            return attachment;
-        }).collect(Collectors.toSet());
+        return IntStream.range(0, 3).mapToObj(i -> generateAttachment()).collect(Collectors.toSet());
     }
 
-    private <T> T randomItem(List<T> items) {
+    public Resource generateAttachment() {
+        final Resource attachment = em
+                .createNamed(URIs.createURI(generateUri(Resource.class).toString()), Resource.class);
+        attachment.setIdentifier("resource" + random.nextInt() + ".doc");
+        attachment.setDescription("This resource was attached to further document the reported occurrence.");
+        return attachment;
+    }
+
+    public <T> T randomItem(List<T> items) {
         return items.get(random.nextInt(items.size()));
     }
 
@@ -125,6 +127,10 @@ public class KommaGenerator {
 
     public List<OccurrenceReport> getReports() {
         return Collections.unmodifiableList(reports);
+    }
+
+    public List<Person> getPersons() {
+        return Collections.unmodifiableList(persons);
     }
 
     public URI getUri(OccurrenceReport report) {

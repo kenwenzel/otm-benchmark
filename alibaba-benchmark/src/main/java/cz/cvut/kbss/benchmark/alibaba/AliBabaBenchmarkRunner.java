@@ -1,0 +1,72 @@
+package cz.cvut.kbss.benchmark.alibaba;
+
+import cz.cvut.kbss.benchmark.AbstractRunner;
+import cz.cvut.kbss.benchmark.BenchmarkException;
+import cz.cvut.kbss.benchmark.BenchmarkRunner;
+import cz.cvut.kbss.benchmark.alibaba.data.AlibabaDataGenerator;
+import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.alibaba.model.Person;
+import cz.cvut.kbss.benchmark.model.Resource;
+import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
+import cz.cvut.kbss.benchmark.util.Config;
+import org.openrdf.repository.RepositoryException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceReport> implements BenchmarkRunner {
+
+    static final Logger LOG = LoggerFactory.getLogger(CreateBenchmarkRunner.class);
+
+    PersistenceFactory persistenceFactory;
+
+    @Override
+    public void setUpBeforeBenchmark() {
+        this.generator = new AlibabaDataGenerator();
+    }
+
+    @Override
+    public void setUp() {
+        try {
+            this.persistenceFactory = new PersistenceFactory();
+        } catch (Exception e) {
+            LOG.error("Unable to setup repository.", e);
+            throw new BenchmarkException(e);
+        }
+        BenchmarkRunner.super.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        try {
+            persistenceFactory.close();
+        } catch (RepositoryException e) {
+            throw new BenchmarkException(e);
+        }
+        Config.getRepoUrl().ifPresent(rUrl -> BenchmarkUtil.clearRepository(rUrl + "/statements"));
+    }
+
+    protected void checkReport(cz.cvut.kbss.benchmark.model.OccurrenceReport expected,
+                               cz.cvut.kbss.benchmark.model.OccurrenceReport actual) {
+        assertNotNull(actual);
+        assertEquals(expected.getRevision(), actual.getRevision());
+        assertEquals(expected.getLastModified(), actual.getLastModified());
+        assertNotNull(actual.getOccurrence());
+        assertEquals(expected.getOccurrence().getName(), actual.getOccurrence().getName());
+        // Had to override because of problems with object equality
+        final Set<String> expectedAttIds = new HashSet<>();
+        expected.getAttachments().forEach(a -> expectedAttIds.add(((Resource) a).getIdentifier()));
+        final Set<String> actualAttIds = new HashSet<>();
+        actual.getAttachments().forEach(a -> actualAttIds.add(((Resource) a).getIdentifier()));
+        assertEquals(expectedAttIds, actualAttIds);
+        assertEquals(expected.getAuthor(), actual.getAuthor());
+        assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
+        assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
+        assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
+    }
+}
