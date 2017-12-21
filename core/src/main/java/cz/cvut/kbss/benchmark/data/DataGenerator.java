@@ -30,8 +30,8 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
             r.setOccurrence(generateOccurrence());
             r.setAuthor(randomItem(persons));
             r.setFileNumber(random.nextLong());
-            r.setDateCreated(new Date());
-            r.setLastModified(new Date());
+            r.setDateCreated(currentTime());
+            r.setLastModified(currentTime());
             r.setLastModifiedBy(randomItem(persons));
             r.setAttachments(generateAttachments());
             r.setRevision(random.nextInt(ITEM_COUNT));
@@ -41,9 +41,19 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
         return reports;
     }
 
+    /**
+     * Gets current date rounded to whole seconds. This is because some libraries have trouble working with times in milliseconds.
+     *
+     * @return Current date and time rounded to whole seconds
+     */
+    private Date currentTime() {
+        final long time = (System.currentTimeMillis() / 1000) * 1000;
+        return new Date(time);
+    }
+
     protected abstract R report();
 
-    protected <T> T randomItem(List<T> items) {
+    public <T> T randomItem(List<T> items) {
         return items.get(random.nextInt(items.size()));
     }
 
@@ -58,12 +68,14 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
     protected abstract Occurrence occurrence();
 
     protected Set<Resource> generateAttachments() {
-        return IntStream.range(0, 3).mapToObj(i -> {
-            final Resource attachment = resource();
-            attachment.setIdentifier("resource" + i + ".doc");
-            attachment.setDescription("This resource was attached to further document the reported occurrence.");
-            return attachment;
-        }).collect(Collectors.toSet());
+        return IntStream.range(0, 3).mapToObj(i -> generateAttachment()).collect(Collectors.toSet());
+    }
+
+    public Resource generateAttachment() {
+        final Resource attachment = resource();
+        attachment.setIdentifier("resource" + random.nextInt() + ".doc");
+        attachment.setDescription("This resource was attached to further document the reported occurrence.");
+        return attachment;
     }
 
     protected abstract Resource resource();

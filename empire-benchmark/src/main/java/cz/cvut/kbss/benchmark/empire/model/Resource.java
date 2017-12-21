@@ -6,6 +6,10 @@ import com.clarkparsia.empire.annotation.RdfsClass;
 import com.clarkparsia.empire.annotation.SupportsRdfIdImpl;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 
+import javax.persistence.Entity;
+import java.util.Objects;
+
+@Entity
 @RdfsClass(Vocabulary.s_c_Resource)
 public class Resource implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Resource {
 
@@ -45,5 +49,28 @@ public class Resource implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Res
     @Override
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "mIdSupport=" + mIdSupport +
+                ", identifier='" + identifier + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Resource)) return false;
+        Resource resource = (Resource) o;
+        return Objects.equals(mIdSupport, resource.mIdSupport) &&
+                Objects.equals(identifier, resource.identifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mIdSupport, identifier);
     }
 }

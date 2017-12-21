@@ -18,8 +18,6 @@ public class CreateBenchmarkRunner extends EmpireBenchmarkRunner {
     public void execute() {
         // The entity manager will be closed in tearDown
         final EntityManager em = persistenceFactory.entityManager();
-//        em.getTransaction().begin();
         executeCreate(new EmpireSaver(em));
-//        em.getTransaction().commit();
     }
 }

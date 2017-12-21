@@ -3,8 +3,13 @@ package cz.cvut.kbss.benchmark;
 import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.model.Person;
+import cz.cvut.kbss.benchmark.util.Constants;
 import cz.cvut.kbss.benchmark.util.Saver;
+import cz.cvut.kbss.benchmark.util.Updater;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
@@ -13,6 +18,8 @@ import static org.junit.Assert.assertNotNull;
 public abstract class AbstractRunner<P extends Person, R extends OccurrenceReport> {
 
     protected DataGenerator<P, R> generator;
+
+    protected List<R> updated;
 
     public void executeCreate(Saver<P, R> saver) {
         saver.begin();
@@ -46,5 +53,35 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         assertEquals(expected.getAttachments().size(), actual.getAttachments().size());
         assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
         assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
+    }
+
+    public void executeUpdate(Updater<R> updater) {
+        this.updated = new ArrayList<>(Constants.ITEM_COUNT / 2);
+        for (int i = 0; i < generator.getReports().size(); i++) {
+            if (i % 2 == 0) {
+                continue;
+            }
+            final R toUpdate = generator.getReports().get(i);
+            toUpdate.setLastModifiedBy(generator.randomItem(generator.getPersons()));
+            toUpdate.setLastModified(new Date(toUpdate.getLastModified().getTime() + 100000));
+            toUpdate.setRevision(toUpdate.getRevision() + 1);
+            toUpdate.getAuthor().getContacts().remove(toUpdate.getAuthor().getContacts().iterator().next());
+            toUpdate.getAttachments().add(generator.generateAttachment());
+            updater.begin();
+            updater.update(toUpdate);
+            updater.commit();
+            updated.add(toUpdate);
+        }
+    }
+
+    public void verifyUpdates(Function<R, R> finder) {
+        updated.forEach(r -> {
+            final R result = finder.apply(r);
+            assertEquals(r.getLastModifiedBy(), result.getLastModifiedBy());    // Must override equals
+            assertEquals(r.getLastModified(), result.getLastModified());
+            assertEquals(r.getRevision(), result.getRevision());
+            assertEquals(r.getAuthor().getContacts(), result.getAuthor().getContacts());
+            assertEquals(r.getAttachments(), result.getAttachments());  // Must override equals
+        });
     }
 }

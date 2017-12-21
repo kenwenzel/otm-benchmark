@@ -39,6 +39,9 @@ ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WAR
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
+echo "Update..."
+echo "*** UPDATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
 cd ../..
 
 # JOPA Benchmark
@@ -54,9 +57,12 @@ ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMU
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
+echo "Update..."
+echo "*** UPDATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
 cd ../..
 
-# Komma Benchmark
+# KOMMA Benchmark
 echo "Running KOMMA..."
 cd komma-benchmark/target
 echo "---------------------------------------" >> ../../${OUTPUT}

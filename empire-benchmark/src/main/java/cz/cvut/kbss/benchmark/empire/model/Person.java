@@ -7,6 +7,7 @@ import com.clarkparsia.empire.annotation.SupportsRdfIdImpl;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 
 import javax.persistence.Entity;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -81,11 +82,6 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
     }
 
     @Override
-    public String toString() {
-        return firstName + " " + lastName + " <" + mIdSupport + ">";
-    }
-
-    @Override
     public RdfKey getRdfId() {
         return mIdSupport.getRdfId();
     }
@@ -93,5 +89,26 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
     @Override
     public void setRdfId(RdfKey rdfKey) {
         mIdSupport.setRdfId(rdfKey);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return Objects.equals(mIdSupport, person.mIdSupport) &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(username, person.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mIdSupport, firstName, lastName, username);
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + " <" + mIdSupport + ">";
     }
 }
