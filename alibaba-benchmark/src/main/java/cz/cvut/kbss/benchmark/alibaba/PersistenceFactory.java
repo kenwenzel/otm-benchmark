@@ -45,14 +45,13 @@ class PersistenceFactory {
     }
 
     ObjectConnection objectConnection() throws RepositoryException {
-        if (connection == null) {
-            this.connection = objectRepository.getConnection();
-        }
-        return connection;
+        return objectRepository.getConnection();
     }
 
     void close() throws RepositoryException {
-        connection.close();
+        if (connection != null) {
+            connection.close();
+        }
         if (repository.isInitialized()) {
             repository.shutDown();
         }

@@ -40,6 +40,7 @@ public class BenchmarkUtil {
         assertEquals(expected.getLastModified(), actual.getLastModified());
         assertNotNull(actual.getOccurrence());
         assertEquals(expected.getOccurrence().getName(), actual.getOccurrence().getName());
+        assertEquals(expected.getSeverityAssessment(), actual.getSeverityAssessment());
         assertEquals(expected.getAttachments(), actual.getAttachments());
         assertEquals(expected.getAuthor(), actual.getAuthor());
         assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());

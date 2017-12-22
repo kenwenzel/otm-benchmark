@@ -21,11 +21,19 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
 
     protected List<R> updated;
 
-    public void executeCreate(Saver<P, R> saver) {
+    protected void persistPersons(Saver<P, R> saver) {
         saver.begin();
         saver.persistAll(generator.getPersons());
         saver.commit();
+    }
 
+    protected void executeBatchCreate(Saver<P, R> saver) {
+        saver.begin();
+        generator.getReports().forEach(saver::persist);
+        saver.commit();
+    }
+
+    protected void executeCreate(Saver<P, R> saver) {
         generator.getReports().forEach(r -> {
             saver.begin();
             saver.persist(r);
@@ -33,14 +41,14 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         });
     }
 
-    public void persistData(Saver<P, R> saver) {
+    protected void persistData(Saver<P, R> saver) {
         saver.begin();
         saver.persistAll(generator.getPersons());
         generator.getReports().forEach(saver::persist);
         saver.commit();
     }
 
-    public void findAndVerifyAll(Function<R, R> finder) {
+    protected void findAndVerifyAll(Function<R, R> finder) {
         generator.getReports().forEach(r -> checkReport(r, finder.apply(r)));
     }
 
@@ -50,6 +58,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         assertEquals(expected.getLastModified(), actual.getLastModified());
         assertNotNull(actual.getOccurrence());
         assertEquals(expected.getOccurrence().getName(), actual.getOccurrence().getName());
+        assertEquals(expected.getSeverityAssessment(), actual.getSeverityAssessment());
         assertEquals(expected.getAttachments(), actual.getAttachments());
         assertEquals(expected.getAuthor(), actual.getAuthor());
         assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
@@ -57,7 +66,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
     }
 
-    public void executeUpdate(Updater<R> updater) {
+    protected void executeUpdate(Updater<R> updater) {
         this.updated = new ArrayList<>(Constants.ITEM_COUNT / 2);
         for (int i = 0; i < generator.getReports().size(); i++) {
             if (i % 2 == 0) {
@@ -65,9 +74,10 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
             }
             final R toUpdate = generator.getReports().get(i);
             toUpdate.setLastModifiedBy(generator.randomItem(generator.getPersons()));
+            toUpdate.getOccurrence().setName(toUpdate.getOccurrence().getName() + "-updated");
+            toUpdate.setSeverityAssessment(i % Constants.MAX_SEVERITY);
             toUpdate.setLastModified(new Date(toUpdate.getLastModified().getTime() + 100000));
             toUpdate.setRevision(toUpdate.getRevision() + 1);
-            toUpdate.getAuthor().getContacts().remove(toUpdate.getAuthor().getContacts().iterator().next());
             toUpdate.getAttachments().add(generator.generateAttachment());
             updater.begin();
             updater.update(toUpdate);
@@ -76,7 +86,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         }
     }
 
-    public void verifyUpdates(Function<R, R> finder) {
+    protected void verifyUpdates(Function<R, R> finder) {
         updated.forEach(r -> {
             final R result = finder.apply(r);
             checkReport(r, result);

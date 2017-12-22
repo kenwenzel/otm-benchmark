@@ -26,6 +26,13 @@ public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person, 
     @Override
     void setOccurrence(Occurrence occurrence);
 
+    @Iri(Vocabulary.s_p_has_severity_assessment)
+    @Override
+    Integer getSeverityAssessment();
+
+    @Override
+    void setSeverityAssessment(Integer severityAssessment);
+
     @Iri(Vocabulary.s_p_has_author)
     @Override
     Person getAuthor();

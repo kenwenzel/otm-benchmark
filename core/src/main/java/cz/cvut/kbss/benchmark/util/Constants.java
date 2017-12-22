@@ -7,6 +7,8 @@ public class Constants {
      */
     public static final int ITEM_COUNT = 300;
 
+    public static final int MAX_SEVERITY = 10;
+
     /**
      * Randomly generated string usable as report summary.
      */

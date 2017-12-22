@@ -17,6 +17,8 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
 
     private Occurrence occurrence;
 
+    private Integer severityAssessment;
+
     private Person author;
 
     private Date dateCreated;
@@ -60,6 +62,17 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     @Override
     public void setOccurrence(Occurrence occurrence) {
         this.occurrence = occurrence;
+    }
+
+    @RDF(Vocabulary.s_p_has_severity_assessment)
+    @Override
+    public Integer getSeverityAssessment() {
+        return severityAssessment;
+    }
+
+    @Override
+    public void setSeverityAssessment(Integer severityAssessment) {
+        this.severityAssessment = severityAssessment;
     }
 
     @RDF(Vocabulary.s_p_has_author)

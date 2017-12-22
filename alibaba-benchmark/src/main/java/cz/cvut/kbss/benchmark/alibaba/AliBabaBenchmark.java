@@ -14,6 +14,8 @@ public class AliBabaBenchmark extends AbstractBenchmark {
         switch (type) {
             case CREATE:
                 return new CreateBenchmarkRunner();
+            case BATCH_CREATE:
+                return new BatchCreateBenchmarkRunner();
             case RETRIEVE:
                 return new RetrieveBenchmarkRunner();
             case UPDATE:

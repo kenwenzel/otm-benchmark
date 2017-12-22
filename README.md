@@ -16,18 +16,36 @@ The benchmark is executed against a locally running RDF4J server.
 
 The following types of operations are benchmarked (each separately):
 * Create
+* Batch create
 * Retrieve
+* Update
 
 ##### Create
 
-Create benchmark persists all the persons in one transaction. Then, to simulate a different mode of operation, the reports
-are persisted one by one in separate transactions. This means that each transaction persists the report, its occurrence and attachments.
+To simulate a regular transactional behavior of web applications the create benchmark persists reports one by one in separate transactions. 
+This means that each transaction persists the report, its occurrence and attachments.
+
+Person instances, required by the reports, are pre-persisted in round setup, so that no check needs to be done for their (non)existence.
+
+
+##### Batch create
+
+This is basically the same as _Create_, but all the reports are now persisted in one big transaction, simulating batch processing. E.g. when a
+system processes reports exported from another system.
 
 
 ##### Retrieve
 
 Retrieve benchmark retrieves all the reports, checking for their attributes and some attributes of the referenced entities (e.g. contacts
 of the report's author and last editor, name of the reported occurrence).
+
+
+##### Update
+
+The update benchmark takes every odd report and updates several of its attributes. Then it merges the instance into the storage.
+The updates are: change last editor, change last modified date, update occurrence name, update severity assessment, increase revision number,
+add a new attachment (which has to be persisted). Each report is updated in a separate transaction. Since AliBaba does not support
+detached objects, update in its case requires making the changes on a managed object loaded from the storage.
 
 
 #### Model

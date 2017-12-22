@@ -24,6 +24,9 @@ public class OccurrenceReport
     @RdfProperty(Vocabulary.s_p_documents)
     private Occurrence occurrence;
 
+    @RdfProperty(Vocabulary.s_p_has_severity_assessment)
+    private Integer severityAssessment;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @RdfProperty(Vocabulary.s_p_has_author)
     private Person author;
@@ -66,6 +69,16 @@ public class OccurrenceReport
     @Override
     public void setOccurrence(Occurrence occurrence) {
         this.occurrence = occurrence;
+    }
+
+    @Override
+    public Integer getSeverityAssessment() {
+        return severityAssessment;
+    }
+
+    @Override
+    public void setSeverityAssessment(Integer severityAssessment) {
+        this.severityAssessment = severityAssessment;
     }
 
     @Override

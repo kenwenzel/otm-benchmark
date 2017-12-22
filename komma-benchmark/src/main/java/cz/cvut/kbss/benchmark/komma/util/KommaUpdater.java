@@ -29,6 +29,8 @@ public class KommaUpdater {
             }
             final OccurrenceReport toUpdate = generator.getReports().get(i);
             toUpdate.setLastModifiedBy(generator.randomItem(generator.getPersons()));
+            toUpdate.getOccurrence().setName(toUpdate.getOccurrence().getName() + "-updated");
+            toUpdate.setSeverityAssessment(i % Constants.MAX_SEVERITY);
             final GregorianCalendar lastModUpdated = new GregorianCalendar();
             lastModUpdated.setTimeInMillis(System.currentTimeMillis() + 10000);
             toUpdate.setLastModified(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(lastModUpdated));

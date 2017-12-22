@@ -26,6 +26,7 @@ public class Vocabulary {
     public static final String s_p_has_id = "http://purl.org/dc/elements/1.1/identifier";
     public static final String s_p_contact = "http://xmlns.com/foaf/0.1/mbox";
     public static final String s_p_references = "http://purl.org/dc/terms/references";
+    public final static String s_p_has_severity_assessment = "http://onto.fel.cvut.cz/ontologies/documentation/has_severity_assessment";
 
     private Vocabulary() {
         throw new AssertionError();

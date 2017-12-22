@@ -9,6 +9,13 @@ import org.cyberborean.rdfbeans.exceptions.RDFBeanException;
 public class CreateBenchmarkRunner extends RDFBeansBenchmarkRunner {
 
     @Override
+    public void setUp() {
+        super.setUp();
+        final RDFBeanManager beanManager = persistenceFactory.beanManager();
+        persistPersons(new RdfBeansSaver(beanManager));
+    }
+
+    @Override
     public void tearDown() {
         final RDFBeanManager beanManager = persistenceFactory.beanManager();
         findAndVerifyAll(r -> {

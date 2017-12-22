@@ -19,6 +19,9 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     @OWLObjectProperty(iri = Vocabulary.s_p_documents, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Occurrence occurrence;
 
+    @OWLDataProperty(iri = Vocabulary.s_p_has_severity_assessment)
+    private Integer severityAssessment;
+
     @OWLObjectProperty(iri = Vocabulary.s_p_has_author, fetch = FetchType.EAGER)
     private Person author;
 
@@ -66,6 +69,16 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     @Override
     public void setOccurrence(Occurrence occurrence) {
         this.occurrence = occurrence;
+    }
+
+    @Override
+    public Integer getSeverityAssessment() {
+        return severityAssessment;
+    }
+
+    @Override
+    public void setSeverityAssessment(Integer severityAssessment) {
+        this.severityAssessment = severityAssessment;
     }
 
     @Override

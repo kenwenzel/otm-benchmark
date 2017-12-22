@@ -8,6 +8,7 @@ public abstract class AbstractBenchmark {
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractBenchmark.class);
 
     protected static final String CREATE = "create";
+    protected static final String BATCH_CREATE = "create-batch";
     protected static final String RETRIEVE = "retrieve";
     protected static final String UPDATE = "update";
     protected static final String DELETE = "delete";

@@ -6,10 +6,12 @@ import cz.cvut.kbss.benchmark.BenchmarkRunner;
 import cz.cvut.kbss.benchmark.alibaba.data.AlibabaDataGenerator;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.alibaba.model.Person;
+import cz.cvut.kbss.benchmark.alibaba.util.AliBabaSaver;
 import cz.cvut.kbss.benchmark.model.Resource;
 import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
 import cz.cvut.kbss.benchmark.util.Config;
 import org.openrdf.repository.RepositoryException;
+import org.openrdf.repository.object.ObjectConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,5 +70,15 @@ abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceR
         assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
         assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
         assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
+    }
+
+    protected void persistTestData() {
+        try {
+            final ObjectConnection connection = persistenceFactory.objectConnection();
+            persistData(new AliBabaSaver(connection));
+            connection.close();
+        } catch (Exception e) {
+            throw new BenchmarkException(e);
+        }
     }
 }

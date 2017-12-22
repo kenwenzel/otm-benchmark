@@ -2,7 +2,6 @@ package cz.cvut.kbss.benchmark.alibaba.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.alibaba.model.Person;
 import cz.cvut.kbss.benchmark.alibaba.model.Resource;
 import cz.cvut.kbss.benchmark.util.Updater;
 import org.openrdf.query.QueryEvaluationException;
@@ -42,7 +41,8 @@ public class AliBabaUpdater implements Updater<OccurrenceReport> {
             toUpdate.setLastModifiedBy(report.getLastModifiedBy());
             toUpdate.setLastModified(report.getLastModified());
             toUpdate.setRevision(report.getRevision());
-            toUpdate.getAuthor().setContacts(report.getAuthor().getContacts());
+            toUpdate.getOccurrence().setName(report.getOccurrence().getName());
+            toUpdate.setSeverityAssessment(report.getSeverityAssessment());
             toUpdate.setAttachments(report.getAttachments());
             for (Resource r : report.getAttachments()) {
                 if (!connection

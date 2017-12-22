@@ -40,12 +40,14 @@ public class KommaGenerator {
         em.getTransaction().commit();
     }
 
-    public void executeCreate() {
-        this.instances = new IdentityHashMap<>();
+    public void persistPersons() {
         em.getTransaction().begin();
         this.persons = generatePersons();
         em.getTransaction().commit();
+    }
 
+    public void executeCreate() {
+        this.instances = new IdentityHashMap<>();
         this.reports = new ArrayList<>(ITEM_COUNT);
         for (int i = 0; i < ITEM_COUNT; i++) {
             em.getTransaction().begin();
@@ -55,10 +57,18 @@ public class KommaGenerator {
         }
     }
 
+    public void executeBatchCreate() {
+        this.instances = new IdentityHashMap<>();
+        this.reports = new ArrayList<>(ITEM_COUNT);
+        em.getTransaction().begin();
+        this.reports = generateReports();
+        em.getTransaction().commit();
+    }
+
     private List<OccurrenceReport> generateReports() {
         final List<OccurrenceReport> reports = new ArrayList<>();
         for (int i = 0; i < ITEM_COUNT; i++) {
-            OccurrenceReport r = report();
+            final OccurrenceReport r = report();
             reports.add(r);
         }
         return reports;
@@ -68,6 +78,7 @@ public class KommaGenerator {
         final URI uri = URIs.createURI(generateUri(OccurrenceReport.class).toString());
         final OccurrenceReport r = em.createNamed(uri, OccurrenceReport.class);
         r.setOccurrence(generateOccurrence());
+        r.setSeverityAssessment(random.nextInt(Constants.MAX_SEVERITY));
         r.setAuthor(randomItem(persons));
         r.setFileNumber(random.nextLong());
         r.setDateCreated(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(new GregorianCalendar()));

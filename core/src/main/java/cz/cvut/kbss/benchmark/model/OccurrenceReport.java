@@ -14,6 +14,10 @@ public interface OccurrenceReport<O extends Occurrence, P extends Person, R exte
 
     void setOccurrence(O occurrence);
 
+    Integer getSeverityAssessment();
+
+    void setSeverityAssessment(Integer severityAssessment);
+
     Person getAuthor();
 
     void setAuthor(P author);

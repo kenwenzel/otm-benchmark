@@ -2,6 +2,7 @@ package cz.cvut.kbss.benchmark.data;
 
 
 import cz.cvut.kbss.benchmark.model.*;
+import cz.cvut.kbss.benchmark.util.Constants;
 
 import java.net.URI;
 import java.util.*;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
+import static cz.cvut.kbss.benchmark.util.Constants.MAX_SEVERITY;
 import static cz.cvut.kbss.benchmark.util.Constants.SUMMARY;
 
 public abstract class DataGenerator<P extends Person, R extends OccurrenceReport> {
@@ -35,6 +37,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
             r.setLastModifiedBy(randomItem(persons));
             r.setAttachments(generateAttachments());
             r.setRevision(random.nextInt(ITEM_COUNT));
+            r.setSeverityAssessment(random.nextInt(MAX_SEVERITY));
             r.setSummary(SUMMARY + System.currentTimeMillis() + i);
             reports.add(r);
         }

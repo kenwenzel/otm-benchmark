@@ -8,6 +8,13 @@ import javax.persistence.EntityManager;
 public class CreateBenchmarkRunner extends EmpireBenchmarkRunner {
 
     @Override
+    public void setUp() {
+        super.setUp();
+        final EntityManager em = persistenceFactory.entityManager();
+        persistPersons(new EmpireSaver(em));
+    }
+
+    @Override
     public void tearDown() {
         final EntityManager em = persistenceFactory.entityManager();
         findAndVerifyAll(r -> em.find(OccurrenceReport.class, r.getRdfId()));

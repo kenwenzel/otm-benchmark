@@ -21,6 +21,9 @@ echo "---------------------------------------" >> ../../${OUTPUT}
 echo "Create..."
 echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
+echo "Batch create..."
+echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
@@ -39,6 +42,9 @@ echo "---------------------------------------" >> ../../${OUTPUT}
 echo "Create..."
 echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
+echo "Batch create..."
+echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
@@ -57,6 +63,9 @@ echo "---------------------------------------" >> ../../${OUTPUT}
 echo "Create..."
 echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
+echo "Batch create..."
+echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
@@ -75,6 +84,9 @@ echo "---------------------------------------" >> ../../${OUTPUT}
 echo "Create..."
 echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
+echo "Batch create..."
+echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
@@ -93,6 +105,9 @@ echo "---------------------------------------" >> ../../${OUTPUT}
 echo "Create..."
 echo "*** CREATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
+echo "Batch create..."
+echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
 echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}

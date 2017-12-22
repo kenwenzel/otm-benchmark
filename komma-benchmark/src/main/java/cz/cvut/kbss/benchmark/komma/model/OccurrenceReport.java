@@ -19,6 +19,11 @@ public interface OccurrenceReport {
 
     void setOccurrence(Occurrence occurrence);
 
+    @Iri(Vocabulary.s_p_has_severity_assessment)
+    Integer getSeverityAssessment();
+
+    void setSeverityAssessment(Integer severityAssessment);
+
     @Iri(Vocabulary.s_p_has_author)
     Person getAuthor();
 

@@ -16,6 +16,8 @@ public class OccurrenceReport implements IOccurrenceReport {
 
     private Occurrence occurrence;
 
+    private Integer severityAssessment;
+
     private Person author;
 
     private Date dateCreated;
@@ -58,6 +60,16 @@ public class OccurrenceReport implements IOccurrenceReport {
     @Override
     public void setOccurrence(Occurrence occurrence) {
         this.occurrence = occurrence;
+    }
+
+    @Override
+    public Integer getSeverityAssessment() {
+        return severityAssessment;
+    }
+
+    @Override
+    public void setSeverityAssessment(Integer severityAssessment) {
+        this.severityAssessment = severityAssessment;
     }
 
     @Override

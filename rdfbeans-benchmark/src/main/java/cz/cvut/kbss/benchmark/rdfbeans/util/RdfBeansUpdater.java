@@ -27,7 +27,7 @@ public class RdfBeansUpdater implements Updater<OccurrenceReport> {
     @Override
     public void update(OccurrenceReport report) {
         try {
-            beanManager.update(report.getAuthor());
+            beanManager.update(report.getOccurrence());
             beanManager.update(report);
         } catch (RDFBeanException e) {
             throw new BenchmarkException(e);
