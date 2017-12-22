@@ -49,7 +49,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         saver.commit();
     }
 
-    protected <O extends Occurrence, A extends Resource> void findAndVerifyAll(Finder<R, O, A> finder) {
+    protected <O extends Occurrence, A extends Resource> void findAndVerifyAll(Finder<R> finder) {
         generator.getReports().forEach(r -> checkReport(r, finder.find(r)));
     }
 
@@ -108,9 +108,9 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         }
     }
 
-    protected <O extends Occurrence, A extends Resource> void verifyDelete(Finder<R, O, A> finder) {
+    protected <O extends Occurrence, A extends Resource> void verifyDelete(Finder<R> finder) {
         deleted.forEach(r -> {
-            assertNull(finder.find(r));
+            assertFalse(finder.exists(r.getClass(), r.));
             assertNull(finder.find((O) r.getOccurrence()));
             r.getAttachments().forEach(a -> assertNull(finder.find((A) a)));
         });
