@@ -1,9 +1,8 @@
 package cz.cvut.kbss.benchmark.alibaba;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
-import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.alibaba.util.AliBabaFinder;
 import cz.cvut.kbss.benchmark.alibaba.util.AliBabaUpdater;
-import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.object.ObjectConnection;
 
@@ -22,13 +21,7 @@ public class UpdateBenchmarkRunner extends AliBabaBenchmarkRunner {
     public void tearDown() {
         try {
             final ObjectConnection connection = persistenceFactory.objectConnection();
-            verifyUpdates(r -> {
-                try {
-                    return connection.getObject(OccurrenceReport.class, r.getUri().toString());
-                } catch (RepositoryException | QueryEvaluationException e) {
-                    throw new BenchmarkException(e);
-                }
-            });
+            verifyUpdates(new AliBabaFinder(connection));
             connection.close();
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);

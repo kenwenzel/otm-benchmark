@@ -1,6 +1,6 @@
 package cz.cvut.kbss.benchmark.jopa;
 
-import cz.cvut.kbss.benchmark.jopa.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.jopa.util.JopaFinder;
 import cz.cvut.kbss.benchmark.jopa.util.JopaSaver;
 import cz.cvut.kbss.jopa.model.EntityManager;
 
@@ -19,6 +19,6 @@ public class RetrieveBenchmarkRunner extends JopaBenchmarkRunner {
     @Override
     public void execute() {
         final EntityManager em = persistenceFactory.entityManager();
-        findAndVerifyAll(r -> em.find(OccurrenceReport.class, r.getUri()));
+        findAndVerifyAll(new JopaFinder(em));
     }
 }

@@ -1,6 +1,6 @@
 package cz.cvut.kbss.benchmark.empire;
 
-import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.empire.util.EmpireFinder;
 import cz.cvut.kbss.benchmark.empire.util.EmpireSaver;
 
 import javax.persistence.EntityManager;
@@ -17,7 +17,7 @@ public class CreateBenchmarkRunner extends EmpireBenchmarkRunner {
     @Override
     public void tearDown() {
         final EntityManager em = persistenceFactory.entityManager();
-        findAndVerifyAll(r -> em.find(OccurrenceReport.class, r.getRdfId()));
+        findAndVerifyAll(new EmpireFinder(em));
         super.tearDown();
     }
 

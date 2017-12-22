@@ -1,6 +1,6 @@
 package cz.cvut.kbss.benchmark.empire;
 
-import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
+import cz.cvut.kbss.benchmark.empire.util.EmpireFinder;
 import cz.cvut.kbss.benchmark.empire.util.EmpireSaver;
 import cz.cvut.kbss.benchmark.empire.util.EmpireUpdater;
 
@@ -22,7 +22,7 @@ public class UpdateBenchmarkRunner extends EmpireBenchmarkRunner {
     @Override
     public void tearDown() {
         final EntityManager em = persistenceFactory.entityManager();
-        verifyUpdates(r -> em.find(OccurrenceReport.class, r.getRdfId()));
+        verifyUpdates(new EmpireFinder(em));
         super.tearDown();
     }
 

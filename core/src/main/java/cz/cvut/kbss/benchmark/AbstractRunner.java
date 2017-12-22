@@ -1,25 +1,26 @@
 package cz.cvut.kbss.benchmark;
 
 import cz.cvut.kbss.benchmark.data.DataGenerator;
+import cz.cvut.kbss.benchmark.model.Occurrence;
 import cz.cvut.kbss.benchmark.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.model.Person;
+import cz.cvut.kbss.benchmark.model.Resource;
 import cz.cvut.kbss.benchmark.util.Constants;
-import cz.cvut.kbss.benchmark.util.Saver;
-import cz.cvut.kbss.benchmark.util.Updater;
+import cz.cvut.kbss.benchmark.util.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
+import static org.junit.Assert.*;
 
 public abstract class AbstractRunner<P extends Person, R extends OccurrenceReport> {
 
     protected DataGenerator<P, R> generator;
 
     protected List<R> updated;
+    protected List<R> deleted;
 
     protected void persistPersons(Saver<P, R> saver) {
         saver.begin();
@@ -48,8 +49,8 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         saver.commit();
     }
 
-    protected void findAndVerifyAll(Function<R, R> finder) {
-        generator.getReports().forEach(r -> checkReport(r, finder.apply(r)));
+    protected <O extends Occurrence, A extends Resource> void findAndVerifyAll(Finder<R, O, A> finder) {
+        generator.getReports().forEach(r -> checkReport(r, finder.find(r)));
     }
 
     protected void checkReport(OccurrenceReport expected, OccurrenceReport actual) {
@@ -67,7 +68,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
     }
 
     protected void executeUpdate(Updater<R> updater) {
-        this.updated = new ArrayList<>(Constants.ITEM_COUNT / 2);
+        this.updated = new ArrayList<>(ITEM_COUNT / 2);
         for (int i = 0; i < generator.getReports().size(); i++) {
             if (i % 2 == 0) {
                 continue;
@@ -86,10 +87,32 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         }
     }
 
-    protected void verifyUpdates(Function<R, R> finder) {
+    protected <O extends Occurrence, A extends Resource> void verifyUpdates(Finder<R, O, A> finder) {
         updated.forEach(r -> {
-            final R result = finder.apply(r);
+            final R result = finder.find(r);
             checkReport(r, result);
+        });
+    }
+
+    protected void executeDelete(Deleter<R> deleter) {
+        this.deleted = new ArrayList<>(ITEM_COUNT / 2);
+        for (int i = 0; i < generator.getReports().size(); i++) {
+            if (i % 2 != 0) {
+                continue;
+            }
+            final R toDelete = generator.getReports().get(i);
+            deleter.begin();
+            deleter.delete(toDelete);
+            deleter.commit();
+            deleted.add(toDelete);
+        }
+    }
+
+    protected <O extends Occurrence, A extends Resource> void verifyDelete(Finder<R, O, A> finder) {
+        deleted.forEach(r -> {
+            assertNull(finder.find(r));
+            assertNull(finder.find((O) r.getOccurrence()));
+            r.getAttachments().forEach(a -> assertNull(finder.find((A) a)));
         });
     }
 }
