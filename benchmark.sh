@@ -28,8 +28,11 @@ echo "Retrieve..."
 echo "*** RETRIEVE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
 echo "Update..."
-echo "*** UPDATE***" >> ../../${OUTPUT}
+echo "*** UPDATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
+echo "Delete..."
+echo "*** DELETE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
 cd ../..
 
 #Empire Benchmark
@@ -51,6 +54,9 @@ ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WAR
 echo "Update..."
 echo "*** UPDATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
+echo "Delete..."
+echo "*** DELETE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
 cd ../..
 
 # JOPA Benchmark
@@ -72,6 +78,9 @@ ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMU
 echo "Update..."
 echo "*** UPDATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
+echo "Delete..."
+echo "*** DELETE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
 cd ../..
 
 # KOMMA Benchmark
@@ -114,6 +123,9 @@ ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $W
 echo "Update..."
 echo "*** UPDATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
+echo "Delete..."
+echo "*** DELETE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
 cd ../..
 
 echo "Benchmark finished."

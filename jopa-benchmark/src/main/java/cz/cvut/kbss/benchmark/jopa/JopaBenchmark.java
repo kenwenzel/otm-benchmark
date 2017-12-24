@@ -21,6 +21,8 @@ public class JopaBenchmark extends AbstractBenchmark {
                 return new RetrieveBenchmarkRunner();
             case UPDATE:
                 return new UpdateBenchmarkRunner();
+            case DELETE:
+                return new DeleteBenchmarkRunner();
             default:
                 throw new IllegalArgumentException("Unsupported benchmark type " + type + '.');
         }

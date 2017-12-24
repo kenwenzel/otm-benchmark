@@ -1,11 +1,12 @@
 package cz.cvut.kbss.benchmark.empire;
 
+import cz.cvut.kbss.benchmark.empire.util.EmpireDeleter;
 import cz.cvut.kbss.benchmark.empire.util.EmpireFinder;
 import cz.cvut.kbss.benchmark.empire.util.EmpireSaver;
 
 import javax.persistence.EntityManager;
 
-public class RetrieveBenchmarkRunner extends EmpireBenchmarkRunner {
+public class DeleteBenchmarkRunner extends EmpireBenchmarkRunner {
 
     @Override
     public void setUp() {
@@ -18,8 +19,15 @@ public class RetrieveBenchmarkRunner extends EmpireBenchmarkRunner {
     }
 
     @Override
+    public void tearDown() {
+        final EntityManager em = persistenceFactory.entityManager();
+        verifyDelete(new EmpireFinder(em));
+        super.tearDown();
+    }
+
+    @Override
     public void execute() {
         final EntityManager em = persistenceFactory.entityManager();
-        findAndVerifyAll(new EmpireFinder(em));
+        executeDelete(new EmpireDeleter(em));
     }
 }
