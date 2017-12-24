@@ -92,6 +92,11 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
     }
 
     @Override
+    public String getId() {
+        return getRdfId().value().toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Person)) return false;

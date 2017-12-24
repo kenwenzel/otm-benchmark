@@ -32,6 +32,11 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
         this.uri = uri;
     }
 
+    @Override
+    public String getId() {
+        return uri;
+    }
+
     @RDF(Vocabulary.s_p_firstName)
     @Override
     public String getFirstName() {

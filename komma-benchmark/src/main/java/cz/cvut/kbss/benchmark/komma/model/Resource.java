@@ -8,7 +8,7 @@ public interface Resource extends cz.cvut.kbss.benchmark.model.Resource {
 
     @Iri(Vocabulary.s_p_has_id)
     @Override
-    String getIdentifier();
+    String getId();
 
     @Override
     void setIdentifier(String identifier);

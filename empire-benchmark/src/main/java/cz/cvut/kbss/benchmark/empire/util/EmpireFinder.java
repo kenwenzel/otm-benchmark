@@ -1,13 +1,14 @@
 package cz.cvut.kbss.benchmark.empire.util;
 
-import cz.cvut.kbss.benchmark.empire.model.Occurrence;
+import com.clarkparsia.empire.SupportsRdfId;
 import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.empire.model.Resource;
+import cz.cvut.kbss.benchmark.model.HasIdentifier;
 import cz.cvut.kbss.benchmark.util.Finder;
 
 import javax.persistence.EntityManager;
+import java.net.URI;
 
-public class EmpireFinder implements Finder<OccurrenceReport, Occurrence, Resource> {
+public class EmpireFinder implements Finder<OccurrenceReport> {
 
     private final EntityManager em;
 
@@ -21,12 +22,7 @@ public class EmpireFinder implements Finder<OccurrenceReport, Occurrence, Resour
     }
 
     @Override
-    public Occurrence find(Occurrence expected) {
-        return em.find(Occurrence.class, expected.getRdfId());
-    }
-
-    @Override
-    public Resource find(Resource expected) {
-        return em.find(Resource.class, expected.getRdfId());
+    public boolean exists(HasIdentifier instance) {
+        return em.find(instance.getClass(), new SupportsRdfId.URIKey(URI.create(instance.getId()))) != null;
     }
 }

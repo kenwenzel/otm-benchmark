@@ -3,7 +3,7 @@ package cz.cvut.kbss.benchmark.model;
 import java.io.Serializable;
 import java.util.Set;
 
-public interface Person extends Serializable {
+public interface Person extends Serializable, HasIdentifier {
 
     String getFirstName();
 

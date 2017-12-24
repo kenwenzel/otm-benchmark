@@ -32,14 +32,17 @@ public class OccurrenceReport implements IOccurrenceReport {
 
     private String summary;
 
-    @Override
     public URI getUri() {
         return uri;
     }
 
-    @Override
     public void setUri(URI uri) {
         this.uri = uri;
+    }
+
+    @Override
+    public String getId() {
+        return uri.toString();
     }
 
     @Override

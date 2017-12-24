@@ -25,6 +25,11 @@ public class Resource implements cz.cvut.kbss.benchmark.model.Resource {
         this.uri = uri;
     }
 
+    @Override
+    public String getId() {
+        return uri;
+    }
+
     @RDF(Vocabulary.s_p_has_id)
     @Override
     public String getIdentifier() {

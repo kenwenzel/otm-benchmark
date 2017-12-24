@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public interface OccurrenceReport<O extends Occurrence, P extends Person, R extends Resource> extends Serializable {
+public interface OccurrenceReport<O extends Occurrence, P extends Person, R extends Resource>
+        extends Serializable, HasIdentifier {
 
     Long getFileNumber();
 

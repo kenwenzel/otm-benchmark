@@ -169,4 +169,9 @@ public class OccurrenceReport
     public void setRdfId(SupportsRdfId.RdfKey rdfKey) {
         mIdSupport.setRdfId(rdfKey);
     }
+
+    @Override
+    public String getId() {
+        return getRdfId().value().toString();
+    }
 }

@@ -30,15 +30,17 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     @OWLDataProperty(iri = Vocabulary.s_p_contact)
     private Set<String> contacts;
 
-    public Person() {
-    }
-
     public URI getUri() {
         return uri;
     }
 
     public void setUri(URI uri) {
         this.uri = uri;
+    }
+
+    @Override
+    public String getId() {
+        return uri.toString();
     }
 
     @Override

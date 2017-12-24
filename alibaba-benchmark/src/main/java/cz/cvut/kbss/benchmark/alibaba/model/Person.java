@@ -22,14 +22,17 @@ public class Person implements IPerson {
 
     private Set<String> contacts;
 
-    @Override
     public URI getUri() {
         return uri;
     }
 
-    @Override
     public void setUri(URI uri) {
         this.uri = uri;
+    }
+
+    @Override
+    public String getId() {
+        return uri.toString();
     }
 
     @Override

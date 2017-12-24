@@ -1,6 +1,7 @@
 package cz.cvut.kbss.benchmark.rdfbeans.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
+import cz.cvut.kbss.benchmark.model.HasIdentifier;
 import cz.cvut.kbss.benchmark.rdfbeans.model.Occurrence;
 import cz.cvut.kbss.benchmark.rdfbeans.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.rdfbeans.model.Resource;
@@ -8,7 +9,7 @@ import cz.cvut.kbss.benchmark.util.Finder;
 import org.cyberborean.rdfbeans.RDFBeanManager;
 import org.cyberborean.rdfbeans.exceptions.RDFBeanException;
 
-public class RdfBeansFinder implements Finder<OccurrenceReport, Occurrence, Resource> {
+public class RdfBeansFinder implements Finder<OccurrenceReport> {
 
     private final RDFBeanManager beanManager;
 
@@ -30,12 +31,11 @@ public class RdfBeansFinder implements Finder<OccurrenceReport, Occurrence, Reso
     }
 
     @Override
-    public Occurrence find(Occurrence expected) {
-        return find(Occurrence.class, expected.getUri());
-    }
-
-    @Override
-    public Resource find(Resource expected) {
-        return find(Resource.class, expected.getUri());
+    public boolean exists(HasIdentifier instance) {
+        try {
+            return beanManager.get(instance.getId(), instance.getClass()) != null;
+        } catch (RDFBeanException e) {
+            throw new BenchmarkException(e);
+        }
     }
 }

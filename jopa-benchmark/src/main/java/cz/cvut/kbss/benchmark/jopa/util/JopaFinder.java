@@ -1,12 +1,13 @@
 package cz.cvut.kbss.benchmark.jopa.util;
 
-import cz.cvut.kbss.benchmark.jopa.model.Occurrence;
 import cz.cvut.kbss.benchmark.jopa.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.jopa.model.Resource;
+import cz.cvut.kbss.benchmark.model.HasIdentifier;
 import cz.cvut.kbss.benchmark.util.Finder;
 import cz.cvut.kbss.jopa.model.EntityManager;
 
-public class JopaFinder implements Finder<OccurrenceReport, Occurrence, Resource> {
+import java.net.URI;
+
+public class JopaFinder implements Finder<OccurrenceReport> {
 
     private final EntityManager em;
 
@@ -20,12 +21,7 @@ public class JopaFinder implements Finder<OccurrenceReport, Occurrence, Resource
     }
 
     @Override
-    public Occurrence find(Occurrence expected) {
-        return em.find(Occurrence.class, expected.getUri());
-    }
-
-    @Override
-    public Resource find(Resource expected) {
-        return em.find(Resource.class, expected.getUri());
+    public boolean exists(HasIdentifier instance) {
+        return em.find(instance.getClass(), URI.create(instance.getId())) != null;
     }
 }

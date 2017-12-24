@@ -15,17 +15,19 @@ public class Resource implements IResource {
 
     private String description;
 
-    @Override
     public URI getUri() {
         return uri;
     }
 
-    @Override
     public void setUri(URI uri) {
         this.uri = uri;
     }
 
     @Override
+    public String getId() {
+        return uri.toString();
+    }
+
     public String getIdentifier() {
         return identifier;
     }
@@ -50,17 +52,17 @@ public class Resource implements IResource {
         if (this == o) return true;
         if (!(o instanceof Resource)) return false;
         Resource resource = (Resource) o;
-        return Objects.equals(getIdentifier(), resource.getIdentifier());
+        return Objects.equals(getId(), resource.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentifier());
+        return Objects.hash(getId());
     }
 
     @Override
     public String toString() {
-        return "Resource{ identifier='" + getIdentifier() + '\'' +
+        return "Resource{ identifier='" + getId() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 '}';
     }

@@ -68,4 +68,9 @@ public class Occurrence implements SupportsRdfId, cz.cvut.kbss.benchmark.model.O
     public void setRdfId(RdfKey rdfKey) {
         mIdSupport.setRdfId(rdfKey);
     }
+
+    @Override
+    public String getId() {
+        return getRdfId().value().toString();
+    }
 }

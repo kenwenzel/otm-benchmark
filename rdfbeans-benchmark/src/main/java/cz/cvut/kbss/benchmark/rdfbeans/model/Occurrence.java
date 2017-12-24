@@ -27,6 +27,11 @@ public class Occurrence implements cz.cvut.kbss.benchmark.model.Occurrence {
         this.uri = uri;
     }
 
+    @Override
+    public String getId() {
+        return uri;
+    }
+
     @RDF(Vocabulary.s_p_label)
     @Override
     public String getName() {

@@ -25,6 +25,11 @@ public class Occurrence implements IOccurrence {
         this.uri = uri;
     }
 
+    @Override
+    public String getId() {
+        return uri.toString();
+    }
+
     public String getName() {
         return name;
     }

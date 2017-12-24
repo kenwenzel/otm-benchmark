@@ -7,7 +7,7 @@ import org.openrdf.annotations.Iri;
 import java.util.Set;
 
 @Iri(Vocabulary.s_c_Person)
-public interface IPerson extends Person, HasUri {
+public interface IPerson extends Person {
     @Iri(Vocabulary.s_p_firstName)
     @Override
     String getFirstName();

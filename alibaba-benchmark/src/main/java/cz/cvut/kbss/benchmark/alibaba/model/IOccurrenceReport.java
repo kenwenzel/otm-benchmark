@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Iri(Vocabulary.s_c_occurrence_report)
-public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person, Resource>, HasUri {
+public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person, Resource> {
 
     @Iri(Vocabulary.s_p_has_file_number)
     @Override

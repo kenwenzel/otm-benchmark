@@ -45,17 +45,19 @@ public class AliBabaDeleter implements Deleter<OccurrenceReport> {
             toDelete.setFileNumber(null);
             toDelete.setRevision(null);
             toDelete.setSummary(null);
-            toDelete.getOccurrence().setName(null);
-            toDelete.getOccurrence().setStartTime(null);
-            toDelete.getOccurrence().setEndTime(null);
-            connection.removeDesignation(toDelete.getOccurrence(), Occurrence.class);
+            final Occurrence occurrence = connection.getObject(Occurrence.class, report.getOccurrence().getId());
+            occurrence.setName(null);
+            occurrence.setStartTime(null);
+            occurrence.setEndTime(null);
+            connection.removeDesignation(occurrence, Occurrence.class);
             toDelete.setOccurrence(null);
             toDelete.setAuthor(null);
             toDelete.setLastModifiedBy(null);
-            for (Resource a : toDelete.getAttachments()) {
-                a.setIdentifier(null);
-                a.setDescription(null);
-                connection.removeDesignation(a, Resource.class);
+            for (Resource a : report.getAttachments()) {
+                final Resource resource = connection.getObject(Resource.class, a.getId());
+                resource.setIdentifier(null);
+                resource.setDescription(null);
+                connection.removeDesignation(resource, Resource.class);
             }
             toDelete.setAttachments(null);
             connection.removeDesignation(toDelete, OccurrenceReport.class);

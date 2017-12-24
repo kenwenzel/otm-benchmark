@@ -52,6 +52,11 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     }
 
     @Override
+    public String getId() {
+        return uri.toString();
+    }
+
+    @Override
     public Long getFileNumber() {
         return fileNumber;
     }

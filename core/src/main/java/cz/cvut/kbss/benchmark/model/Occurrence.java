@@ -3,7 +3,7 @@ package cz.cvut.kbss.benchmark.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public interface Occurrence extends Serializable {
+public interface Occurrence extends Serializable, HasIdentifier {
 
     String getName();
 

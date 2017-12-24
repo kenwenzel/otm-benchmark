@@ -5,11 +5,11 @@ import cz.cvut.kbss.benchmark.model.Vocabulary;
 import org.openrdf.annotations.Iri;
 
 @Iri(Vocabulary.s_c_Resource)
-public interface IResource extends Resource, HasUri {
+public interface IResource extends Resource {
 
     @Iri(Vocabulary.s_p_has_id)
     @Override
-    String getIdentifier();
+    String getId();
 
     @Override
     void setIdentifier(String identifier);
