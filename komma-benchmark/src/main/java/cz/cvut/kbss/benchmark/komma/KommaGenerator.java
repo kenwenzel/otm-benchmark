@@ -21,7 +21,7 @@ public class KommaGenerator {
 
     private IEntityManager em;
 
-    private Map<OccurrenceReport, URI> instances;
+    private Map<Object, URI> instances;
 
     public void setEm(IEntityManager em) {
         this.em = em;
@@ -96,10 +96,11 @@ public class KommaGenerator {
     }
 
     public Resource generateAttachment() {
-        final Resource attachment = em
-                .createNamed(URIs.createURI(generateUri(Resource.class).toString()), Resource.class);
+        final URI uri = URIs.createURI(generateUri(Resource.class).toString());
+        final Resource attachment = em.createNamed(uri, Resource.class);
         attachment.setIdentifier("resource" + random.nextInt() + ".doc");
         attachment.setDescription("This resource was attached to further document the reported occurrence.");
+        instances.put(attachment, uri);
         return attachment;
     }
 
@@ -108,11 +109,12 @@ public class KommaGenerator {
     }
 
     private Occurrence generateOccurrence() {
-        final Occurrence occurrence = em
-                .createNamed(URIs.createURI(generateUri(Occurrence.class).toString()), Occurrence.class);
+        final URI uri = URIs.createURI(generateUri(Occurrence.class).toString());
+        final Occurrence occurrence = em.createNamed(uri, Occurrence.class);
         occurrence.setName("Occurrence" + random.nextInt());
         occurrence.setStartTime(new Date(System.currentTimeMillis() - 10000));
         occurrence.setEndTime(new Date());
+        instances.put(occurrence, uri);
         return occurrence;
     }
 
@@ -144,7 +146,7 @@ public class KommaGenerator {
         return Collections.unmodifiableList(persons);
     }
 
-    public URI getUri(OccurrenceReport report) {
+    public URI getUri(Object report) {
         return instances.get(report);
     }
 }

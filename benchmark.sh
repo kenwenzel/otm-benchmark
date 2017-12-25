@@ -102,6 +102,9 @@ ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARM
 echo "Update..."
 echo "*** UPDATE ***" >> ../../${OUTPUT}
 ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
+echo "Delete..."
+echo "*** DELETE ***" >> ../../${OUTPUT}
+${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
 cd ../..
 
 # RDFBeans Benchmark

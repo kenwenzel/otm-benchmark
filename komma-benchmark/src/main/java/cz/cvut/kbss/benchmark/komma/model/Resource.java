@@ -4,19 +4,15 @@ import cz.cvut.kbss.benchmark.model.Vocabulary;
 import net.enilink.composition.annotations.Iri;
 
 @Iri(Vocabulary.s_c_Resource)
-public interface Resource extends cz.cvut.kbss.benchmark.model.Resource {
+public interface Resource {
 
     @Iri(Vocabulary.s_p_has_id)
-    @Override
-    String getId();
+    String getIdentifier();
 
-    @Override
     void setIdentifier(String identifier);
 
     @Iri(Vocabulary.s_p_description)
-    @Override
     String getDescription();
 
-    @Override
     void setDescription(String description);
 }
