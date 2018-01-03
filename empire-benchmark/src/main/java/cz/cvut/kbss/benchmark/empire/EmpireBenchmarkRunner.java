@@ -1,20 +1,19 @@
 package cz.cvut.kbss.benchmark.empire;
 
+import cz.cvut.kbss.benchmark.AbstractRunner;
 import cz.cvut.kbss.benchmark.BenchmarkException;
-import cz.cvut.kbss.benchmark.BenchmarkRunner;
+import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.empire.data.EmpireDataGenerator;
 import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.empire.model.Person;
 import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
-import cz.cvut.kbss.benchmark.AbstractRunner;
 
 import java.io.IOException;
 import java.util.Properties;
 
 import static cz.cvut.kbss.benchmark.empire.PersistenceFactory.CONFIG_FILE;
 
-public abstract class EmpireBenchmarkRunner extends AbstractRunner<Person, OccurrenceReport>
-        implements BenchmarkRunner {
+public abstract class EmpireBenchmarkRunner extends AbstractRunner<Person, OccurrenceReport> {
 
     private static final String SERVER_URL_PROPERTY = "0.url";
     private static final String REPO_NAME_PROPERTY = "0.repo";
@@ -33,14 +32,14 @@ public abstract class EmpireBenchmarkRunner extends AbstractRunner<Person, Occur
     }
 
     @Override
-    public void setUpBeforeBenchmark() {
-        this.generator = new EmpireDataGenerator();
+    protected DataGenerator<Person, OccurrenceReport> createGenerator(int factor) {
+        return new EmpireDataGenerator(factor);
     }
 
     @Override
     public void setUp() {
         this.persistenceFactory = new PersistenceFactory();
-        BenchmarkRunner.super.setUp();
+        super.setUp();
     }
 
     @Override

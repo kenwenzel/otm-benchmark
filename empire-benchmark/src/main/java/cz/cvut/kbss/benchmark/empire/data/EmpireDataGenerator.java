@@ -9,7 +9,8 @@ import cz.cvut.kbss.benchmark.empire.model.Resource;
 
 public class EmpireDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    public EmpireDataGenerator() {
+    public EmpireDataGenerator(int factor) {
+        super(factor);
         generate();
     }
 

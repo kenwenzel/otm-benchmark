@@ -8,7 +8,8 @@ import cz.cvut.kbss.benchmark.rdfbeans.model.Resource;
 
 public class RDFBeansDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    public RDFBeansDataGenerator() {
+    public RDFBeansDataGenerator(int factor) {
+        super(factor);
         generate();
     }
 

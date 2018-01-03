@@ -2,8 +2,10 @@ package cz.cvut.kbss.benchmark.komma;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.BenchmarkRunner;
+import cz.cvut.kbss.benchmark.Configuration;
 import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
 import cz.cvut.kbss.benchmark.util.Config;
+import cz.cvut.kbss.benchmark.util.Constants;
 import org.eclipse.rdf4j.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +14,19 @@ abstract class KommaBenchmarkRunner implements BenchmarkRunner {
 
     static final Logger LOG = LoggerFactory.getLogger(KommaBenchmarkRunner.class);
 
+    private Configuration configuration;
+
     PersistenceFactory persistenceFactory;
     KommaGenerator generator;
 
     @Override
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    @Override
     public void setUpBeforeBenchmark() {
-        this.generator = new KommaGenerator();
+        this.generator = new KommaGenerator(configuration.getValue(Constants.FACTOR_PARAMETER, Integer.class));
     }
 
     @Override

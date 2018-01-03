@@ -9,6 +9,8 @@ public class Constants {
 
     public static final int MAX_SEVERITY = 10;
 
+    public static String FACTOR_PARAMETER = "f";
+
     /**
      * Randomly generated string usable as report summary.
      */

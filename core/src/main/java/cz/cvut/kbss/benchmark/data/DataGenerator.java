@@ -2,23 +2,27 @@ package cz.cvut.kbss.benchmark.data;
 
 
 import cz.cvut.kbss.benchmark.model.*;
-import cz.cvut.kbss.benchmark.util.Constants;
 
 import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
-import static cz.cvut.kbss.benchmark.util.Constants.MAX_SEVERITY;
-import static cz.cvut.kbss.benchmark.util.Constants.SUMMARY;
+import static cz.cvut.kbss.benchmark.util.Constants.*;
 
 public abstract class DataGenerator<P extends Person, R extends OccurrenceReport> {
 
     protected final Random random = new Random();
 
+    private final int itemCount;
+
     private List<R> reports;
     private List<P> persons;
+
+    public DataGenerator(int factor) {
+        assert factor > 0;
+        this.itemCount = ITEM_COUNT * factor;
+    }
 
     public void generate() {
         this.persons = generatePersons();
@@ -27,7 +31,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
 
     protected List<R> generateReports() {
         final List<R> reports = new ArrayList<>();
-        for (int i = 0; i < ITEM_COUNT; i++) {
+        for (int i = 0; i < itemCount; i++) {
             final R r = report();
             r.setOccurrence(generateOccurrence());
             r.setAuthor(randomItem(persons));
@@ -85,7 +89,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
 
     protected List<P> generatePersons() {
         final List<P> list = new ArrayList<>();
-        for (int i = 0; i < ITEM_COUNT; i++) {
+        for (int i = 0; i < itemCount; i++) {
             final P p = person();
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);

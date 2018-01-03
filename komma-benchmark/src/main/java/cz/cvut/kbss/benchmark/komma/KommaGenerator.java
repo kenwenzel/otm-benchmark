@@ -19,9 +19,15 @@ import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
 
 public class KommaGenerator {
 
+    private final int itemCount;
+
     private IEntityManager em;
 
     private Map<Object, URI> instances;
+
+    public KommaGenerator(int factor) {
+        this.itemCount = ITEM_COUNT * factor;
+    }
 
     public void setEm(IEntityManager em) {
         this.em = em;
@@ -48,8 +54,8 @@ public class KommaGenerator {
 
     public void executeCreate() {
         this.instances = new IdentityHashMap<>();
-        this.reports = new ArrayList<>(ITEM_COUNT);
-        for (int i = 0; i < ITEM_COUNT; i++) {
+        this.reports = new ArrayList<>(itemCount);
+        for (int i = 0; i < itemCount; i++) {
             em.getTransaction().begin();
             final OccurrenceReport report = report();
             reports.add(report);
@@ -59,15 +65,15 @@ public class KommaGenerator {
 
     public void executeBatchCreate() {
         this.instances = new IdentityHashMap<>();
-        this.reports = new ArrayList<>(ITEM_COUNT);
+        this.reports = new ArrayList<>(itemCount);
         em.getTransaction().begin();
         this.reports = generateReports();
         em.getTransaction().commit();
     }
 
     private List<OccurrenceReport> generateReports() {
-        final List<OccurrenceReport> reports = new ArrayList<>();
-        for (int i = 0; i < ITEM_COUNT; i++) {
+        final List<OccurrenceReport> reports = new ArrayList<>(itemCount);
+        for (int i = 0; i < itemCount; i++) {
             final OccurrenceReport r = report();
             reports.add(r);
         }
@@ -119,8 +125,8 @@ public class KommaGenerator {
     }
 
     private List<Person> generatePersons() {
-        final List<Person> list = new ArrayList<>();
-        for (int i = 0; i < ITEM_COUNT; i++) {
+        final List<Person> list = new ArrayList<>(itemCount);
+        for (int i = 0; i < itemCount; i++) {
             final Person p = em.createNamed(URIs.createURI(generateUri(Person.class).toString()), Person.class);
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);

@@ -15,12 +15,33 @@ import java.util.List;
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
 import static org.junit.Assert.*;
 
-public abstract class AbstractRunner<P extends Person, R extends OccurrenceReport> {
+public abstract class AbstractRunner<P extends Person, R extends OccurrenceReport> implements BenchmarkRunner {
 
     protected DataGenerator<P, R> generator;
 
     protected List<R> updated;
     protected List<R> deleted;
+
+    protected Configuration configuration;
+
+    @Override
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    @Override
+    public void setUpBeforeBenchmark() {
+        this.generator = createGenerator(configuration.getValue(Constants.FACTOR_PARAMETER, Integer.class));
+    }
+
+    /**
+     * Creates the data generator.
+     * <p>
+     * This is called before the benchmark.
+     *
+     * @param factor Scaling factor used for data generator initialization
+     */
+    protected abstract DataGenerator<P, R> createGenerator(int factor);
 
     protected void persistPersons(Saver<P, R> saver) {
         saver.begin();

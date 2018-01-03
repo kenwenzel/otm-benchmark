@@ -2,11 +2,11 @@ package cz.cvut.kbss.benchmark.alibaba;
 
 import cz.cvut.kbss.benchmark.AbstractRunner;
 import cz.cvut.kbss.benchmark.BenchmarkException;
-import cz.cvut.kbss.benchmark.BenchmarkRunner;
 import cz.cvut.kbss.benchmark.alibaba.data.AlibabaDataGenerator;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.alibaba.model.Person;
 import cz.cvut.kbss.benchmark.alibaba.util.AliBabaSaver;
+import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.model.Resource;
 import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
 import cz.cvut.kbss.benchmark.util.Config;
@@ -21,15 +21,15 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceReport> implements BenchmarkRunner {
+abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceReport> {
 
     static final Logger LOG = LoggerFactory.getLogger(CreateBenchmarkRunner.class);
 
     PersistenceFactory persistenceFactory;
 
     @Override
-    public void setUpBeforeBenchmark() {
-        this.generator = new AlibabaDataGenerator();
+    protected DataGenerator<Person, OccurrenceReport> createGenerator(int factor) {
+        return new AlibabaDataGenerator(factor);
     }
 
     @Override
@@ -40,7 +40,7 @@ abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceR
             LOG.error("Unable to setup repository.", e);
             throw new BenchmarkException(e);
         }
-        BenchmarkRunner.super.setUp();
+        super.setUp();
     }
 
     @Override
