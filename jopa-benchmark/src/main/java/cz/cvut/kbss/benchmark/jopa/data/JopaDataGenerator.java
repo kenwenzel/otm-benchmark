@@ -1,10 +1,7 @@
 package cz.cvut.kbss.benchmark.jopa.data;
 
 import cz.cvut.kbss.benchmark.data.DataGenerator;
-import cz.cvut.kbss.benchmark.jopa.model.Occurrence;
-import cz.cvut.kbss.benchmark.jopa.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.jopa.model.Person;
-import cz.cvut.kbss.benchmark.jopa.model.Resource;
+import cz.cvut.kbss.benchmark.jopa.model.*;
 
 public class JopaDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
@@ -25,6 +22,13 @@ public class JopaDataGenerator extends DataGenerator<Person, OccurrenceReport> {
         final Occurrence o = new Occurrence();
         o.setUri(generateUri(Occurrence.class));
         return o;
+    }
+
+    @Override
+    protected Event event() {
+        final Event event = new Event();
+        event.setUri(generateUri(Event.class));
+        return event;
     }
 
     @Override

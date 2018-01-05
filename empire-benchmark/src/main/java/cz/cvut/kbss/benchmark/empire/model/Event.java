@@ -1,41 +1,51 @@
-package cz.cvut.kbss.benchmark.jopa.model;
+package cz.cvut.kbss.benchmark.empire.model;
 
+import com.clarkparsia.empire.SupportsRdfId;
+import com.clarkparsia.empire.annotation.RdfProperty;
+import com.clarkparsia.empire.annotation.RdfsClass;
+import com.clarkparsia.empire.annotation.SupportsRdfIdImpl;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
-import cz.cvut.kbss.jopa.model.annotations.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.net.URI;
 import java.util.Date;
 import java.util.Set;
 
-@OWLClass(iri = Vocabulary.s_c_Event)
-public class Event implements cz.cvut.kbss.benchmark.model.Event<Event> {
+@Entity
+@RdfsClass(Vocabulary.s_c_Event)
+public class Event implements cz.cvut.kbss.benchmark.model.Event<Event>, SupportsRdfId {
 
-    @Id
-    private URI uri;
+    private SupportsRdfId mIdSupport = new SupportsRdfIdImpl();
 
-    @OWLDataProperty(iri = Vocabulary.s_p_has_start_time)
+    @RdfProperty(Vocabulary.s_p_has_start_time)
     private Date startTime;
 
-    @OWLDataProperty(iri = Vocabulary.s_p_has_end_time)
+    @RdfProperty(Vocabulary.s_p_has_end_time)
     private Date endTime;
 
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_part, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @RdfProperty(Vocabulary.s_p_has_part)
     private Set<Event> subEvents;
 
-    @OWLObjectProperty(iri = Vocabulary.s_p_has_event_type)
+    @RdfProperty(Vocabulary.s_p_has_event_type)
     private URI eventType;
 
-    public URI getUri() {
-        return uri;
+    @Override
+    public RdfKey getRdfId() {
+        return mIdSupport.getRdfId();
     }
 
-    public void setUri(URI uri) {
-        this.uri = uri;
+    @Override
+    public void setRdfId(RdfKey rdfKey) {
+        mIdSupport.setRdfId(rdfKey);
     }
 
     @Override
     public String getId() {
-        return uri.toString();
+        return getRdfId().value().toString();
     }
 
     @Override
@@ -63,6 +73,7 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event> {
         return subEvents;
     }
 
+    @Override
     public void setSubEvents(Set<Event> subEvents) {
         this.subEvents = subEvents;
     }
@@ -80,7 +91,7 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event> {
     @Override
     public String toString() {
         return "Event{" +
-                "uri=" + uri +
+                "id=" + getId() +
                 ", subEvents=" + subEvents +
                 ", eventType=" + eventType +
                 '}';

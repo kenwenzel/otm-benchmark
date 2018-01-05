@@ -2,10 +2,7 @@ package cz.cvut.kbss.benchmark.empire.data;
 
 import com.clarkparsia.empire.SupportsRdfId;
 import cz.cvut.kbss.benchmark.data.DataGenerator;
-import cz.cvut.kbss.benchmark.empire.model.Occurrence;
-import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.empire.model.Person;
-import cz.cvut.kbss.benchmark.empire.model.Resource;
+import cz.cvut.kbss.benchmark.empire.model.*;
 
 public class EmpireDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
@@ -26,6 +23,13 @@ public class EmpireDataGenerator extends DataGenerator<Person, OccurrenceReport>
         final Occurrence occurrence = new Occurrence();
         occurrence.setRdfId(new SupportsRdfId.URIKey(generateUri(Occurrence.class)));
         return occurrence;
+    }
+
+    @Override
+    protected Event event() {
+        final Event event = new Event();
+        event.setRdfId(new SupportsRdfId.URIKey(generateUri(Event.class)));
+        return event;
     }
 
     @Override

@@ -2,6 +2,7 @@ package cz.cvut.kbss.benchmark.data;
 
 
 import cz.cvut.kbss.benchmark.model.*;
+import cz.cvut.kbss.benchmark.util.Constants;
 
 import java.net.URI;
 import java.util.*;
@@ -11,6 +12,14 @@ import java.util.stream.IntStream;
 import static cz.cvut.kbss.benchmark.util.Constants.*;
 
 public abstract class DataGenerator<P extends Person, R extends OccurrenceReport> {
+
+    private static final URI[] EVENT_TYPES =
+            new URI[]{URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-1"),
+                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-10"),
+                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-100"),
+                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-101"),
+                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-102"),
+                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-103")};
 
     protected final Random random = new Random();
 
@@ -67,17 +76,33 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
     protected Occurrence generateOccurrence() {
         final Occurrence occurrence = occurrence();
         occurrence.setName("Occurrence" + random.nextInt());
-        occurrence.setStartTime(new Date(System.currentTimeMillis() - 10000));
-        occurrence.setEndTime(new Date());
-        occurrence.setSubEvents(generateEventHierarchy());
+        occurrence.setStartTime(new Date(currentTime().getTime() - 10000));
+        occurrence.setEndTime(currentTime());
+        occurrence.setSubEvents(generateEventHierarchy(occurrence));
+        occurrence.setEventType(EVENT_TYPES[random.nextInt(EVENT_TYPES.length)]);
         return occurrence;
     }
 
     protected abstract Occurrence occurrence();
 
-    private Set<Event> generateEventHierarchy() {
-        // TODO
-        return null;
+    private Set<Event> generateEventHierarchy(Occurrence occurrence) {
+        return generateEvents(occurrence, 0, Constants.MAX_EVENT_DEPTH);
+    }
+
+    private Set<Event> generateEvents(Occurrence occurrence, int level, int maxLevel) {
+        if (level >= maxLevel) {
+            return null;
+        }
+        final Set<Event> events = new HashSet<>();
+        for (int i = 0; i < Constants.MAX_CHILD_EVENTS; i++) {
+            final Event evt = event();
+            evt.setStartTime(occurrence.getStartTime());
+            evt.setEndTime(occurrence.getEndTime());
+            evt.setSubEvents(generateEvents(occurrence, level + 1, maxLevel));
+            evt.setEventType(EVENT_TYPES[random.nextInt(EVENT_TYPES.length)]);
+            events.add(evt);
+        }
+        return events;
     }
 
     protected abstract Event event();

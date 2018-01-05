@@ -1,16 +1,11 @@
 package cz.cvut.kbss.benchmark;
 
 import cz.cvut.kbss.benchmark.data.DataGenerator;
-import cz.cvut.kbss.benchmark.model.Occurrence;
-import cz.cvut.kbss.benchmark.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.model.Person;
-import cz.cvut.kbss.benchmark.model.Resource;
+import cz.cvut.kbss.benchmark.model.*;
 import cz.cvut.kbss.benchmark.util.Constants;
 import cz.cvut.kbss.benchmark.util.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
 import static org.junit.Assert.*;
@@ -86,6 +81,23 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
         assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
         assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
+        checkEvents(expected.getOccurrence().getSubEvents(), actual.getOccurrence().getSubEvents());
+    }
+
+    private void checkEvents(Set<Event> expected, Set<Event> actual) {
+        assertNotNull(actual);
+        assertEquals(expected.size(), actual.size());
+        for (Event expEvent : expected) {
+            final Optional<Event> actEvent = actual.stream().filter(e -> expEvent.getId().equals(e.getId())).findAny();
+            assertTrue(actEvent.isPresent());
+            final Event evt = actEvent.get();
+            assertEquals(expEvent.getStartTime(), evt.getStartTime());
+            assertEquals(expEvent.getEndTime(), evt.getEndTime());
+            assertEquals(expEvent.getEventType(), evt.getEventType());
+            if (expEvent.getSubEvents() != null) {
+                checkEvents(expEvent.getSubEvents(), evt.getSubEvents());
+            }
+        }
     }
 
     protected void executeUpdate(Updater<R> updater) {
@@ -134,6 +146,17 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
             assertFalse(finder.exists(r));
             assertFalse(finder.exists(r.getOccurrence()));
             r.getAttachments().forEach(a -> assertFalse(finder.exists((A) a)));
+            verifyDeletedEvents(r.getOccurrence().getSubEvents(), finder);
+        });
+    }
+
+    private void verifyDeletedEvents(Set<Event> events, Finder<R> finder) {
+        if (events == null) {
+            return;
+        }
+        events.forEach(e -> {
+            assertFalse(finder.exists(e));
+            verifyDeletedEvents(e.getSubEvents(), finder);
         });
     }
 }
