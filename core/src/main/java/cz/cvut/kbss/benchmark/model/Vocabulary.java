@@ -5,6 +5,7 @@ public class Vocabulary {
     public static final String BASE_URI = "http://krizik.felk.cvut.cz/ontologies/benchmark/";
 
     public static final String s_c_occurrence_report = "http://onto.fel.cvut.cz/ontologies/documentation/occurrence_report";
+    public final static String s_c_Event = "http://onto.fel.cvut.cz/ontologies/ufo/Event";
     public static final String s_c_Occurrence = "http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence";
     public static final String s_c_Person = "http://onto.fel.cvut.cz/ontologies/ufo/Person";
     public static final String s_c_Resource = "http://onto.fel.cvut.cz/ontologies/aviation/documentation/resource";
@@ -27,6 +28,8 @@ public class Vocabulary {
     public static final String s_p_contact = "http://xmlns.com/foaf/0.1/mbox";
     public static final String s_p_references = "http://purl.org/dc/terms/references";
     public final static String s_p_has_severity_assessment = "http://onto.fel.cvut.cz/ontologies/documentation/has_severity_assessment";
+    public final static String s_p_has_part = "http://onto.fel.cvut.cz/ontologies/ufo/has_part";
+    public final static String s_p_has_event_type = "http://onto.fel.cvut.cz/ontologies/reporting-tool/has_event_type";
 
     private Vocabulary() {
         throw new AssertionError();

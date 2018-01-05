@@ -69,10 +69,18 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
         occurrence.setName("Occurrence" + random.nextInt());
         occurrence.setStartTime(new Date(System.currentTimeMillis() - 10000));
         occurrence.setEndTime(new Date());
+        occurrence.setSubEvents(generateEventHierarchy());
         return occurrence;
     }
 
     protected abstract Occurrence occurrence();
+
+    private Set<Event> generateEventHierarchy() {
+        // TODO
+        return null;
+    }
+
+    protected abstract Event event();
 
     protected Set<Resource> generateAttachments() {
         return IntStream.range(0, 3).mapToObj(i -> generateAttachment()).collect(Collectors.toSet());
