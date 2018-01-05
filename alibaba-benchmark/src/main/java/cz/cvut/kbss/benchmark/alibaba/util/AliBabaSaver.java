@@ -1,6 +1,7 @@
 package cz.cvut.kbss.benchmark.alibaba.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
+import cz.cvut.kbss.benchmark.alibaba.model.Event;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
 import cz.cvut.kbss.benchmark.alibaba.model.Person;
 import cz.cvut.kbss.benchmark.alibaba.model.Resource;
@@ -9,6 +10,7 @@ import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.object.ObjectConnection;
 
 import java.util.Collection;
+import java.util.Set;
 
 public class AliBabaSaver implements Saver<Person, OccurrenceReport> {
 
@@ -40,7 +42,7 @@ public class AliBabaSaver implements Saver<Person, OccurrenceReport> {
     public void persistAll(Collection<Person> persons) {
         try {
             for (Person p : persons) {
-                connection.addObject(p.getUri().toString(), p);
+                connection.addObject(p.getId(), p);
             }
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);
@@ -50,13 +52,23 @@ public class AliBabaSaver implements Saver<Person, OccurrenceReport> {
     @Override
     public void persist(OccurrenceReport report) {
         try {
-            connection.addObject(report.getUri().toString(), report);
-            connection.addObject(report.getOccurrence().getUri().toString(), report.getOccurrence());
+            connection.addObject(report.getId(), report);
+            connection.addObject(report.getOccurrence().getId(), report.getOccurrence());
             for (Resource a : report.getAttachments()) {
-                connection.addObject(a.getUri().toString(), a);
+                connection.addObject(a.getId(), a);
             }
+            persistEvents(report.getOccurrence().getSubEvents());
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);
+        }
+    }
+
+    private void persistEvents(Set<Event> events) throws RepositoryException {
+        if (events != null) {
+            for (Event e : events) {
+                connection.addObject(e.getId(), e);
+                persistEvents(e.getSubEvents());
+            }
         }
     }
 }

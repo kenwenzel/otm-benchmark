@@ -1,9 +1,6 @@
 package cz.cvut.kbss.benchmark.alibaba;
 
-import cz.cvut.kbss.benchmark.alibaba.model.Occurrence;
-import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.alibaba.model.Person;
-import cz.cvut.kbss.benchmark.alibaba.model.Resource;
+import cz.cvut.kbss.benchmark.alibaba.model.*;
 import cz.cvut.kbss.benchmark.util.Config;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryException;
@@ -22,7 +19,6 @@ class PersistenceFactory {
 
     private final Repository repository;
     private final ObjectRepository objectRepository;
-    private ObjectConnection connection;
 
     PersistenceFactory() throws RepositoryConfigException, RepositoryException {
         // When running in a jar, Sesame for some reason does not register appropriate RDF writer factories
@@ -36,6 +32,7 @@ class PersistenceFactory {
 
         final ObjectRepositoryFactory factory = new ObjectRepositoryFactory();
         final ObjectRepositoryConfig config = factory.getConfig();
+        config.addConcept(Event.class);
         config.addConcept(Occurrence.class);
         config.addConcept(OccurrenceReport.class);
         config.addConcept(Person.class);
@@ -49,9 +46,6 @@ class PersistenceFactory {
     }
 
     void close() throws RepositoryException {
-        if (connection != null) {
-            connection.close();
-        }
         if (repository.isInitialized()) {
             repository.shutDown();
         }

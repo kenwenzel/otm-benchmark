@@ -1,9 +1,6 @@
 package cz.cvut.kbss.benchmark.alibaba.data;
 
-import cz.cvut.kbss.benchmark.alibaba.model.Occurrence;
-import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.alibaba.model.Person;
-import cz.cvut.kbss.benchmark.alibaba.model.Resource;
+import cz.cvut.kbss.benchmark.alibaba.model.*;
 import cz.cvut.kbss.benchmark.data.DataGenerator;
 
 public class AlibabaDataGenerator extends DataGenerator<Person, OccurrenceReport> {
@@ -25,6 +22,13 @@ public class AlibabaDataGenerator extends DataGenerator<Person, OccurrenceReport
         final Occurrence o = new Occurrence();
         o.setUri(generateUri(Occurrence.class));
         return o;
+    }
+
+    @Override
+    protected Event event() {
+        final Event event = new Event();
+        event.setUri(generateUri(Event.class));
+        return event;
     }
 
     @Override

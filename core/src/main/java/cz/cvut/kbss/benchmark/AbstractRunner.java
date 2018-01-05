@@ -84,7 +84,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         checkEvents(expected.getOccurrence().getSubEvents(), actual.getOccurrence().getSubEvents());
     }
 
-    private void checkEvents(Set<Event> expected, Set<Event> actual) {
+    protected void checkEvents(Set<Event> expected, Set<Event> actual) {
         assertNotNull(actual);
         assertEquals(expected.size(), actual.size());
         for (Event expEvent : expected) {

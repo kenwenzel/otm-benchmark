@@ -1,13 +1,13 @@
 package cz.cvut.kbss.benchmark.alibaba.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
-import cz.cvut.kbss.benchmark.alibaba.model.Occurrence;
-import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.alibaba.model.Resource;
+import cz.cvut.kbss.benchmark.alibaba.model.*;
 import cz.cvut.kbss.benchmark.util.Deleter;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.object.ObjectConnection;
+
+import java.util.Set;
 
 public class AliBabaDeleter implements Deleter<OccurrenceReport> {
 
@@ -49,6 +49,9 @@ public class AliBabaDeleter implements Deleter<OccurrenceReport> {
             occurrence.setName(null);
             occurrence.setStartTime(null);
             occurrence.setEndTime(null);
+            deleteEvents(report.getOccurrence().getSubEvents());
+            occurrence.setEventType(null);
+            occurrence.setSubEvents(null);
             connection.removeDesignation(occurrence, Occurrence.class);
             toDelete.setOccurrence(null);
             toDelete.setAuthor(null);
@@ -63,6 +66,21 @@ public class AliBabaDeleter implements Deleter<OccurrenceReport> {
             connection.removeDesignation(toDelete, OccurrenceReport.class);
         } catch (RepositoryException | QueryEvaluationException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void deleteEvents(Set<Event> events) throws QueryEvaluationException, RepositoryException {
+        if (events == null) {
+            return;
+        }
+        for (Event e : events) {
+            final Event toDelete = connection.getObject(Event.class, e.getId());
+            toDelete.setStartTime(null);
+            toDelete.setEndTime(null);
+            toDelete.setEventType(null);
+            deleteEvents(e.getSubEvents());
+            toDelete.setSubEvents(null);
+            connection.removeDesignation(toDelete, Event.class);
         }
     }
 }

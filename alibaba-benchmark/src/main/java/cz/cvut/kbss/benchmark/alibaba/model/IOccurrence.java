@@ -7,7 +7,7 @@ import org.openrdf.annotations.Iri;
 import java.util.Date;
 
 @Iri(Vocabulary.s_c_Occurrence)
-public interface IOccurrence extends Occurrence {
+public interface IOccurrence extends IEvent, Occurrence<Event> {
 
     @Iri(Vocabulary.s_p_label)
     @Override
@@ -16,20 +16,4 @@ public interface IOccurrence extends Occurrence {
     @Iri(Vocabulary.s_p_label)
     @Override
     void setName(String name);
-
-    @Iri(Vocabulary.s_p_has_start_time)
-    @Override
-    Date getStartTime();
-
-    @Iri(Vocabulary.s_p_has_start_time)
-    @Override
-    void setStartTime(Date startTime);
-
-    @Iri(Vocabulary.s_p_has_end_time)
-    @Override
-    Date getEndTime();
-
-    @Iri(Vocabulary.s_p_has_end_time)
-    @Override
-    void setEndTime(Date endTime);
 }

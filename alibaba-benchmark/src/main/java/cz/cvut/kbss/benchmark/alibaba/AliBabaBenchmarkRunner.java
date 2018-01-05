@@ -70,6 +70,7 @@ abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceR
         assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
         assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
         assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
+        checkEvents(expected.getOccurrence().getSubEvents(), actual.getOccurrence().getSubEvents());
     }
 
     protected void persistTestData() {
