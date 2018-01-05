@@ -3,132 +3,110 @@
 JAVA=/opt/java-8-oracle/bin/java
 OUTPUT=benchmark.log
 LOGFILE=logback.xml
-WARMUPS=10
-ROUNDS=100
+WARMUPS=1
+ROUNDS=1
 
-# TODO Restart rdf4j tomcat between benchmarks?
+GRAPHDB_HOME=~/Java/graphdb-free-8.3.1/
+GRAPHDB_PIDFILE=/tmp/.graphdbpid
+start_graphdb()
+{
+    ${GRAPHDB_HOME}/bin/graphdb -d -s -p ${GRAPHDB_PIDFILE};
+    sleep 20    # Sleep to give GraphDB time to start
+}
+
+stop_graphdb()
+{
+    kill $(<"${GRAPHDB_PIDFILE}")
+    sleep 2
+}
+
+restart_graphdb()
+{
+    stop_graphdb
+    start_graphdb
+}
+
+start_repository()
+{
+    start_graphdb
+}
+
+stop_repository()
+{
+    stop_graphdb
+}
+
+restart_repository()
+{
+    stop_repository
+    start_repository
+}
+
+execute_benchmark()
+{
+    cd ${1}/target
+    echo "Create..."
+    echo "*** CREATE ***" >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} create >> ../../${OUTPUT}
+    restart_repository
+    echo "Batch create..."
+    echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} create-batch >> ../../${OUTPUT}
+    restart_repository
+    echo "Retrieve..."
+    echo "*** RETRIEVE ***" >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} retrieve >> ../../${OUTPUT}
+    restart_repository
+    echo "Update..."
+    echo "*** UPDATE ***" >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} update >> ../../${OUTPUT}
+    restart_repository
+    echo "Delete..."
+    echo "*** DELETE ***" >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} delete >> ../../${OUTPUT}
+    restart_repository
+    cd ../..
+}
 
 > ${OUTPUT}
 echo "Running benchmark..."
+start_repository
 
 #AliBaba Benchmark
 echo "Running AliBaba..."
-cd alibaba-benchmark/target
 echo "---------------------------------------" >> ../../${OUTPUT}
 echo "|               AliBaba               |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
-
-echo "Create..."
-echo "*** CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
-echo "Batch create..."
-echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
-echo "Retrieve..."
-echo "*** RETRIEVE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
-echo "Update..."
-echo "*** UPDATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
-echo "Delete..."
-echo "*** DELETE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} alibaba-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
-cd ../..
+execute_benchmark "alibaba-benchmark"
 
 #Empire Benchmark
 echo "Running Empire..."
-cd empire-benchmark/target
 echo "---------------------------------------" >> ../../${OUTPUT}
 echo "|               Empire                |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
-
-echo "Create..."
-echo "*** CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
-echo "Batch create..."
-echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
-echo "Retrieve..."
-echo "*** RETRIEVE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
-echo "Update..."
-echo "*** UPDATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
-echo "Delete..."
-echo "*** DELETE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} empire-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
-cd ../..
+execute_benchmark "empire-benchmark"
 
 # JOPA Benchmark
 echo "Running JOPA..."
-cd jopa-benchmark/target
 echo "---------------------------------------" >> ../../${OUTPUT}
 echo "|               JOPA                  |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
+execute_benchmark "jopa-benchmark"
 
-echo "Create..."
-echo "*** CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
-echo "Batch create..."
-echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
-echo "Retrieve..."
-echo "*** RETRIEVE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
-echo "Update..."
-echo "*** UPDATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
-echo "Delete..."
-echo "*** DELETE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} jopa-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
-cd ../..
 
 # KOMMA Benchmark
 echo "Running KOMMA..."
-cd komma-benchmark/target
 echo "---------------------------------------" >> ../../${OUTPUT}
 echo "|               KOMMA                 |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
-
-echo "Create..."
-echo "*** CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
-echo "Batch create..."
-echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
-echo "Retrieve..."
-echo "*** RETRIEVE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
-echo "Update..."
-echo "*** UPDATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
-echo "Delete..."
-echo "*** DELETE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} komma-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
-cd ../..
+execute_benchmark "komma-benchmark"
 
 # RDFBeans Benchmark
 echo "Running RDFBeans..."
-cd rdfbeans-benchmark/target
 echo "---------------------------------------" >> ../../${OUTPUT}
 echo "|               RDFBeans              |" >> ../../${OUTPUT}
 echo "---------------------------------------" >> ../../${OUTPUT}
+execute_benchmark "rdfbeans-benchmark"
 
-echo "Create..."
-echo "*** CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS create >> ../../${OUTPUT}
-echo "Batch create..."
-echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS create-batch >> ../../${OUTPUT}
-echo "Retrieve..."
-echo "*** RETRIEVE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS retrieve >> ../../${OUTPUT}
-echo "Update..."
-echo "*** UPDATE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS update >> ../../${OUTPUT}
-echo "Delete..."
-echo "*** DELETE ***" >> ../../${OUTPUT}
-${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} rdfbeans-benchmark.jar -w $WARMUPS -r $ROUNDS delete >> ../../${OUTPUT}
-cd ../..
-
+stop_repository
 echo "Benchmark finished."
