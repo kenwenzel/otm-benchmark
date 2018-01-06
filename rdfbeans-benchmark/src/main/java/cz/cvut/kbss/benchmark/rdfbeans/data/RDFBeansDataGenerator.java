@@ -1,10 +1,7 @@
 package cz.cvut.kbss.benchmark.rdfbeans.data;
 
 import cz.cvut.kbss.benchmark.data.DataGenerator;
-import cz.cvut.kbss.benchmark.rdfbeans.model.Occurrence;
-import cz.cvut.kbss.benchmark.rdfbeans.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.rdfbeans.model.Person;
-import cz.cvut.kbss.benchmark.rdfbeans.model.Resource;
+import cz.cvut.kbss.benchmark.rdfbeans.model.*;
 
 public class RDFBeansDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
@@ -25,6 +22,13 @@ public class RDFBeansDataGenerator extends DataGenerator<Person, OccurrenceRepor
         final Occurrence occurrence = new Occurrence();
         occurrence.setUri(generateUri(Occurrence.class).toString());
         return occurrence;
+    }
+
+    @Override
+    protected Event event() {
+        final Event event = new Event();
+        event.setUri(generateUri(Event.class).toString());
+        return event;
     }
 
     @Override
