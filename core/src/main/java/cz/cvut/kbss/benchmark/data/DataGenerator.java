@@ -13,14 +13,6 @@ import static cz.cvut.kbss.benchmark.util.Constants.*;
 
 public abstract class DataGenerator<P extends Person, R extends OccurrenceReport> {
 
-    private static final URI[] EVENT_TYPES =
-            new URI[]{URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-1"),
-                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-10"),
-                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-100"),
-                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-101"),
-                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-102"),
-                      URI.create("http://onto.fel.cvut.cz/ontologies/eccairs/aviation-3.4.0.2/vl-a-430/v-103")};
-
     protected final Random random = new Random();
 
     private final int itemCount;

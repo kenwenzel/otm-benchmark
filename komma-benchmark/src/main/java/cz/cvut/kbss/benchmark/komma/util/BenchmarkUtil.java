@@ -2,14 +2,19 @@ package cz.cvut.kbss.benchmark.komma.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.komma.KommaGenerator;
+import cz.cvut.kbss.benchmark.komma.model.Event;
 import cz.cvut.kbss.benchmark.komma.model.OccurrenceReport;
 import net.enilink.komma.core.IEntityManager;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Optional;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class BenchmarkUtil {
 
@@ -46,5 +51,28 @@ public class BenchmarkUtil {
         assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());
         assertEquals(expected.getAuthor().getContacts(), actual.getAuthor().getContacts());
         assertEquals(expected.getLastModifiedBy().getContacts(), actual.getLastModifiedBy().getContacts());
+        checkEvents(expected.getOccurrence().getSubEvents(), actual.getOccurrence().getSubEvents());
+    }
+
+    protected static void checkEvents(Set<Event> expected, Set<Event> actual) {
+        assertNotNull(actual);
+        assertEquals(expected.size(), actual.size());
+        for (Event expEvent : expected) {
+            final Optional<Event> actEvent = actual.stream().filter(e -> expEvent.getId().equals(e.getId())).findAny();
+            assertTrue(actEvent.isPresent());
+            final Event evt = actEvent.get();
+            assertEquals(expEvent.getStart(), evt.getStart());
+            assertEquals(expEvent.getEnd(), evt.getEnd());
+            assertEquals(expEvent.getEventType(), evt.getEventType());
+            if (expEvent.getSubEvents() != null) {
+                checkEvents(expEvent.getSubEvents(), evt.getSubEvents());
+            }
+        }
+    }
+
+    public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) {
+        GregorianCalendar c = new GregorianCalendar();
+        c.setTime(date);
+        return datatypeFactory().newXMLGregorianCalendar(c);
     }
 }

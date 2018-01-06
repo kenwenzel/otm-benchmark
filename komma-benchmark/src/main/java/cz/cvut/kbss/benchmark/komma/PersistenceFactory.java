@@ -2,10 +2,7 @@ package cz.cvut.kbss.benchmark.komma;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import cz.cvut.kbss.benchmark.komma.model.Occurrence;
-import cz.cvut.kbss.benchmark.komma.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.komma.model.Person;
-import cz.cvut.kbss.benchmark.komma.model.Resource;
+import cz.cvut.kbss.benchmark.komma.model.*;
 import cz.cvut.kbss.benchmark.komma.util.BenchmarkModule;
 import cz.cvut.kbss.benchmark.util.Config;
 import net.enilink.komma.core.IEntityManager;
@@ -35,6 +32,7 @@ public class PersistenceFactory {
         Injector injector = Guice.createInjector(new BenchmarkModule(repository, new KommaModule() {
             {
                 addConcept(Person.class);
+                addConcept(Event.class);
                 addConcept(Occurrence.class);
                 addConcept(OccurrenceReport.class);
                 addConcept(Resource.class);

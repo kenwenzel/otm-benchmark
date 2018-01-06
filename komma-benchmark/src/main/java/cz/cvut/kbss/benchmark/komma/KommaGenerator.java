@@ -1,9 +1,6 @@
 package cz.cvut.kbss.benchmark.komma;
 
-import cz.cvut.kbss.benchmark.komma.model.Occurrence;
-import cz.cvut.kbss.benchmark.komma.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.komma.model.Person;
-import cz.cvut.kbss.benchmark.komma.model.Resource;
+import cz.cvut.kbss.benchmark.komma.model.*;
 import cz.cvut.kbss.benchmark.komma.util.BenchmarkUtil;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import cz.cvut.kbss.benchmark.util.Constants;
@@ -118,10 +115,38 @@ public class KommaGenerator {
         final URI uri = URIs.createURI(generateUri(Occurrence.class).toString());
         final Occurrence occurrence = em.createNamed(uri, Occurrence.class);
         occurrence.setName("Occurrence" + random.nextInt());
-        occurrence.setStartTime(new Date(System.currentTimeMillis() - 10000));
-        occurrence.setEndTime(new Date());
+        occurrence.setStart(BenchmarkUtil.toXmlGregorianCalendar(new Date(System.currentTimeMillis() - 10000)));
+        occurrence.setEnd(BenchmarkUtil.toXmlGregorianCalendar(new Date()));
+        occurrence.setSubEvents(generateEventHierarchy(occurrence));
         instances.put(occurrence, uri);
         return occurrence;
+    }
+
+    private Set<Event> generateEventHierarchy(Occurrence occurrence) {
+        return generateEvents(occurrence, 0, Constants.MAX_EVENT_DEPTH);
+    }
+
+    private Set<Event> generateEvents(Occurrence occurrence, int level, int maxLevel) {
+        if (level >= maxLevel) {
+            return null;
+        }
+        final Set<Event> events = new HashSet<>();
+        for (int i = 0; i < Constants.MAX_CHILD_EVENTS; i++) {
+            final Event evt = generateEvent(occurrence);
+            evt.setSubEvents(generateEvents(occurrence, level + 1, maxLevel));
+            events.add(evt);
+        }
+        return events;
+    }
+
+    private Event generateEvent(Occurrence occurrence) {
+        final URI uri = URIs.createURI(generateUri(Event.class).toString());
+        final Event event = em.createNamed(uri, Event.class);
+        event.setStart(occurrence.getStart());
+        event.setEnd(occurrence.getEnd());
+        event.setEventType(Constants.EVENT_TYPES[random.nextInt(Constants.EVENT_TYPES.length)]);
+        instances.put(event, uri);
+        return event;
     }
 
     private List<Person> generatePersons() {
@@ -152,7 +177,7 @@ public class KommaGenerator {
         return Collections.unmodifiableList(persons);
     }
 
-    public URI getUri(Object report) {
-        return instances.get(report);
+    public URI getUri(Object instance) {
+        return instances.get(instance);
     }
 }
