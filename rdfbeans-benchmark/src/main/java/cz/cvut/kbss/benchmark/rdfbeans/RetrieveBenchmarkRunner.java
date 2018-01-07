@@ -18,6 +18,6 @@ public class RetrieveBenchmarkRunner extends RDFBeansBenchmarkRunner {
     @Override
     public void execute() {
         final RDFBeanManager beanManager = persistenceFactory.beanManager();
-        findAndVerifyAll(new RdfBeansFinder(beanManager));
+        executeRetrieve(new RdfBeansFinder(beanManager));
     }
 }

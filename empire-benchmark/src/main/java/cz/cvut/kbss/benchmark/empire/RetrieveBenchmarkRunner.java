@@ -20,6 +20,6 @@ public class RetrieveBenchmarkRunner extends EmpireBenchmarkRunner {
     @Override
     public void execute() {
         final EntityManager em = persistenceFactory.entityManager();
-        findAndVerifyAll(new EmpireFinder(em));
+        executeRetrieve(new EmpireFinder(em));
     }
 }

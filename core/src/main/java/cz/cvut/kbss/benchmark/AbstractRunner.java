@@ -65,6 +65,10 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
         saver.commit();
     }
 
+    protected void executeRetrieve(Finder<R> finder) {
+        findAndVerifyAll(finder);
+    }
+
     protected <O extends Occurrence, A extends Resource> void findAndVerifyAll(Finder<R> finder) {
         generator.getReports().forEach(r -> checkReport(r, finder.find(r)));
     }
@@ -97,6 +101,22 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
             if (expEvent.getSubEvents() != null) {
                 checkEvents(expEvent.getSubEvents(), evt.getSubEvents());
             }
+        }
+    }
+
+    protected void executeRetrieveAll(Finder<R> finder) {
+        final Collection<R> result = finder.findAll();
+        assertEquals(generator.getReports().size(), result.size());
+        for (R report : generator.getReports()) {
+            boolean found = false;
+            for (R resultReport : result) {
+                if (report.getId().equals(resultReport.getId())) {
+                    found = true;
+                    checkReport(report, resultReport);
+                    break;
+                }
+            }
+            assertTrue(found);
         }
     }
 

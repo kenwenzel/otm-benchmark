@@ -19,6 +19,6 @@ public class RetrieveBenchmarkRunner extends JopaBenchmarkRunner {
     @Override
     public void execute() {
         final EntityManager em = persistenceFactory.entityManager();
-        findAndVerifyAll(new JopaFinder(em));
+        executeRetrieve(new JopaFinder(em));
     }
 }

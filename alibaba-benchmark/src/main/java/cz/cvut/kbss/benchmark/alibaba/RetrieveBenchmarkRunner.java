@@ -18,7 +18,7 @@ public class RetrieveBenchmarkRunner extends AliBabaBenchmarkRunner {
     public void execute() {
         try {
             final ObjectConnection connection = persistenceFactory.objectConnection();
-            findAndVerifyAll(new AliBabaFinder(connection));
+            executeRetrieve(new AliBabaFinder(connection));
             connection.close();
         } catch (Exception e) {
             throw new BenchmarkException(e);

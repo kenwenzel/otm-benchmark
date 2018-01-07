@@ -4,6 +4,8 @@ import cz.cvut.kbss.benchmark.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 public abstract class AbstractBenchmark {
 
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractBenchmark.class);
@@ -11,6 +13,7 @@ public abstract class AbstractBenchmark {
     protected static final String CREATE = "create";
     protected static final String BATCH_CREATE = "create-batch";
     protected static final String RETRIEVE = "retrieve";
+    protected static final String RETRIEVE_ALL = "retrieve-all";
     protected static final String UPDATE = "update";
     protected static final String DELETE = "delete";
 
@@ -44,7 +47,8 @@ public abstract class AbstractBenchmark {
 
     private static void printHelp() {
         System.out.println("Usage:");
-        System.out.println("[execution-configuration] (" + CREATE + '|' + RETRIEVE + '|' + UPDATE + '|' + DELETE + ')');
+        System.out.println("[execution-configuration] (" + String
+                .join("|", Arrays.asList(CREATE, BATCH_CREATE, RETRIEVE, RETRIEVE_ALL, UPDATE, DELETE)) + ')');
         System.out.println("execution-configuration: ");
         Configuration.printHelp();
     }

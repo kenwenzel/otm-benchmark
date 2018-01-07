@@ -19,6 +19,8 @@ public class JopaBenchmark extends AbstractBenchmark {
                 return new BatchCreateBenchmarkRunner();
             case RETRIEVE:
                 return new RetrieveBenchmarkRunner();
+            case RETRIEVE_ALL:
+                return new RetrieveAllBenchmarkRunner();
             case UPDATE:
                 return new UpdateBenchmarkRunner();
             case DELETE:
