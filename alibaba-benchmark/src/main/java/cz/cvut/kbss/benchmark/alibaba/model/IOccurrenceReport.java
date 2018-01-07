@@ -17,6 +17,9 @@ public interface IOccurrenceReport extends OccurrenceReport<Occurrence, Person, 
     @Override
     void setKey(String key);
 
+    @Override
+    String getId();
+
     @Iri(Vocabulary.s_p_has_file_number)
     @Override
     Long getFileNumber();

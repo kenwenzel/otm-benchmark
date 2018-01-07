@@ -52,6 +52,11 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     }
 
     @Override
+    public String getId() {
+        return uri.toString();
+    }
+
+    @Override
     public String getFirstName() {
         return firstName;
     }

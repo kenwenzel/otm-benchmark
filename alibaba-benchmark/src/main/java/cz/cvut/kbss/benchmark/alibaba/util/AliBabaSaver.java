@@ -42,7 +42,7 @@ public class AliBabaSaver implements Saver<Person, OccurrenceReport> {
     public void persistAll(Collection<Person> persons) {
         try {
             for (Person p : persons) {
-                connection.addObject(p.getKey(), p);
+                connection.addObject(p.getUri().toString(), p);
             }
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);
@@ -52,10 +52,10 @@ public class AliBabaSaver implements Saver<Person, OccurrenceReport> {
     @Override
     public void persist(OccurrenceReport report) {
         try {
-            connection.addObject(report.getKey(), report);
-            connection.addObject(report.getOccurrence().getKey(), report.getOccurrence());
+            connection.addObject(report.getUri().toString(), report);
+            connection.addObject(report.getOccurrence().getUri().toString(), report.getOccurrence());
             for (Resource a : report.getAttachments()) {
-                connection.addObject(a.getKey(), a);
+                connection.addObject(a.getUri().toString(), a);
             }
             persistEvents(report.getOccurrence().getSubEvents());
         } catch (RepositoryException e) {
@@ -66,7 +66,7 @@ public class AliBabaSaver implements Saver<Person, OccurrenceReport> {
     private void persistEvents(Set<Event> events) throws RepositoryException {
         if (events != null) {
             for (Event e : events) {
-                connection.addObject(e.getKey(), e);
+                connection.addObject(e.getUri().toString(), e);
                 persistEvents(e.getSubEvents());
             }
         }

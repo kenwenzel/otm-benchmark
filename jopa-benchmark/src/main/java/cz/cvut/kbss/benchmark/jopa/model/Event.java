@@ -48,6 +48,11 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event> {
     }
 
     @Override
+    public String getId() {
+        return uri.toString();
+    }
+
+    @Override
     public Date getStartTime() {
         return startTime;
     }

@@ -43,6 +43,11 @@ public class Person implements IPerson {
     }
 
     @Override
+    public String getId() {
+        return uri.toString();
+    }
+
+    @Override
     public String getFirstName() {
         return firstName;
     }

@@ -15,6 +15,9 @@ public interface IResource extends Resource {
     void setKey(String key);
 
     @Override
+    String getId();
+
+    @Override
     void setIdentifier(String identifier);
 
     @Iri(Vocabulary.s_p_description)

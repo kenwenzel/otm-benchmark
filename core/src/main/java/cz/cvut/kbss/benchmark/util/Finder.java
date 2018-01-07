@@ -1,6 +1,6 @@
 package cz.cvut.kbss.benchmark.util;
 
-import cz.cvut.kbss.benchmark.model.HasKey;
+import cz.cvut.kbss.benchmark.model.HasIdentifier;
 import cz.cvut.kbss.benchmark.model.OccurrenceReport;
 
 import java.util.Collection;
@@ -11,5 +11,5 @@ public interface Finder<R extends OccurrenceReport> {
 
     Collection<R> findAll();
 
-    boolean exists(HasKey instance);
+    boolean exists(HasIdentifier instance);
 }

@@ -2,7 +2,7 @@ package cz.cvut.kbss.benchmark.alibaba.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 import cz.cvut.kbss.benchmark.alibaba.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.model.HasKey;
+import cz.cvut.kbss.benchmark.model.HasIdentifier;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import cz.cvut.kbss.benchmark.util.Finder;
 import org.openrdf.annotations.Iri;
@@ -45,13 +45,13 @@ public class AliBabaFinder implements Finder<OccurrenceReport> {
     }
 
     @Override
-    public boolean exists(HasKey instance) {
+    public boolean exists(HasIdentifier instance) {
         final Class<?> cls = instance.getClass();
         assert cls.getDeclaredAnnotation(Iri.class) != null;
         final String typeUri = cls.getDeclaredAnnotation(Iri.class).value();
         final ValueFactory vf = connection.getValueFactory();
         try {
-            return connection.hasStatement(vf.createURI(instance.getKey()), RDF.TYPE, vf.createURI(typeUri));
+            return connection.hasStatement(vf.createURI(instance.getId()), RDF.TYPE, vf.createURI(typeUri));
         } catch (RepositoryException e) {
             throw new BenchmarkException(e);
         }

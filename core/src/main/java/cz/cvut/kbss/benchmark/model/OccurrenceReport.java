@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Set;
 
 public interface OccurrenceReport<O extends Occurrence, P extends Person, R extends Resource>
-        extends Serializable, HasKey {
+        extends Serializable, HasIdentifier, HasKey {
 
     Long getFileNumber();
 

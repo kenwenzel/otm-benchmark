@@ -57,6 +57,11 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event>, Support
     }
 
     @Override
+    public String getId() {
+        return getRdfId().value().toString();
+    }
+
+    @Override
     public Date getStartTime() {
         return startTime;
     }

@@ -35,6 +35,11 @@ public class Resource implements IResource {
         this.key = key;
     }
 
+    @Override
+    public String getId() {
+        return uri.toString();
+    }
+
     public String getIdentifier() {
         return identifier;
     }

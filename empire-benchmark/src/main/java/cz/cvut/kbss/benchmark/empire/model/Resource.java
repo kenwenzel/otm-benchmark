@@ -45,6 +45,11 @@ public class Resource implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Res
     }
 
     @Override
+    public String getId() {
+        return getRdfId().value().toString();
+    }
+
+    @Override
     public String getIdentifier() {
         return identifier;
     }

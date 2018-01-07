@@ -2,7 +2,7 @@ package cz.cvut.kbss.benchmark.model;
 
 import java.io.Serializable;
 
-public interface Resource extends Serializable, HasKey {
+public interface Resource extends Serializable, HasIdentifier, HasKey {
 
     /**
      * Can be for example file name, or a URL.

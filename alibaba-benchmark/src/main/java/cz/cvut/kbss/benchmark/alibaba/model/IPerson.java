@@ -16,6 +16,9 @@ public interface IPerson extends Person {
     @Override
     void setKey(String key);
 
+    @Override
+    String getId();
+
     @Iri(Vocabulary.s_p_firstName)
     @Override
     String getFirstName();

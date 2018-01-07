@@ -17,6 +17,9 @@ public interface IEvent extends cz.cvut.kbss.benchmark.model.Event<Event> {
     @Override
     void setKey(String key);
 
+    @Override
+    String getId();
+
     @Iri(Vocabulary.s_p_has_start_time)
     @Override
     Date getStartTime();

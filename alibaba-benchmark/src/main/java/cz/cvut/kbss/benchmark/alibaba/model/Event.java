@@ -41,6 +41,11 @@ public class Event implements IEvent {
     }
 
     @Override
+    public String getId() {
+        return uri.toString();
+    }
+
+    @Override
     public Date getStartTime() {
         return startTime;
     }

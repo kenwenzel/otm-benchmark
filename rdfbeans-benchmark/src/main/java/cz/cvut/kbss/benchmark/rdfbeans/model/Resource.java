@@ -12,6 +12,8 @@ public class Resource implements cz.cvut.kbss.benchmark.model.Resource {
 
     private String uri;
 
+    private String key;
+
     private String identifier;
 
     private String description;
@@ -25,8 +27,19 @@ public class Resource implements cz.cvut.kbss.benchmark.model.Resource {
         this.uri = uri;
     }
 
+    @RDF(Vocabulary.s_p_has_key)
     @Override
     public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Override
+    public String getId() {
         return uri;
     }
 

@@ -13,6 +13,8 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
 
     private String uri;
 
+    private String key;
+
     private String firstName;
 
     private String lastName;
@@ -32,8 +34,19 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
         this.uri = uri;
     }
 
+    @RDF(Vocabulary.s_p_has_key)
     @Override
     public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Override
+    public String getId() {
         return uri;
     }
 

@@ -45,6 +45,11 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
     }
 
     @Override
+    public String getId() {
+        return getRdfId().value().toString();
+    }
+
+    @Override
     public String getFirstName() {
         return firstName;
     }

@@ -13,6 +13,8 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
 
     private String uri;
 
+    private String key;
+
     private Long fileNumber;
 
     private Occurrence occurrence;
@@ -42,8 +44,19 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
         this.uri = uri;
     }
 
+    @RDF(Vocabulary.s_p_has_key)
     @Override
     public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Override
+    public String getId() {
         return uri;
     }
 

@@ -65,6 +65,11 @@ public class OccurrenceReport
     }
 
     @Override
+    public String getId() {
+        return getRdfId().value().toString();
+    }
+
+    @Override
     public Long getFileNumber() {
         return fileNumber;
     }

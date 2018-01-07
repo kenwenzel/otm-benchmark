@@ -53,6 +53,11 @@ public class OccurrenceReport implements IOccurrenceReport {
     }
 
     @Override
+    public String getId() {
+        return uri.toString();
+    }
+
+    @Override
     public Long getFileNumber() {
         return fileNumber;
     }
