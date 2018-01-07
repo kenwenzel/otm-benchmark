@@ -6,6 +6,11 @@ import net.enilink.composition.annotations.Iri;
 @Iri(Vocabulary.s_c_Resource)
 public interface Resource {
 
+    @Iri(Vocabulary.s_p_has_key)
+    String getKey();
+
+    void setKey(String key);
+
     @Iri(Vocabulary.s_p_has_id)
     String getIdentifier();
 

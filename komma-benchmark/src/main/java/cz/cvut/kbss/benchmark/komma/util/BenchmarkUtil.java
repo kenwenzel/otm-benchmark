@@ -32,11 +32,12 @@ public class BenchmarkUtil {
         return FACTORY;
     }
 
-    public static void findAllAndVerify(KommaGenerator generator, IEntityManager em) {
-        generator.getReports().forEach(r -> {
-            final OccurrenceReport result = em.find(generator.getUri(r), OccurrenceReport.class);
-            checkReport(r, result);
-        });
+    public static void executeRetrieve(KommaGenerator generator, KommaFinder finder) {
+        findAllAndVerify(generator, finder);
+    }
+
+    public static void findAllAndVerify(KommaGenerator generator, KommaFinder finder) {
+        generator.getReports().forEach(r -> checkReport(r, finder.find(generator.getUri(r))));
     }
 
     public static void checkReport(OccurrenceReport expected, OccurrenceReport actual) {

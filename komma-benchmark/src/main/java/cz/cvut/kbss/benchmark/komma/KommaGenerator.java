@@ -80,6 +80,7 @@ public class KommaGenerator {
     private OccurrenceReport report() {
         final URI uri = URIs.createURI(generateUri(OccurrenceReport.class).toString());
         final OccurrenceReport r = em.createNamed(uri, OccurrenceReport.class);
+        r.setKey(generateKey());
         r.setOccurrence(generateOccurrence());
         r.setSeverityAssessment(random.nextInt(Constants.MAX_SEVERITY));
         r.setAuthor(randomItem(persons));
@@ -114,6 +115,7 @@ public class KommaGenerator {
     private Occurrence generateOccurrence() {
         final URI uri = URIs.createURI(generateUri(Occurrence.class).toString());
         final Occurrence occurrence = em.createNamed(uri, Occurrence.class);
+        occurrence.setKey(generateKey());
         occurrence.setName("Occurrence" + random.nextInt());
         occurrence.setStart(BenchmarkUtil.toXmlGregorianCalendar(new Date(System.currentTimeMillis() - 10000)));
         occurrence.setEnd(BenchmarkUtil.toXmlGregorianCalendar(new Date()));
@@ -142,6 +144,7 @@ public class KommaGenerator {
     private Event generateEvent(Occurrence occurrence) {
         final URI uri = URIs.createURI(generateUri(Event.class).toString());
         final Event event = em.createNamed(uri, Event.class);
+        event.setKey(generateKey());
         event.setStart(occurrence.getStart());
         event.setEnd(occurrence.getEnd());
         event.setEventType(Constants.EVENT_TYPES[random.nextInt(Constants.EVENT_TYPES.length)]);
@@ -153,6 +156,7 @@ public class KommaGenerator {
         final List<Person> list = new ArrayList<>(itemCount);
         for (int i = 0; i < itemCount; i++) {
             final Person p = em.createNamed(URIs.createURI(generateUri(Person.class).toString()), Person.class);
+            p.setKey(generateKey());
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);
             p.setLastName("lastName" + i);
@@ -167,6 +171,10 @@ public class KommaGenerator {
 
     private java.net.URI generateUri(Class<?> type) {
         return java.net.URI.create(Vocabulary.BASE_URI + type.getSimpleName() + random.nextInt());
+    }
+
+    private String generateKey() {
+        return Long.toString(System.currentTimeMillis()) + random.nextInt();
     }
 
     public List<OccurrenceReport> getReports() {

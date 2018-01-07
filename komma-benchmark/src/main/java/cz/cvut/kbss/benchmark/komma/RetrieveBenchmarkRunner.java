@@ -1,6 +1,7 @@
 package cz.cvut.kbss.benchmark.komma;
 
 import cz.cvut.kbss.benchmark.komma.util.BenchmarkUtil;
+import cz.cvut.kbss.benchmark.komma.util.KommaFinder;
 import net.enilink.komma.core.IEntityManager;
 
 public class RetrieveBenchmarkRunner extends KommaBenchmarkRunner {
@@ -19,6 +20,6 @@ public class RetrieveBenchmarkRunner extends KommaBenchmarkRunner {
     @Override
     public void execute() {
         final IEntityManager em = persistenceFactory.entityManager();
-        BenchmarkUtil.findAllAndVerify(generator, em);
+        BenchmarkUtil.executeRetrieve(generator, new KommaFinder(em));
     }
 }
