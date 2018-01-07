@@ -37,6 +37,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
             r.setOccurrence(generateOccurrence());
             r.setAuthor(randomItem(persons));
             r.setFileNumber(random.nextLong());
+            r.setKey(generateKey());
             r.setDateCreated(currentTime());
             r.setLastModified(currentTime());
             r.setLastModifiedBy(randomItem(persons));
@@ -68,6 +69,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
     protected Occurrence generateOccurrence() {
         final Occurrence occurrence = occurrence();
         occurrence.setName("Occurrence" + random.nextInt());
+        occurrence.setKey(generateKey());
         occurrence.setStartTime(new Date(currentTime().getTime() - 10000));
         occurrence.setEndTime(currentTime());
         occurrence.setSubEvents(generateEventHierarchy(occurrence));
@@ -76,6 +78,10 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
     }
 
     protected abstract Occurrence occurrence();
+
+    private String generateKey() {
+        return Long.toString(System.currentTimeMillis()) + random.nextInt();
+    }
 
     private Set<Event> generateEventHierarchy(Occurrence occurrence) {
         return generateEvents(occurrence, 0, Constants.MAX_EVENT_DEPTH);
@@ -92,6 +98,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
             evt.setEndTime(occurrence.getEndTime());
             evt.setSubEvents(generateEvents(occurrence, level + 1, maxLevel));
             evt.setEventType(EVENT_TYPES[random.nextInt(EVENT_TYPES.length)]);
+            evt.setKey(generateKey());
             events.add(evt);
         }
         return events;
@@ -106,6 +113,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
     public Resource generateAttachment() {
         final Resource attachment = resource();
         attachment.setIdentifier("resource" + random.nextInt() + ".doc");
+        attachment.setKey(generateKey());
         attachment.setDescription("This resource was attached to further document the reported occurrence.");
         return attachment;
     }
@@ -116,6 +124,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
         final List<P> list = new ArrayList<>();
         for (int i = 0; i < itemCount; i++) {
             final P p = person();
+            p.setKey(generateKey());
             p.setPassword("password-" + i);
             p.setFirstName("firstName" + i);
             p.setLastName("lastName" + i);

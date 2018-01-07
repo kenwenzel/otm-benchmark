@@ -16,6 +16,9 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
 
     private SupportsRdfId mIdSupport = new SupportsRdfIdImpl();
 
+    @RdfProperty(Vocabulary.s_p_has_key)
+    private String key;
+
     @RdfProperty(Vocabulary.s_p_firstName)
     private String firstName;
 
@@ -30,6 +33,16 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
 
     @RdfProperty(Vocabulary.s_p_contact)
     private Set<String> contacts;
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     @Override
     public String getFirstName() {
@@ -89,11 +102,6 @@ public class Person implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Perso
     @Override
     public void setRdfId(RdfKey rdfKey) {
         mIdSupport.setRdfId(rdfKey);
-    }
-
-    @Override
-    public String getId() {
-        return getRdfId().value().toString();
     }
 
     @Override

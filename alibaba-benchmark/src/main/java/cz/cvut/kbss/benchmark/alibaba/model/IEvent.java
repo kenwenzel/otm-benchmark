@@ -10,6 +10,13 @@ import java.util.Set;
 @Iri(Vocabulary.s_c_Event)
 public interface IEvent extends cz.cvut.kbss.benchmark.model.Event<Event> {
 
+    @Iri(Vocabulary.s_p_has_key)
+    @Override
+    String getKey();
+
+    @Override
+    void setKey(String key);
+
     @Iri(Vocabulary.s_p_has_start_time)
     @Override
     Date getStartTime();

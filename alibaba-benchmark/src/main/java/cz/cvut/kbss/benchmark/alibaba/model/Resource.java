@@ -11,6 +11,8 @@ public class Resource implements IResource {
 
     private URI uri;
 
+    private String key;
+
     private String identifier;
 
     private String description;
@@ -24,8 +26,13 @@ public class Resource implements IResource {
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getIdentifier() {
@@ -52,17 +59,17 @@ public class Resource implements IResource {
         if (this == o) return true;
         if (!(o instanceof Resource)) return false;
         Resource resource = (Resource) o;
-        return Objects.equals(getId(), resource.getId());
+        return Objects.equals(getKey(), resource.getKey());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getKey());
     }
 
     @Override
     public String toString() {
-        return "Resource{ identifier='" + getId() + '\'' +
+        return "Resource{ identifier='" + getKey() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 '}';
     }

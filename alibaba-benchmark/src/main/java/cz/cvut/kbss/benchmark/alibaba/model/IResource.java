@@ -9,7 +9,10 @@ public interface IResource extends Resource {
 
     @Iri(Vocabulary.s_p_has_id)
     @Override
-    String getId();
+    String getKey();
+
+    @Override
+    void setKey(String key);
 
     @Override
     void setIdentifier(String identifier);

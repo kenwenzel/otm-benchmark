@@ -58,7 +58,7 @@ public class BenchmarkUtil {
         assertNotNull(actual);
         assertEquals(expected.size(), actual.size());
         for (Event expEvent : expected) {
-            final Optional<Event> actEvent = actual.stream().filter(e -> expEvent.getId().equals(e.getId())).findAny();
+            final Optional<Event> actEvent = actual.stream().filter(e -> expEvent.getKey().equals(e.getKey())).findAny();
             assertTrue(actEvent.isPresent());
             final Event evt = actEvent.get();
             assertEquals(expEvent.getStart(), evt.getStart());

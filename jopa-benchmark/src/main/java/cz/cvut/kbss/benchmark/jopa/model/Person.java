@@ -15,6 +15,9 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     @Id
     private URI uri;
 
+    @OWLDataProperty(iri = Vocabulary.s_p_has_key)
+    private String key;
+
     @OWLDataProperty(iri = Vocabulary.s_p_firstName)
     private String firstName;
 
@@ -39,8 +42,13 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

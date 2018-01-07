@@ -17,6 +17,9 @@ public class OccurrenceReport
 
     private SupportsRdfId mIdSupport = new SupportsRdfIdImpl();
 
+    @RdfProperty(Vocabulary.s_p_has_key)
+    private String key;
+
     @RdfProperty(Vocabulary.s_p_has_file_number)
     private Long fileNumber;
 
@@ -50,6 +53,16 @@ public class OccurrenceReport
 
     @RdfProperty(Vocabulary.s_p_description)
     private String summary;
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     @Override
     public Long getFileNumber() {
@@ -168,10 +181,5 @@ public class OccurrenceReport
     @Override
     public void setRdfId(SupportsRdfId.RdfKey rdfKey) {
         mIdSupport.setRdfId(rdfKey);
-    }
-
-    @Override
-    public String getId() {
-        return getRdfId().value().toString();
     }
 }

@@ -43,7 +43,7 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     }
 
     @Override
-    public String getId() {
+    public String getKey() {
         return uri;
     }
 

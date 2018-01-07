@@ -32,7 +32,7 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event> {
     }
 
     @Override
-    public String getId() {
+    public String getKey() {
         return uri;
     }
 

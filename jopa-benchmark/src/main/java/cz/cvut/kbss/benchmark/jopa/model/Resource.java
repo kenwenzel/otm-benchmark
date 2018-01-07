@@ -14,6 +14,9 @@ public class Resource implements cz.cvut.kbss.benchmark.model.Resource {
     @Id
     private URI uri;
 
+    @OWLDataProperty(iri = Vocabulary.s_p_has_key)
+    private String key;
+
     @OWLDataProperty(iri = Vocabulary.s_p_has_id)
     private String identifier;
 
@@ -29,8 +32,13 @@ public class Resource implements cz.cvut.kbss.benchmark.model.Resource {
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

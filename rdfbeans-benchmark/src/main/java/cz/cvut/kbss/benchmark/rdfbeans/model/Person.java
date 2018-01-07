@@ -33,7 +33,7 @@ public class Person implements cz.cvut.kbss.benchmark.model.Person {
     }
 
     @Override
-    public String getId() {
+    public String getKey() {
         return uri;
     }
 

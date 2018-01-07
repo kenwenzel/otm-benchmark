@@ -30,6 +30,7 @@ public class Vocabulary {
     public final static String s_p_has_severity_assessment = "http://onto.fel.cvut.cz/ontologies/documentation/has_severity_assessment";
     public final static String s_p_has_part = "http://onto.fel.cvut.cz/ontologies/ufo/has_part";
     public final static String s_p_has_event_type = "http://onto.fel.cvut.cz/ontologies/reporting-tool/has_event_type";
+    public final static String s_p_has_key = "http://onto.fel.cvut.cz/ontologies/documentation/has_key";
 
     private Vocabulary() {
         throw new AssertionError();

@@ -25,6 +25,6 @@ public class Occurrence extends Event implements cz.cvut.kbss.benchmark.model.Oc
 
     @Override
     public String toString() {
-        return "Occurrence{" + name + " <" + getId() + ">}";
+        return "Occurrence{" + name + " <" + this.getKey() + ">}";
     }
 }

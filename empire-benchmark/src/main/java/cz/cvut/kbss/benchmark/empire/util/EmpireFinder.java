@@ -3,7 +3,7 @@ package cz.cvut.kbss.benchmark.empire.util;
 import com.clarkparsia.empire.SupportsRdfId;
 import com.clarkparsia.empire.impl.RdfQuery;
 import cz.cvut.kbss.benchmark.empire.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.model.HasIdentifier;
+import cz.cvut.kbss.benchmark.model.HasKey;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import cz.cvut.kbss.benchmark.util.Finder;
 
@@ -31,7 +31,7 @@ public class EmpireFinder implements Finder<OccurrenceReport> {
     }
 
     @Override
-    public boolean exists(HasIdentifier instance) {
-        return em.find(instance.getClass(), new SupportsRdfId.URIKey(URI.create(instance.getId()))) != null;
+    public boolean exists(HasKey instance) {
+        return em.find(instance.getClass(), new SupportsRdfId.URIKey(URI.create(instance.getKey()))) != null;
     }
 }

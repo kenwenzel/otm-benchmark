@@ -53,6 +53,7 @@ abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceR
         Config.getRepoUrl().ifPresent(rUrl -> BenchmarkUtil.clearRepository(rUrl + "/statements"));
     }
 
+    @Override
     protected void checkReport(cz.cvut.kbss.benchmark.model.OccurrenceReport expected,
                                cz.cvut.kbss.benchmark.model.OccurrenceReport actual) {
         assertNotNull(actual);
@@ -62,9 +63,9 @@ abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceR
         assertEquals(expected.getOccurrence().getName(), actual.getOccurrence().getName());
         // Had to override because of problems with object equality
         final Set<String> expectedAttIds = new HashSet<>();
-        expected.getAttachments().forEach(a -> expectedAttIds.add(((Resource) a).getId()));
+        expected.getAttachments().forEach(a -> expectedAttIds.add(((Resource) a).getKey()));
         final Set<String> actualAttIds = new HashSet<>();
-        actual.getAttachments().forEach(a -> actualAttIds.add(((Resource) a).getId()));
+        actual.getAttachments().forEach(a -> actualAttIds.add(((Resource) a).getKey()));
         assertEquals(expectedAttIds, actualAttIds);
         assertEquals(expected.getAuthor(), actual.getAuthor());
         assertEquals(expected.getLastModifiedBy(), actual.getLastModifiedBy());

@@ -12,6 +12,8 @@ public class Event implements IEvent {
 
     private URI uri;
 
+    private String key;
+
     private Date startTime;
 
     private Date endTime;
@@ -29,8 +31,13 @@ public class Event implements IEvent {
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.Set;
 
-public interface Event<T extends Event> extends Serializable, HasIdentifier {
+public interface Event<T extends Event> extends Serializable, HasKey {
 
     Date getStartTime();
 

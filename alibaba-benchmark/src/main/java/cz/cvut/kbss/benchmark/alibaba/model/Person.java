@@ -12,6 +12,8 @@ public class Person implements IPerson {
 
     private URI uri;
 
+    private String key;
+
     private String firstName;
 
     private String lastName;
@@ -31,8 +33,13 @@ public class Person implements IPerson {
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

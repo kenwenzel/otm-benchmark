@@ -12,6 +12,8 @@ public class OccurrenceReport implements IOccurrenceReport {
 
     private URI uri;
 
+    private String key;
+
     private Long fileNumber;
 
     private Occurrence occurrence;
@@ -41,8 +43,13 @@ public class OccurrenceReport implements IOccurrenceReport {
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

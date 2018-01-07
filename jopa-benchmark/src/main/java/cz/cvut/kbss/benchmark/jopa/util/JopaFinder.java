@@ -1,7 +1,7 @@
 package cz.cvut.kbss.benchmark.jopa.util;
 
 import cz.cvut.kbss.benchmark.jopa.model.OccurrenceReport;
-import cz.cvut.kbss.benchmark.model.HasIdentifier;
+import cz.cvut.kbss.benchmark.model.HasKey;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import cz.cvut.kbss.benchmark.util.Finder;
 import cz.cvut.kbss.jopa.model.EntityManager;
@@ -29,7 +29,7 @@ public class JopaFinder implements Finder<OccurrenceReport> {
     }
 
     @Override
-    public boolean exists(HasIdentifier instance) {
-        return em.find(instance.getClass(), URI.create(instance.getId())) != null;
+    public boolean exists(HasKey instance) {
+        return em.find(instance.getClass(), URI.create(instance.getKey())) != null;
     }
 }

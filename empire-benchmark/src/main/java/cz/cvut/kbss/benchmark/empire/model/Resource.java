@@ -15,6 +15,9 @@ public class Resource implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Res
 
     private SupportsRdfId mIdSupport = new SupportsRdfIdImpl();
 
+    @RdfProperty(Vocabulary.s_p_has_key)
+    private String key;
+
     @RdfProperty(Vocabulary.s_p_has_id)
     private String identifier;
 
@@ -32,8 +35,13 @@ public class Resource implements SupportsRdfId, cz.cvut.kbss.benchmark.model.Res
     }
 
     @Override
-    public String getId() {
-        return getRdfId().value().toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

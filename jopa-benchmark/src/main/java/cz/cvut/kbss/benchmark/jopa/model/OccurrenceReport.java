@@ -13,6 +13,9 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     @Id
     private URI uri;
 
+    @OWLDataProperty(iri = Vocabulary.s_p_has_key)
+    private String key;
+
     @OWLDataProperty(iri = Vocabulary.s_p_has_file_number)
     private Long fileNumber;
 
@@ -52,8 +55,13 @@ public class OccurrenceReport implements cz.cvut.kbss.benchmark.model.Occurrence
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

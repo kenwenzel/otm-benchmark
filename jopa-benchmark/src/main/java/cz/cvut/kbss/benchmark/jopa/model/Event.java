@@ -1,5 +1,6 @@
 package cz.cvut.kbss.benchmark.jopa.model;
 
+import com.sun.xml.internal.org.jvnet.fastinfoset.VocabularyApplicationData;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.*;
 
@@ -12,6 +13,9 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event> {
 
     @Id
     private URI uri;
+
+    @OWLDataProperty(iri = Vocabulary.s_p_has_key)
+    private String key;
 
     @OWLDataProperty(iri = Vocabulary.s_p_has_start_time)
     private Date startTime;
@@ -34,8 +38,13 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event> {
     }
 
     @Override
-    public String getId() {
-        return uri.toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

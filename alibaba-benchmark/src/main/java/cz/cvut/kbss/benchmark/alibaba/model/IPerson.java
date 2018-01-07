@@ -8,6 +8,14 @@ import java.util.Set;
 
 @Iri(Vocabulary.s_c_Person)
 public interface IPerson extends Person {
+
+    @Iri(Vocabulary.s_p_has_key)
+    @Override
+    String getKey();
+
+    @Override
+    void setKey(String key);
+
     @Iri(Vocabulary.s_p_firstName)
     @Override
     String getFirstName();

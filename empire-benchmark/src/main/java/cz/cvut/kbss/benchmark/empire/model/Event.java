@@ -20,6 +20,9 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event>, Support
 
     private SupportsRdfId mIdSupport = new SupportsRdfIdImpl();
 
+    @RdfProperty(Vocabulary.s_p_has_key)
+    private String key;
+
     @RdfProperty(Vocabulary.s_p_has_start_time)
     private Date startTime;
 
@@ -44,8 +47,13 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event>, Support
     }
 
     @Override
-    public String getId() {
-        return getRdfId().value().toString();
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override
@@ -91,7 +99,7 @@ public class Event implements cz.cvut.kbss.benchmark.model.Event<Event>, Support
     @Override
     public String toString() {
         return "Event{" +
-                "id=" + getId() +
+                "id=" + this.getKey() +
                 ", subEvents=" + subEvents +
                 ", eventType=" + eventType +
                 '}';
