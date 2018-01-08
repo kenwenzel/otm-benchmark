@@ -1,6 +1,5 @@
 package cz.cvut.kbss.benchmark.jopa.model;
 
-import com.sun.xml.internal.org.jvnet.fastinfoset.VocabularyApplicationData;
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import cz.cvut.kbss.jopa.model.annotations.*;
 

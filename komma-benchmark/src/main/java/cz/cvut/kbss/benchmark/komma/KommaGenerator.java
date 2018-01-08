@@ -96,7 +96,8 @@ public class KommaGenerator {
     }
 
     private Set<Resource> generateAttachments() {
-        return IntStream.range(0, 3).mapToObj(i -> generateAttachment()).collect(Collectors.toSet());
+        return IntStream.range(0, Constants.ATTACHMENT_COUNT).mapToObj(i -> generateAttachment())
+                        .collect(Collectors.toSet());
     }
 
     public Resource generateAttachment() {

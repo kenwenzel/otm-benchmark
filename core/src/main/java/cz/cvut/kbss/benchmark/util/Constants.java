@@ -11,6 +11,8 @@ public class Constants {
 
     public static final int MAX_SEVERITY = 10;
 
+    public static final int ATTACHMENT_COUNT = 3;
+
     public static final int MAX_CHILD_EVENTS = 2;
 
     public static final int MAX_EVENT_DEPTH = 2;

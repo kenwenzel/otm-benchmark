@@ -57,6 +57,10 @@ execute_benchmark()
     echo "*** RETRIEVE ***" >> ../../${OUTPUT}
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} retrieve >> ../../${OUTPUT}
     restart_repository
+    echo "Retrieve all..."
+    echo "*** RETRIEVE ALL ***" >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} retrieve-all >> ../../${OUTPUT}
+    restart_repository
     echo "Update..."
     echo "*** UPDATE ***" >> ../../${OUTPUT}
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} update >> ../../${OUTPUT}
@@ -74,38 +78,38 @@ start_repository
 
 #AliBaba Benchmark
 echo "Running AliBaba..."
-echo "---------------------------------------" >> ../../${OUTPUT}
-echo "|               AliBaba               |" >> ../../${OUTPUT}
-echo "---------------------------------------" >> ../../${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
+echo "|               AliBaba               |" >> ${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
 execute_benchmark "alibaba-benchmark"
 
 #Empire Benchmark
 echo "Running Empire..."
-echo "---------------------------------------" >> ../../${OUTPUT}
-echo "|               Empire                |" >> ../../${OUTPUT}
-echo "---------------------------------------" >> ../../${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
+echo "|               Empire                |" >> ${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
 execute_benchmark "empire-benchmark"
 
 # JOPA Benchmark
 echo "Running JOPA..."
-echo "---------------------------------------" >> ../../${OUTPUT}
-echo "|               JOPA                  |" >> ../../${OUTPUT}
-echo "---------------------------------------" >> ../../${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
+echo "|               JOPA                  |" >> ${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
 execute_benchmark "jopa-benchmark"
 
 
 # KOMMA Benchmark
 echo "Running KOMMA..."
-echo "---------------------------------------" >> ../../${OUTPUT}
-echo "|               KOMMA                 |" >> ../../${OUTPUT}
-echo "---------------------------------------" >> ../../${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
+echo "|               KOMMA                 |" >> ${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
 execute_benchmark "komma-benchmark"
 
 # RDFBeans Benchmark
 echo "Running RDFBeans..."
-echo "---------------------------------------" >> ../../${OUTPUT}
-echo "|               RDFBeans              |" >> ../../${OUTPUT}
-echo "---------------------------------------" >> ../../${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
+echo "|               RDFBeans              |" >> ${OUTPUT}
+echo "---------------------------------------" >> ${OUTPUT}
 execute_benchmark "rdfbeans-benchmark"
 
 stop_repository

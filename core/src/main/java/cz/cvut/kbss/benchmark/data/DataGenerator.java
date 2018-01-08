@@ -107,7 +107,8 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
     protected abstract Event event();
 
     protected Set<Resource> generateAttachments() {
-        return IntStream.range(0, 3).mapToObj(i -> generateAttachment()).collect(Collectors.toSet());
+        return IntStream.range(0, Constants.ATTACHMENT_COUNT).mapToObj(i -> generateAttachment())
+                        .collect(Collectors.toSet());
     }
 
     public Resource generateAttachment() {
