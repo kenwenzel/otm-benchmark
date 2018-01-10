@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static cz.cvut.kbss.benchmark.util.Constants.EVENT_TYPES;
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
 
 public class KommaGenerator {
@@ -104,6 +105,7 @@ public class KommaGenerator {
         final URI uri = URIs.createURI(generateUri(Resource.class).toString());
         final Resource attachment = em.createNamed(uri, Resource.class);
         attachment.setIdentifier("resource" + random.nextInt() + ".doc");
+        attachment.setKey(generateKey());
         attachment.setDescription("This resource was attached to further document the reported occurrence.");
         instances.put(attachment, uri);
         return attachment;
@@ -121,6 +123,7 @@ public class KommaGenerator {
         occurrence.setStart(BenchmarkUtil.toXmlGregorianCalendar(new Date(System.currentTimeMillis() - 10000)));
         occurrence.setEnd(BenchmarkUtil.toXmlGregorianCalendar(new Date()));
         occurrence.setSubEvents(generateEventHierarchy(occurrence));
+        occurrence.setEventType(EVENT_TYPES[random.nextInt(EVENT_TYPES.length)]);
         instances.put(occurrence, uri);
         return occurrence;
     }
@@ -146,9 +149,11 @@ public class KommaGenerator {
         final URI uri = URIs.createURI(generateUri(Event.class).toString());
         final Event event = em.createNamed(uri, Event.class);
         event.setKey(generateKey());
-        event.setStart(occurrence.getStart());
-        event.setEnd(occurrence.getEnd());
-        event.setEventType(Constants.EVENT_TYPES[random.nextInt(Constants.EVENT_TYPES.length)]);
+        // Can't reuse the value from occurrence, since it is null.
+        // It appears that getters of newly created instances do not return proper values until commit
+        event.setStart(BenchmarkUtil.toXmlGregorianCalendar(new Date(System.currentTimeMillis() - 10000)));
+        event.setEnd(BenchmarkUtil.toXmlGregorianCalendar(new Date()));
+        event.setEventType(EVENT_TYPES[random.nextInt(Constants.EVENT_TYPES.length)]);
         instances.put(event, uri);
         return event;
     }
