@@ -38,14 +38,14 @@ public class AliBabaDeleter implements Deleter<OccurrenceReport> {
     @Override
     public void delete(OccurrenceReport report) {
         try {
-            final OccurrenceReport toDelete = connection.getObject(OccurrenceReport.class, report.getUri().toString());
+            final OccurrenceReport toDelete = connection.getObject(OccurrenceReport.class, report.getId());
             toDelete.setSeverityAssessment(null);
             toDelete.setDateCreated(null);
             toDelete.setLastModified(null);
             toDelete.setFileNumber(null);
             toDelete.setRevision(null);
             toDelete.setSummary(null);
-            final Occurrence occurrence = connection.getObject(Occurrence.class, report.getOccurrence().getKey());
+            final Occurrence occurrence = connection.getObject(Occurrence.class, report.getOccurrence().getId());
             occurrence.setName(null);
             occurrence.setStartTime(null);
             occurrence.setEndTime(null);
@@ -57,7 +57,7 @@ public class AliBabaDeleter implements Deleter<OccurrenceReport> {
             toDelete.setAuthor(null);
             toDelete.setLastModifiedBy(null);
             for (Resource a : report.getAttachments()) {
-                final Resource resource = connection.getObject(Resource.class, a.getKey());
+                final Resource resource = connection.getObject(Resource.class, a.getId());
                 resource.setIdentifier(null);
                 resource.setDescription(null);
                 connection.removeDesignation(resource, Resource.class);
@@ -74,7 +74,7 @@ public class AliBabaDeleter implements Deleter<OccurrenceReport> {
             return;
         }
         for (Event e : events) {
-            final Event toDelete = connection.getObject(Event.class, e.getKey());
+            final Event toDelete = connection.getObject(Event.class, e.getId());
             toDelete.setStartTime(null);
             toDelete.setEndTime(null);
             toDelete.setEventType(null);
