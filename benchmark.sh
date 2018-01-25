@@ -3,8 +3,8 @@
 JAVA=/opt/java-8-oracle/bin/java
 OUTPUT=benchmark.log
 LOGFILE=logback.xml
-WARMUPS=1
-ROUNDS=1
+WARMUPS=10
+ROUNDS=100
 
 GRAPHDB_HOME=~/Java/graphdb-free-8.3.1/
 GRAPHDB_PIDFILE=/tmp/.graphdbpid
@@ -47,27 +47,27 @@ execute_benchmark()
     cd ${1}/target
     echo "Create..."
     echo "*** CREATE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} create >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_create.data create >> ../../${OUTPUT}
     restart_repository
     echo "Batch create..."
     echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} create-batch >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_create-batch.data create-batch >> ../../${OUTPUT}
     restart_repository
     echo "Retrieve..."
     echo "*** RETRIEVE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} retrieve >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_retrieve.data retrieve >> ../../${OUTPUT}
     restart_repository
     echo "Retrieve all..."
     echo "*** RETRIEVE ALL ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} retrieve-all >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_retrieve-all.data retrieve-all >> ../../${OUTPUT}
     restart_repository
     echo "Update..."
     echo "*** UPDATE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} update >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_update.data update >> ../../${OUTPUT}
     restart_repository
     echo "Delete..."
     echo "*** DELETE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} delete >> ../../${OUTPUT}
+    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_delete.data delete >> ../../${OUTPUT}
     restart_repository
     cd ../..
 }

@@ -18,7 +18,9 @@ The following types of operations are benchmarked (each separately):
 * Create
 * Batch create
 * Retrieve
+* Retrieve all
 * Update
+* Delete
 
 ##### Create
 
@@ -39,6 +41,10 @@ system processes reports exported from another system.
 Retrieve benchmark retrieves all the reports, checking for their attributes and some attributes of the referenced entities (e.g. contacts
 of the report's author and last editor, name of the reported occurrence).
 
+##### Retrieve all
+
+Retrieve all uses either a SPARQL `SELECT` query or the frameworks API method to find all instances of type `OccurrenceReport`. The instances
+are then checked the same way as in Retrieve.
 
 ##### Update
 
@@ -47,12 +53,17 @@ The updates are: change last editor, change last modified date, update occurrenc
 add a new attachment (which has to be persisted). Each report is updated in a separate transaction. Since AliBaba does not support
 detached objects, update in its case requires making the changes on a managed object loaded from the storage.
 
+##### Delete
+
+Deletes every odd report, including all its references (except for author/last editor). Each report is deleted in a separate transaction.
+Correct removal is verified.
 
 #### Model
 
 The benchmark uses a relatively simple model consisting of the following entity classes:
 * **Person** contains basic information about a person, all modelled as data properties,
-* **Occurrence** contains basic information about an occurrence, its temporal specification and name,
+* **Event** contains basic information about an event, its temporal specification, type and sub events,
+* **Occurrence** subclass of `Event`, adds occurrence name,
 * **OccurrenceReport** represents a report documenting an occurrence. It references the occurrence (a 1:1 relationship), person as its creator and last editor and a set of resources as attachments,
 * **Resource** represents a reference to an external resource, be it a file stored on local file system or a remote URL.
 
@@ -67,7 +78,8 @@ The benchmark generates a number of persons, occurrences and reports. The exact 
 All of these are persisted either as part of the Create benchmark or during setup of other types of benchmark.
 
 Each report is assigned a random person as creator and another as last editor. An occurrence is generated for each report since they 
-are in a 1:1 relationship. Each report is also assigned three randomly generated attachments, which are persisted with it.
+are in a 1:1 relationship. The occurrence has a balanced binary tree of subevents. Its depth is specified in constants.
+Each report is also assigned three randomly generated attachments, which are persisted with it.
 
 All attributes of all entities are set, none is left empty. Also, lazy loading is disabled on entities.
 
@@ -80,7 +92,8 @@ The benchmark cleans up the repository after each round and uses a new persisten
 
 Number of executions can be configured using the **-w** and **-r** parameters, where:
 * **-w** is the number of warmup rounds, which are not measured,
-* **-r** is the number of measured rounds.
+* **-r** is the number of measured rounds,
+* **-f** is the file into which individual round execution times should be written.
 
 In addition, it is possible to configure the benchmark to output each round's execution time into a file for further investigation.
 This is done using **-o** parameter with value specifying the target file.

@@ -10,7 +10,7 @@
     </appender>
 
     <!-- Benchmark Logger -->
-    <logger name="cz.cvut.kbss.benchmark" level="TRACE" additivity="false">
+    <logger name="cz.cvut.kbss.benchmark" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 
