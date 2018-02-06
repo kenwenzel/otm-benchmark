@@ -6,7 +6,7 @@ LOGFILE=logback.xml
 WARMUPS=10
 ROUNDS=100
 
-GRAPHDB_HOME=~/Java/graphdb-free-8.3.1/
+GRAPHDB_HOME=~/Java/graphdb-free-8.4.1/
 GRAPHDB_PIDFILE=/tmp/.graphdbpid
 start_graphdb()
 {

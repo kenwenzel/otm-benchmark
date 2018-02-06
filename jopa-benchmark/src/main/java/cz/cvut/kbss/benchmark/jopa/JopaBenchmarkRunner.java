@@ -25,6 +25,7 @@ public abstract class JopaBenchmarkRunner extends AbstractRunner<Person, Occurre
 
     @Override
     public void tearDown() {
+        super.tearDown();
         persistenceFactory.close();
         Config.getRepoUrl().ifPresent(rUrl -> BenchmarkUtil.clearRepository(rUrl + "/statements"));
     }

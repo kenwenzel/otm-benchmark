@@ -123,7 +123,7 @@ public class KommaGenerator {
         occurrence.setStart(BenchmarkUtil.toXmlGregorianCalendar(new Date(System.currentTimeMillis() - 10000)));
         occurrence.setEnd(BenchmarkUtil.toXmlGregorianCalendar(new Date()));
         occurrence.setSubEvents(generateEventHierarchy(occurrence));
-        occurrence.setEventType(EVENT_TYPES[random.nextInt(EVENT_TYPES.length)]);
+        occurrence.setEventType(URIs.createURI(EVENT_TYPES[random.nextInt(EVENT_TYPES.length)].toString()));
         instances.put(occurrence, uri);
         return occurrence;
     }
@@ -153,7 +153,7 @@ public class KommaGenerator {
         // It appears that getters of newly created instances do not return proper values until commit
         event.setStart(BenchmarkUtil.toXmlGregorianCalendar(new Date(System.currentTimeMillis() - 10000)));
         event.setEnd(BenchmarkUtil.toXmlGregorianCalendar(new Date()));
-        event.setEventType(EVENT_TYPES[random.nextInt(Constants.EVENT_TYPES.length)]);
+        event.setEventType(URIs.createURI(EVENT_TYPES[random.nextInt(EVENT_TYPES.length)].toString()));
         instances.put(event, uri);
         return event;
     }

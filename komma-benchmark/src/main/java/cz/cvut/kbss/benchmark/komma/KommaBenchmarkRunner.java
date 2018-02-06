@@ -10,6 +10,8 @@ import org.eclipse.rdf4j.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 abstract class KommaBenchmarkRunner implements BenchmarkRunner {
 
     static final Logger LOG = LoggerFactory.getLogger(KommaBenchmarkRunner.class);
@@ -19,6 +21,8 @@ abstract class KommaBenchmarkRunner implements BenchmarkRunner {
     PersistenceFactory persistenceFactory;
     KommaGenerator generator;
 
+    private Process memoryWatcher;
+
     @Override
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
@@ -27,6 +31,15 @@ abstract class KommaBenchmarkRunner implements BenchmarkRunner {
     @Override
     public void setUpBeforeBenchmark() {
         this.generator = new KommaGenerator(configuration.getValue(Constants.FACTOR_PARAMETER, Integer.class));
+    }
+
+    @Override
+    public void beforeFirstMeasured() {
+        final String jstatOutput = configuration.getValue(Constants.MEMORY_PARAMETER, String.class);
+        if (jstatOutput.isEmpty()) {
+            return;
+        }
+        this.memoryWatcher = BenchmarkUtil.startJStat(new File(jstatOutput));
     }
 
     @Override
@@ -42,6 +55,10 @@ abstract class KommaBenchmarkRunner implements BenchmarkRunner {
 
     @Override
     public void tearDown() {
+        if (memoryWatcher != null) {
+            memoryWatcher.destroy();
+            this.memoryWatcher = null;
+        }
         try {
             persistenceFactory.close();
         } catch (RepositoryException e) {

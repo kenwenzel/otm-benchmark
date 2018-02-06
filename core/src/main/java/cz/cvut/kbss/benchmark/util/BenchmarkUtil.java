@@ -2,6 +2,9 @@ package cz.cvut.kbss.benchmark.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -24,6 +27,25 @@ public class BenchmarkUtil {
             conn.disconnect();
         } catch (java.io.IOException e) {
             throw new BenchmarkException("Unable to connect to the benchmark repo.");
+        }
+    }
+
+    public static Process startJStat(File outputFile) {
+        final String mxName = ManagementFactory.getRuntimeMXBean().getName();
+        final String pid = mxName.substring(0, mxName.indexOf('@'));
+        try {
+            if (!outputFile.exists()) {
+                final boolean result = outputFile.createNewFile();
+                if (!result) {
+                    throw new BenchmarkException("Unable to create jstat output file.");
+                }
+            }
+            final ProcessBuilder pb = new ProcessBuilder("jstat", "-gc", pid, "500");
+            pb.redirectErrorStream(true);
+            pb.redirectOutput(ProcessBuilder.Redirect.appendTo(outputFile));
+            return pb.start();
+        } catch (IOException e) {
+            throw new BenchmarkException("Unable to start jstat.", e);
         }
     }
 }

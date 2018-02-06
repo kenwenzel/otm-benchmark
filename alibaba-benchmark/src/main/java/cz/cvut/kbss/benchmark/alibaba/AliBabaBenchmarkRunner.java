@@ -45,6 +45,7 @@ abstract class AliBabaBenchmarkRunner extends AbstractRunner<Person, OccurrenceR
 
     @Override
     public void tearDown() {
+        super.tearDown();
         try {
             persistenceFactory.close();
         } catch (RepositoryException e) {

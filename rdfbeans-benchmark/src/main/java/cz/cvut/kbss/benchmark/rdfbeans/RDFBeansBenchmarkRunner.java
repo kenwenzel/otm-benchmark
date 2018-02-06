@@ -25,6 +25,7 @@ public abstract class RDFBeansBenchmarkRunner extends AbstractRunner<Person, Occ
 
     @Override
     public void tearDown() {
+        super.tearDown();
         persistenceFactory.close();
         Config.getRepoUrl().ifPresent(rUrl -> BenchmarkUtil.clearRepository(rUrl + "/statements"));
     }

@@ -19,6 +19,8 @@ public class Constants {
 
     public static final String FACTOR_PARAMETER = "f";
 
+    public static final String MEMORY_PARAMETER = "m";
+
     /**
      * Randomly generated string usable as report summary.
      */

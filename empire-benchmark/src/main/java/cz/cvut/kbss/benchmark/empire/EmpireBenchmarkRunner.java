@@ -44,6 +44,7 @@ public abstract class EmpireBenchmarkRunner extends AbstractRunner<Person, Occur
 
     @Override
     public void tearDown() {
+        super.tearDown();
         persistenceFactory.close();
         if (properties.containsKey(SERVER_URL_PROPERTY)) {
             final String repoUrl = properties.getProperty(SERVER_URL_PROPERTY) + "repositories/" +

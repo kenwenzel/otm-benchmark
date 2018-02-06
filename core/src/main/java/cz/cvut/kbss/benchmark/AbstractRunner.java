@@ -2,9 +2,10 @@ package cz.cvut.kbss.benchmark;
 
 import cz.cvut.kbss.benchmark.data.DataGenerator;
 import cz.cvut.kbss.benchmark.model.*;
-import cz.cvut.kbss.benchmark.util.Constants;
 import cz.cvut.kbss.benchmark.util.*;
+import cz.cvut.kbss.benchmark.util.Constants;
 
+import java.io.File;
 import java.util.*;
 
 import static cz.cvut.kbss.benchmark.util.Constants.ITEM_COUNT;
@@ -19,6 +20,8 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
 
     protected Configuration configuration;
 
+    private Process memoryWatcher;
+
     @Override
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
@@ -27,6 +30,23 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
     @Override
     public void setUpBeforeBenchmark() {
         this.generator = createGenerator(configuration.getValue(Constants.FACTOR_PARAMETER, Integer.class));
+    }
+
+    @Override
+    public void beforeFirstMeasured() {
+        final String jstatOutput = configuration.getValue(Constants.MEMORY_PARAMETER, String.class);
+        if (jstatOutput.isEmpty()) {
+            return;
+        }
+        this.memoryWatcher = BenchmarkUtil.startJStat(new File(jstatOutput));
+    }
+
+    @Override
+    public void tearDown() {
+        if (memoryWatcher != null) {
+            memoryWatcher.destroy();
+            this.memoryWatcher = null;
+        }
     }
 
     /**
