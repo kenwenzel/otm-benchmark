@@ -7,7 +7,7 @@
     <groupId>cz.cvut.kbss.benchmark</groupId>
     <artifactId>oom-benchmark</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 
     <modules>
         <module>core</module>
