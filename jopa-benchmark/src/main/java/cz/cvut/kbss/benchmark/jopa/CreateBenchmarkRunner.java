@@ -14,6 +14,7 @@ public class CreateBenchmarkRunner extends JopaBenchmarkRunner {
         em.close();
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override

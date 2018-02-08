@@ -20,6 +20,7 @@ public class CreateBenchmarkRunner extends AliBabaBenchmarkRunner {
         }
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override

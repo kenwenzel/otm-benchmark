@@ -13,6 +13,7 @@ public class RetrieveBenchmarkRunner extends RDFBeansBenchmarkRunner {
         persistData(new RdfBeansSaver(beanManager));
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override

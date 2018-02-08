@@ -21,6 +21,7 @@ abstract class KommaBenchmarkRunner implements BenchmarkRunner {
     PersistenceFactory persistenceFactory;
     KommaGenerator generator;
 
+    private boolean measured;
     private Process memoryWatcher;
 
     @Override
@@ -35,6 +36,13 @@ abstract class KommaBenchmarkRunner implements BenchmarkRunner {
 
     @Override
     public void beforeFirstMeasured() {
+        this.measured = true;
+    }
+
+    void startMeasuringMemoryUsage() {
+        if (!measured) {
+            return;
+        }
         final String jstatOutput = configuration.getValue(Constants.MEMORY_PARAMETER, String.class);
         if (jstatOutput.isEmpty()) {
             return;

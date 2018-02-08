@@ -12,6 +12,7 @@ public class RetrieveBenchmarkRunner extends AliBabaBenchmarkRunner {
         persistTestData();
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override

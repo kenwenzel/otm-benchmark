@@ -14,6 +14,7 @@ public class DeleteBenchmarkRunner extends AliBabaBenchmarkRunner {
         persistTestData();
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override

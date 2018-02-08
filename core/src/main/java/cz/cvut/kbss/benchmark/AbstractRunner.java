@@ -20,6 +20,7 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
 
     protected Configuration configuration;
 
+    private boolean measured = false;
     private Process memoryWatcher;
 
     @Override
@@ -34,6 +35,13 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
 
     @Override
     public void beforeFirstMeasured() {
+        this.measured = true;
+    }
+
+    protected void startMeasuringMemoryUsage() {
+        if (!measured) {
+            return;
+        }
         final String jstatOutput = configuration.getValue(Constants.MEMORY_PARAMETER, String.class);
         if (jstatOutput.isEmpty()) {
             return;

@@ -11,6 +11,7 @@ public class CreateBenchmarkRunner extends RDFBeansBenchmarkRunner {
         super.setUp();
         final RDFBeanManager beanManager = persistenceFactory.beanManager();
         persistPersons(new RdfBeansSaver(beanManager));
+        startMeasuringMemoryUsage();
     }
 
     @Override

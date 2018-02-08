@@ -16,6 +16,7 @@ public class UpdateBenchmarkRunner extends KommaBenchmarkRunner {
         em.close();
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override

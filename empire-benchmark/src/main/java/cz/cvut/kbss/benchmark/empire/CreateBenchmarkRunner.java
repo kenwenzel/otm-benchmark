@@ -12,6 +12,7 @@ public class CreateBenchmarkRunner extends EmpireBenchmarkRunner {
         super.setUp();
         final EntityManager em = persistenceFactory.entityManager();
         persistPersons(new EmpireSaver(em));
+        startMeasuringMemoryUsage();
     }
 
     @Override

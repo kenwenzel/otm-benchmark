@@ -1,10 +1,9 @@
 #!/bin/bash
 
 JAVA=/opt/java-8-oracle/bin/java
-OUTPUT=benchmark.log
 LOGFILE=logback.xml
-WARMUPS=1
-ROUNDS=1
+WARMUPS=5
+ROUNDS=5
 
 GRAPHDB_HOME=~/Java/graphdb-free-8.4.1/
 GRAPHDB_PIDFILE=/tmp/.graphdbpid
@@ -47,26 +46,32 @@ execute_benchmark()
     cd ${1}/target
     echo "Create..."
     echo "*** CREATE ***"
+    > ../../memory/${1}_create.data
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -m ../../memory/${1}_create.data create
     restart_repository
     echo "Batch create..."
     echo "*** BATCH CREATE ***"
+    > ../../memory/${1}_create-batch.data
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -m ../../memory/${1}_create-batch.data create-batch
     restart_repository
     echo "Retrieve..."
     echo "*** RETRIEVE ***"
+    > ../../memory/${1}_retrieve.data
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -m ../../memory/${1}_retrieve.data retrieve
     restart_repository
     echo "Retrieve all..."
     echo "*** RETRIEVE ALL ***"
+    > ../../memory/${1}_retrieve-all.data
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -m ../../memory/${1}_retrieve-all.data retrieve-all
     restart_repository
     echo "Update..."
     echo "*** UPDATE ***"
+    > ../../memory/${1}_update.data
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -m ../../memory/${1}_update.data update
     restart_repository
     echo "Delete..."
     echo "*** DELETE ***"
+    > ../../memory/${1}_delete.data
     ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -m ../../memory/${1}_delete.data delete
     restart_repository
     cd ../..

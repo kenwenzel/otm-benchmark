@@ -17,6 +17,7 @@ public class UpdateBenchmarkRunner extends EmpireBenchmarkRunner {
         em.clear();
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override

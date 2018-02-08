@@ -13,6 +13,7 @@ public class CreateBenchmarkRunner extends KommaBenchmarkRunner {
         generator.setEm(em);
         generator.persistPersons();
         em.close();
+        startMeasuringMemoryUsage();
     }
 
     @Override

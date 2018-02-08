@@ -15,6 +15,7 @@ public class DeleteBenchmarkRunner extends JopaBenchmarkRunner {
         em.close();
         System.gc();
         System.gc();
+        startMeasuringMemoryUsage();
     }
 
     @Override
