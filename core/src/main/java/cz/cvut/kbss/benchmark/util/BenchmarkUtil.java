@@ -40,7 +40,7 @@ public class BenchmarkUtil {
                     throw new BenchmarkException("Unable to create jstat output file.");
                 }
             }
-            final ProcessBuilder pb = new ProcessBuilder("jstat", "-gc", pid, "500");
+            final ProcessBuilder pb = new ProcessBuilder("jstat", "-gc", pid, "250");
             pb.redirectErrorStream(true);
             pb.redirectOutput(ProcessBuilder.Redirect.appendTo(outputFile));
             return pb.start();
