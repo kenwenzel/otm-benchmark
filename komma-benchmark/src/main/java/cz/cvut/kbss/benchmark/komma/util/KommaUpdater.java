@@ -28,21 +28,25 @@ public class KommaUpdater {
                 continue;
             }
             final OccurrenceReport toUpdate = generator.getReports().get(i);
-            toUpdate.setLastModifiedBy(generator.randomItem(generator.getPersons()));
-            toUpdate.getOccurrence().setName(toUpdate.getOccurrence().getName() + "-updated");
-            toUpdate.setSeverityAssessment(i % Constants.MAX_SEVERITY);
-            final GregorianCalendar lastModUpdated = new GregorianCalendar();
-            lastModUpdated.setTimeInMillis(System.currentTimeMillis() + 10000);
-            toUpdate.setLastModified(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(lastModUpdated));
-            toUpdate.setRevision(toUpdate.getRevision() + 1);
-            toUpdate.getAuthor().getContacts().remove(toUpdate.getAuthor().getContacts().iterator().next());
-            toUpdate.getAttachments().add(generator.generateAttachment());
+            updateReport(toUpdate, generator);
             em.getTransaction().begin();
             em.merge(toUpdate);
             em.merge(toUpdate.getAuthor());
             em.getTransaction().commit();
             updated.add(toUpdate);
         }
+    }
+
+    public static void updateReport(OccurrenceReport toUpdate, KommaGenerator generator) {
+        toUpdate.setLastModifiedBy(generator.randomItem(generator.getPersons()));
+        toUpdate.getOccurrence().setName(toUpdate.getOccurrence().getName() + "-updated");
+        toUpdate.setSeverityAssessment(generator.randomInt(Constants.MAX_SEVERITY));
+        final GregorianCalendar lastModUpdated = new GregorianCalendar();
+        lastModUpdated.setTimeInMillis(System.currentTimeMillis() + 10000);
+        toUpdate.setLastModified(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(lastModUpdated));
+        toUpdate.setRevision(toUpdate.getRevision() + 1);
+        toUpdate.getAuthor().getContacts().remove(toUpdate.getAuthor().getContacts().iterator().next());
+        toUpdate.getAttachments().add(generator.generateAttachment());
     }
 
     public void verifyUpdates() {

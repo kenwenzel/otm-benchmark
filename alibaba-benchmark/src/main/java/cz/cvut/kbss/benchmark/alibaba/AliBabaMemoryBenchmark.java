@@ -30,7 +30,6 @@ public class AliBabaMemoryBenchmark extends AbstractMemoryBenchmark<Person, Occu
     }
 
     public static void main(String[] args) {
-        // TODO
         new AliBabaMemoryBenchmark().execute();
     }
 

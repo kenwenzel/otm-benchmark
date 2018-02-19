@@ -23,8 +23,8 @@ public class KommaGenerator {
 
     private Map<Object, URI> instances;
 
-    public KommaGenerator(int factor) {
-        this.itemCount = ITEM_COUNT * factor;
+    public KommaGenerator(float factor) {
+        this.itemCount = Math.round(ITEM_COUNT * factor);
     }
 
     public void setEm(IEntityManager em) {
@@ -173,6 +173,10 @@ public class KommaGenerator {
             list.add(p);
         }
         return list;
+    }
+
+    public int randomInt(int max) {
+        return random.nextInt(max);
     }
 
     private java.net.URI generateUri(Class<?> type) {
