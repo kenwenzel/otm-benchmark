@@ -28,6 +28,11 @@ public class RdfBeansSaver implements Saver<Person, OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        // Do nothing
+    }
+
+    @Override
     public void persistAll(Collection<Person> persons) {
         try {
             for (Person p : persons) {

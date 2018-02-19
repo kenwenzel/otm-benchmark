@@ -25,6 +25,11 @@ public class RdfBeansUpdater implements Updater<OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        // Do nothing
+    }
+
+    @Override
     public void update(OccurrenceReport report) {
         try {
             beanManager.update(report.getOccurrence());

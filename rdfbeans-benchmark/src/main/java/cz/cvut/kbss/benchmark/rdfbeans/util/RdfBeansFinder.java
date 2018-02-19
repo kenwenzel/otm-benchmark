@@ -53,4 +53,9 @@ public class RdfBeansFinder implements Finder<OccurrenceReport> {
             throw new BenchmarkException(e);
         }
     }
+
+    @Override
+    public void close() {
+        // Do nothing
+    }
 }

@@ -5,7 +5,7 @@ import cz.cvut.kbss.benchmark.rdfbeans.model.*;
 
 public class RDFBeansDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    public RDFBeansDataGenerator(int factor) {
+    public RDFBeansDataGenerator(float factor) {
         super(factor);
         generate();
     }

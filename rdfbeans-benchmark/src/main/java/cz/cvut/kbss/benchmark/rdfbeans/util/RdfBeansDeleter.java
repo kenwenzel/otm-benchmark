@@ -30,6 +30,11 @@ public class RdfBeansDeleter implements Deleter<OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        // Do nothing
+    }
+
+    @Override
     public void delete(OccurrenceReport report) {
         try {
             deleteEvents(report.getOccurrence().getSubEvents());
