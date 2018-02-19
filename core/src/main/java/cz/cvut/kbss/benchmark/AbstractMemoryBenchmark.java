@@ -14,7 +14,7 @@ public abstract class AbstractMemoryBenchmark<P extends Person, R extends Occurr
 
     private final DataGenerator<P, R> generator;
 
-    protected AbstractMemoryBenchmark(DataGenerator generator) {
+    protected AbstractMemoryBenchmark(DataGenerator<P, R> generator) {
         this.generator = generator;
     }
 
@@ -75,6 +75,7 @@ public abstract class AbstractMemoryBenchmark<P extends Person, R extends Occurr
             generator.getReports().forEach(r -> {
                 updater.begin();
                 AbstractRunner.updateReport(r, generator);
+                updater.update(r);
                 updater.commit();
             });
         } finally {
