@@ -24,6 +24,11 @@ public class EmpireUpdater implements Updater<OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        // Do nothing
+    }
+
+    @Override
     public void update(OccurrenceReport report) {
         em.merge(report.getOccurrence());
         em.merge(report);

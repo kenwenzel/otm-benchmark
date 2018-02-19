@@ -24,6 +24,11 @@ public class EmpireDeleter implements Deleter<OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        // Do nothing
+    }
+
+    @Override
     public void delete(OccurrenceReport report) {
         final OccurrenceReport toDelete = em.getReference(OccurrenceReport.class, report.getRdfId());
         em.remove(toDelete.getOccurrence());

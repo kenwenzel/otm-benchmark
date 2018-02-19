@@ -26,6 +26,11 @@ public class EmpireSaver implements Saver<Person, OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        // Do nothing
+    }
+
+    @Override
     public void persistAll(Collection<Person> persons) {
         persons.forEach(em::persist);
     }

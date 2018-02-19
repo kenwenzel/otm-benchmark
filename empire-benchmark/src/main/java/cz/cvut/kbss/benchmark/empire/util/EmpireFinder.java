@@ -34,4 +34,9 @@ public class EmpireFinder implements Finder<OccurrenceReport> {
     public boolean exists(HasIdentifier instance) {
         return em.find(instance.getClass(), new SupportsRdfId.URIKey(URI.create(instance.getId()))) != null;
     }
+
+    @Override
+    public void close() {
+        // Do nothing
+    }
 }

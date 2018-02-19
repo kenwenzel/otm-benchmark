@@ -6,7 +6,7 @@ import cz.cvut.kbss.benchmark.empire.model.*;
 
 public class EmpireDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    public EmpireDataGenerator(int factor) {
+    public EmpireDataGenerator(float factor) {
         super(factor);
         generate();
     }
