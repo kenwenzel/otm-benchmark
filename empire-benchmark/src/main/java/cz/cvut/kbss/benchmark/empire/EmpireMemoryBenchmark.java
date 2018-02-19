@@ -18,7 +18,7 @@ public class EmpireMemoryBenchmark extends AbstractMemoryBenchmark<Person, Occur
     private final PersistenceFactory persistenceFactory;
 
     private EmpireMemoryBenchmark() {
-        super(new EmpireDataGenerator(0.1f));
+        super(new EmpireDataGenerator(1));
         this.persistenceFactory = new PersistenceFactory();
     }
 

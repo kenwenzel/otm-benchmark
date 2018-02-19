@@ -21,7 +21,7 @@ public class AliBabaMemoryBenchmark extends AbstractMemoryBenchmark<Person, Occu
     private final PersistenceFactory persistenceFactory;
 
     private AliBabaMemoryBenchmark() {
-        super(new AlibabaDataGenerator(0.01f));
+        super(new AlibabaDataGenerator(1));
         try {
             persistenceFactory = new PersistenceFactory();
         } catch (RepositoryException | RepositoryConfigException e) {

@@ -19,7 +19,7 @@ public class KommaMemoryBenchmark {
     private final PersistenceFactory persistenceFactory;
 
     private KommaMemoryBenchmark() {
-        this.generator = new KommaGenerator(0.1f);
+        this.generator = new KommaGenerator(1);
         this.persistenceFactory = new PersistenceFactory();
     }
 

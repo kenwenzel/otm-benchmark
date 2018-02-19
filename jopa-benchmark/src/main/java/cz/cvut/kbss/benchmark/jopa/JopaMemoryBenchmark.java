@@ -18,7 +18,7 @@ public class JopaMemoryBenchmark extends AbstractMemoryBenchmark<Person, Occurre
     private final PersistenceFactory persistenceFactory;
 
     private JopaMemoryBenchmark() {
-        super(new JopaDataGenerator(0.1f));
+        super(new JopaDataGenerator(1));
         persistenceFactory = new PersistenceFactory();
     }
 

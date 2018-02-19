@@ -18,7 +18,7 @@ public class RdfBeansMemoryBenchmark extends AbstractMemoryBenchmark<Person, Occ
     private final PersistenceFactory persistenceFactory;
 
     private RdfBeansMemoryBenchmark() {
-        super(new RDFBeansDataGenerator(0.1f));
+        super(new RDFBeansDataGenerator(1));
         persistenceFactory = new PersistenceFactory();
     }
 
