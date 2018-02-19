@@ -23,6 +23,11 @@ public class JopaDeleter implements Deleter<OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        em.close();
+    }
+
+    @Override
     public void delete(OccurrenceReport report) {
         final OccurrenceReport r = em.find(OccurrenceReport.class, report.getUri());
         em.remove(r.getOccurrence());

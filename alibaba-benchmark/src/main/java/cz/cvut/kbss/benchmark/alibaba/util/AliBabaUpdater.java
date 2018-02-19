@@ -35,6 +35,15 @@ public class AliBabaUpdater implements Updater<OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (RepositoryException e) {
+            throw new BenchmarkException(e);
+        }
+    }
+
+    @Override
     public void update(OccurrenceReport report) {
         try {
             final OccurrenceReport toUpdate = connection.getObject(OccurrenceReport.class, report.getUri().toString());

@@ -20,17 +20,25 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
     private List<R> reports;
     private List<P> persons;
 
-    public DataGenerator(int factor) {
+    public DataGenerator(float factor) {
         assert factor > 0;
-        this.itemCount = ITEM_COUNT * factor;
+        this.itemCount = Math.round(ITEM_COUNT * factor);
     }
 
     public void generate() {
-        this.persons = generatePersons();
-        this.reports = generateReports();
+        this.persons = generatePersonsImpl();
+        this.reports = generateReportsImpl();
     }
 
-    protected List<R> generateReports() {
+    public void generatePersons() {
+        generatePersonsImpl();
+    }
+
+    public void generateReports() {
+        generateReportsImpl();
+    }
+
+    protected List<R> generateReportsImpl() {
         final List<R> reports = new ArrayList<>();
         for (int i = 0; i < itemCount; i++) {
             final R r = report();
@@ -48,6 +56,10 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
             reports.add(r);
         }
         return reports;
+    }
+
+    public int randomInt(int max) {
+        return random.nextInt(max);
     }
 
     /**
@@ -121,7 +133,7 @@ public abstract class DataGenerator<P extends Person, R extends OccurrenceReport
 
     protected abstract Resource resource();
 
-    protected List<P> generatePersons() {
+    protected List<P> generatePersonsImpl() {
         final List<P> list = new ArrayList<>();
         for (int i = 0; i < itemCount; i++) {
             final P p = person();

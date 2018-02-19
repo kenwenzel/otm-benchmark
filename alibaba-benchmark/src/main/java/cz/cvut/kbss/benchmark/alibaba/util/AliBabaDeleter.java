@@ -36,6 +36,15 @@ public class AliBabaDeleter implements Deleter<OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (RepositoryException e) {
+            throw new BenchmarkException(e);
+        }
+    }
+
+    @Override
     public void delete(OccurrenceReport report) {
         try {
             final OccurrenceReport toDelete = connection.getObject(OccurrenceReport.class, report.getId());

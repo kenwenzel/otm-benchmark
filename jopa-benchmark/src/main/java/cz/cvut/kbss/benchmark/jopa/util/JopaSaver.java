@@ -26,6 +26,11 @@ public class JopaSaver implements Saver<Person, OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        em.close();
+    }
+
+    @Override
     public void persistAll(Collection<Person> persons) {
         persons.forEach(em::persist);
     }

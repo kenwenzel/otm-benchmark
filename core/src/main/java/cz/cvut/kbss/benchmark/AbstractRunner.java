@@ -157,17 +157,21 @@ public abstract class AbstractRunner<P extends Person, R extends OccurrenceRepor
                 continue;
             }
             final R toUpdate = generator.getReports().get(i);
-            toUpdate.setLastModifiedBy(generator.randomItem(generator.getPersons()));
-            toUpdate.getOccurrence().setName(toUpdate.getOccurrence().getName() + "-updated");
-            toUpdate.setSeverityAssessment(i % Constants.MAX_SEVERITY);
-            toUpdate.setLastModified(new Date(toUpdate.getLastModified().getTime() + 100000));
-            toUpdate.setRevision(toUpdate.getRevision() + 1);
-            toUpdate.getAttachments().add(generator.generateAttachment());
+            updateReport(toUpdate, generator);
             updater.begin();
             updater.update(toUpdate);
             updater.commit();
             updated.add(toUpdate);
         }
+    }
+
+    public static <P extends Person, R extends OccurrenceReport> void updateReport(R toUpdate, DataGenerator<P, R> generator) {
+        toUpdate.setLastModifiedBy(generator.randomItem(generator.getPersons()));
+        toUpdate.getOccurrence().setName(toUpdate.getOccurrence().getName() + "-updated");
+        toUpdate.setSeverityAssessment(generator.randomInt(Constants.MAX_SEVERITY));
+        toUpdate.setLastModified(new Date(toUpdate.getLastModified().getTime() + 100000));
+        toUpdate.setRevision(toUpdate.getRevision() + 1);
+        toUpdate.getAttachments().add(generator.generateAttachment());
     }
 
     protected <O extends Occurrence, A extends Resource> void verifyUpdates(Finder<R> finder) {

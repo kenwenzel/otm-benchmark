@@ -5,7 +5,7 @@ import cz.cvut.kbss.benchmark.data.DataGenerator;
 
 public class AlibabaDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    public AlibabaDataGenerator(int factor) {
+    public AlibabaDataGenerator(float factor) {
         super(factor);
         generate();
     }

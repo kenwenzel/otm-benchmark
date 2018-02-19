@@ -5,7 +5,7 @@ import cz.cvut.kbss.benchmark.jopa.model.*;
 
 public class JopaDataGenerator extends DataGenerator<Person, OccurrenceReport> {
 
-    public JopaDataGenerator(int factor) {
+    public JopaDataGenerator(float factor) {
         super(factor);
         generate();
     }

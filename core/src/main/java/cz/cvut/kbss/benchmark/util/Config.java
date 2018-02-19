@@ -30,4 +30,9 @@ public class Config {
         final String url = configuration.getProperty("url", "");
         return url.isEmpty() ? Optional.empty() : Optional.of(url);
     }
+
+    public static Optional<Long> getRuntime() {
+        final String runtime = configuration.getProperty("memory.runtime", "");
+        return runtime.isEmpty() ? Optional.empty() : Optional.of(Long.parseLong(runtime));
+    }
 }

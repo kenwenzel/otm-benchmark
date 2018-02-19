@@ -56,4 +56,13 @@ public class AliBabaFinder implements Finder<OccurrenceReport> {
             throw new BenchmarkException(e);
         }
     }
+
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (RepositoryException e) {
+            throw new BenchmarkException(e);
+        }
+    }
 }

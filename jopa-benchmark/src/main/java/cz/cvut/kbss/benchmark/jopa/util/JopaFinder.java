@@ -32,4 +32,9 @@ public class JopaFinder implements Finder<OccurrenceReport> {
     public boolean exists(HasIdentifier instance) {
         return em.find(instance.getClass(), URI.create(instance.getId())) != null;
     }
+
+    @Override
+    public void close() {
+        em.close();
+    }
 }

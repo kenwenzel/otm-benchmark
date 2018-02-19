@@ -39,6 +39,15 @@ public class AliBabaSaver implements Saver<Person, OccurrenceReport> {
     }
 
     @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (RepositoryException e) {
+            throw new BenchmarkException(e);
+        }
+    }
+
+    @Override
     public void persistAll(Collection<Person> persons) {
         try {
             for (Person p : persons) {

@@ -1,14 +1,22 @@
 package cz.cvut.kbss.benchmark.util;
 
 import cz.cvut.kbss.benchmark.BenchmarkException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BenchmarkUtil {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BenchmarkUtil.class);
+
+    private static final Timer TIMER = new Timer();
 
     private BenchmarkUtil() {
         throw new AssertionError();
@@ -47,5 +55,22 @@ public class BenchmarkUtil {
         } catch (IOException e) {
             throw new BenchmarkException("Unable to start jstat.", e);
         }
+    }
+
+    /**
+     * Configures the application to shutdown after the specified delay.
+     *
+     * @param delay Delay in milliseconds
+     */
+    public static void scheduleApplicationShutdown(long delay) {
+        LOG.info("Scheduling application shutdown in {} ms.", delay);
+        final TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                LOG.info("Shutting the application down.");
+                System.exit(0);
+            }
+        };
+        TIMER.schedule(task, delay);
     }
 }

@@ -12,4 +12,6 @@ public interface Finder<R extends OccurrenceReport> {
     Collection<R> findAll();
 
     boolean exists(HasIdentifier instance);
+
+    void close();
 }
