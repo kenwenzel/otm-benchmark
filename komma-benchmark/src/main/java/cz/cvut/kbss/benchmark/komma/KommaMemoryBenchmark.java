@@ -39,10 +39,9 @@ public class KommaMemoryBenchmark {
     }
 
     private void persistPersons() {
-        try (IEntityManager em = persistenceFactory.entityManager()) {
-            generator.setEm(em);
-            generator.persistPersons();
-        }
+        final IEntityManager em = persistenceFactory.entityManager();
+        generator.setEm(em);
+        generator.persistPersons();
     }
 
     private void persist() {
