@@ -7,6 +7,8 @@ import cz.cvut.kbss.benchmark.util.BenchmarkUtil;
 import cz.cvut.kbss.benchmark.util.Config;
 import cz.cvut.kbss.benchmark.util.Constants;
 import net.enilink.komma.core.IEntityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Set;
@@ -14,6 +16,8 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 
 public class KommaMemoryBenchmark {
+
+    private static final Logger LOG = LoggerFactory.getLogger(KommaMemoryBenchmark.class);
 
     private final KommaGenerator generator;
     private final PersistenceFactory persistenceFactory;
@@ -31,10 +35,14 @@ public class KommaMemoryBenchmark {
         BenchmarkUtil.scheduleApplicationShutdown(Config.getRuntime().orElse(Constants.DEFAULT_MEMORY_RUNTIME));
         persistPersons();
         while (true) {
-            persist();
-            findAll();
-            update();
-            remove();
+            try {
+                persist();
+                findAll();
+                update();
+                remove();
+            } catch (RuntimeException e) {
+                LOG.warn("Exception caught!", e);
+            }
         }
     }
 
