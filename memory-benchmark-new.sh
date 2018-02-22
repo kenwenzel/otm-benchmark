@@ -2,7 +2,7 @@
 
 JAVA=/opt/java-8-oracle/bin/java
 LOGFILE=logback.xml
-MEM=80m
+MEM=40m
 
 GRAPHDB_HOME=~/Java/graphdb-free-8.4.1/
 GRAPHDB_PIDFILE=/tmp/.graphdbpid

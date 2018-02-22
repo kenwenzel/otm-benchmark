@@ -40,7 +40,7 @@ public class KommaMemoryBenchmark {
                 findAll();
                 update();
                 remove();
-            } catch (RuntimeException e) {
+            } catch (RuntimeException | AssertionError e) {
                 LOG.warn("Exception caught!", e);
             }
         }

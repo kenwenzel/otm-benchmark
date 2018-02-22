@@ -5,6 +5,7 @@ OUTPUT=benchmark.log
 LOGFILE=logback.xml
 WARMUPS=10
 ROUNDS=100
+MEMORY=64m
 
 GRAPHDB_HOME=~/Java/graphdb-free-8.4.1/
 GRAPHDB_PIDFILE=/tmp/.graphdbpid
@@ -47,27 +48,27 @@ execute_benchmark()
     cd ${1}/target
     echo "Create..."
     echo "*** CREATE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_create.data create >> ../../${OUTPUT}
+    ${JAVA} -jar -Xms${MEMORY} -Xmx${MEMORY} -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_create.data create >> ../../${OUTPUT}
     restart_repository
     echo "Batch create..."
     echo "*** BATCH CREATE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_create-batch.data create-batch >> ../../${OUTPUT}
+    ${JAVA} -jar -Xms${MEMORY} -Xmx${MEMORY} -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_create-batch.data create-batch >> ../../${OUTPUT}
     restart_repository
     echo "Retrieve..."
     echo "*** RETRIEVE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_retrieve.data retrieve >> ../../${OUTPUT}
+    ${JAVA} -jar -Xms${MEMORY} -Xmx${MEMORY} -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_retrieve.data retrieve >> ../../${OUTPUT}
     restart_repository
     echo "Retrieve all..."
     echo "*** RETRIEVE ALL ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_retrieve-all.data retrieve-all >> ../../${OUTPUT}
+    ${JAVA} -jar -Xms${MEMORY} -Xmx${MEMORY} -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_retrieve-all.data retrieve-all >> ../../${OUTPUT}
     restart_repository
     echo "Update..."
     echo "*** UPDATE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_update.data update >> ../../${OUTPUT}
+    ${JAVA} -jar -Xms${MEMORY} -Xmx${MEMORY} -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_update.data update >> ../../${OUTPUT}
     restart_repository
     echo "Delete..."
     echo "*** DELETE ***" >> ../../${OUTPUT}
-    ${JAVA} -jar -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_delete.data delete >> ../../${OUTPUT}
+    ${JAVA} -jar -Xms${MEMORY} -Xmx${MEMORY} -Dlogback.configurationFile=${LOGFILE} ${1}.jar -w ${WARMUPS} -r ${ROUNDS} -o ../../data/${1}_delete.data delete >> ../../${OUTPUT}
     restart_repository
     cd ../..
 }
