@@ -5,6 +5,7 @@ OUTPUT=benchmark.log
 LOGFILE=logback.xml
 WARMUPS=10
 ROUNDS=100
+EXECUTIONS=5
 MEMORY=64m
 
 GRAPHDB_HOME=~/Java/graphdb-free-8.4.1/
@@ -17,6 +18,7 @@ start_graphdb()
 
 stop_graphdb()
 {
+    echo "Stopping GraphDB: kill $(<\"${GRAPHDB_PIDFILE}\")"
     kill $(<"${GRAPHDB_PIDFILE}")
     sleep 2
 }
@@ -73,45 +75,58 @@ execute_benchmark()
     cd ../..
 }
 
+execute_round()
+{
+    #AliBaba Benchmark
+    echo "Running AliBaba..."
+    echo "---------------------------------------" >> ${OUTPUT}
+    echo "|               AliBaba               |" >> ${OUTPUT}
+    echo "---------------------------------------" >> ${OUTPUT}
+    execute_benchmark "alibaba-benchmark"
+
+    #Empire Benchmark
+    echo "Running Empire..."
+    echo "---------------------------------------" >> ${OUTPUT}
+    echo "|               Empire                |" >> ${OUTPUT}
+    echo "---------------------------------------" >> ${OUTPUT}
+    execute_benchmark "empire-benchmark"
+
+    # JOPA Benchmark
+    echo "Running JOPA..."
+    echo "---------------------------------------" >> ${OUTPUT}
+    echo "|               JOPA                  |" >> ${OUTPUT}
+    echo "---------------------------------------" >> ${OUTPUT}
+    execute_benchmark "jopa-benchmark"
+
+    # KOMMA Benchmark
+    echo "Running KOMMA..."
+    echo "---------------------------------------" >> ${OUTPUT}
+    echo "|               KOMMA                 |" >> ${OUTPUT}
+    echo "---------------------------------------" >> ${OUTPUT}
+    execute_benchmark "komma-benchmark"
+
+    # RDFBeans Benchmark
+    echo "Running RDFBeans..."
+    echo "---------------------------------------" >> ${OUTPUT}
+    echo "|               RDFBeans              |" >> ${OUTPUT}
+    echo "---------------------------------------" >> ${OUTPUT}
+    execute_benchmark "rdfbeans-benchmark"
+}
+
+
 > ${OUTPUT}
 echo "Running benchmark..."
 start_repository
 
-#AliBaba Benchmark
-echo "Running AliBaba..."
-echo "---------------------------------------" >> ${OUTPUT}
-echo "|               AliBaba               |" >> ${OUTPUT}
-echo "---------------------------------------" >> ${OUTPUT}
-execute_benchmark "alibaba-benchmark"
-
-#Empire Benchmark
-echo "Running Empire..."
-echo "---------------------------------------" >> ${OUTPUT}
-echo "|               Empire                |" >> ${OUTPUT}
-echo "---------------------------------------" >> ${OUTPUT}
-execute_benchmark "empire-benchmark"
-
-# JOPA Benchmark
-echo "Running JOPA..."
-echo "---------------------------------------" >> ${OUTPUT}
-echo "|               JOPA                  |" >> ${OUTPUT}
-echo "---------------------------------------" >> ${OUTPUT}
-execute_benchmark "jopa-benchmark"
-
-
-# KOMMA Benchmark
-echo "Running KOMMA..."
-echo "---------------------------------------" >> ${OUTPUT}
-echo "|               KOMMA                 |" >> ${OUTPUT}
-echo "---------------------------------------" >> ${OUTPUT}
-execute_benchmark "komma-benchmark"
-
-# RDFBeans Benchmark
-echo "Running RDFBeans..."
-echo "---------------------------------------" >> ${OUTPUT}
-echo "|               RDFBeans              |" >> ${OUTPUT}
-echo "---------------------------------------" >> ${OUTPUT}
-execute_benchmark "rdfbeans-benchmark"
+####
+#
+# Execute the whole benchmark several times, so that we have output from multiple JVM executions
+#
+####
+for i in 1..${EXECUTIONS}
+do
+    execute_round
+done
 
 stop_repository
 echo "Benchmark finished."

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+###
+#
+# This memory benchmark is based on instructing JVM to output GC details.
+#
+###
+
 JAVA=/opt/java-8-oracle/bin/java
 LOGFILE=logback.xml
 MEM=40m

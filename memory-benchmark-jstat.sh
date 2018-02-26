@@ -1,5 +1,11 @@
 #!/bin/bash
 
+###
+#
+# This memory benchmark is based on memory sampling using jstat
+#
+###
+
 JAVA=/opt/java-8-oracle/bin/java
 LOGFILE=logback.xml
 WARMUPS=5
