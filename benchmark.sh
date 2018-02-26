@@ -18,7 +18,6 @@ start_graphdb()
 
 stop_graphdb()
 {
-    echo "Stopping GraphDB: kill $(<\"${GRAPHDB_PIDFILE}\")"
     kill $(<"${GRAPHDB_PIDFILE}")
     sleep 2
 }
@@ -123,8 +122,9 @@ start_repository
 # Execute the whole benchmark several times, so that we have output from multiple JVM executions
 #
 ####
-for i in 1..${EXECUTIONS}
+for i in $(seq 1 ${EXECUTIONS})
 do
+    echo "Running JVM round ${i}..."
     execute_round
 done
 
