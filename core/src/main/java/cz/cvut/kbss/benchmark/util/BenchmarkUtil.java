@@ -16,7 +16,7 @@ public class BenchmarkUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(BenchmarkUtil.class);
 
-    private static final Timer TIMER = new Timer();
+    private static Timer timer;
 
     private BenchmarkUtil() {
         throw new AssertionError();
@@ -64,6 +64,9 @@ public class BenchmarkUtil {
      */
     public static void scheduleApplicationShutdown(long delay) {
         LOG.info("Scheduling application shutdown in {} ms.", delay);
+        if (timer == null) {
+            timer = new Timer("ShutdownTimer");
+        }
         final TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -71,6 +74,6 @@ public class BenchmarkUtil {
                 System.exit(0);
             }
         };
-        TIMER.schedule(task, delay);
+        timer.schedule(task, delay);
     }
 }
