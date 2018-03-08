@@ -8,7 +8,7 @@ public class Vocabulary {
     public final static String s_c_Event = "http://onto.fel.cvut.cz/ontologies/ufo/Event";
     public static final String s_c_Occurrence = "http://onto.fel.cvut.cz/ontologies/aviation-safety/Occurrence";
     public static final String s_c_Person = "http://onto.fel.cvut.cz/ontologies/ufo/Person";
-    public static final String s_c_Resource = "http://onto.fel.cvut.cz/ontologies/aviation/documentation/resource";
+    public static final String s_c_Resource = "http://onto.fel.cvut.cz/ontologies/documentation/resource";
     public static final String s_p_has_file_number = "http://onto.fel.cvut.cz/ontologies/documentation/has_file_number";
     public static final String s_p_documents = "http://onto.fel.cvut.cz/ontologies/documentation/documents";
     public static final String s_p_has_author = "http://onto.fel.cvut.cz/ontologies/documentation/has-author";
