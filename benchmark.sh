@@ -3,7 +3,7 @@
 JAVA=/opt/java-8-oracle/bin/java
 OUTPUT=benchmark.log
 LOGFILE=logback.xml
-WARMUPS=10
+WARMUPS=20
 ROUNDS=100
 EXECUTIONS=5
 MEMORY=64m
