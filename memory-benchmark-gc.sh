@@ -54,11 +54,12 @@ clear_repository()
 start_repository
 
 echo "Executing benchmark..."
+mkdir -p memory/${MEM}/
 
 echo "AliBaba"
 cd alibaba-benchmark/target
 ${JAVA} -cp alibaba-benchmark.jar -Dlogback.configurationFile=${LOGFILE} -Xms${MEM} -Xmx${MEM} -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:alibaba-gc.log cz.cvut.kbss.benchmark.alibaba.AliBabaMemoryBenchmark
-mv alibaba-gc.log ../../
+mv alibaba-gc.log ../../memory/${MEM}/
 cd ../..
 
 clear_repository
@@ -66,7 +67,7 @@ clear_repository
 echo "Empire"
 cd empire-benchmark/target
 ${JAVA} -cp empire-benchmark.jar -Dlogback.configurationFile=${LOGFILE} -Xms${MEM} -Xmx${MEM} -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:empire-gc.log cz.cvut.kbss.benchmark.empire.EmpireMemoryBenchmark
-mv empire-gc.log ../../
+mv empire-gc.log ../../memory/${MEM}/
 cd ../..
 
 clear_repository
@@ -74,7 +75,7 @@ clear_repository
 echo "JOPA"
 cd jopa-benchmark/target
 ${JAVA} -cp jopa-benchmark.jar -Dlogback.configurationFile=${LOGFILE} -Xms${MEM} -Xmx${MEM} -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:jopa-gc.log cz.cvut.kbss.benchmark.jopa.JopaMemoryBenchmark
-mv jopa-gc.log ../../
+mv jopa-gc.log ../../memory/${MEM}/
 cd ../..
 
 clear_repository
@@ -82,7 +83,7 @@ clear_repository
 echo "KOMMA"
 cd komma-benchmark/target
 ${JAVA} -cp komma-benchmark.jar -Dlogback.configurationFile=${LOGFILE} -Xms${MEM} -Xmx${MEM} -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:komma-gc.log cz.cvut.kbss.benchmark.komma.KommaMemoryBenchmark
-mv komma-gc.log ../../
+mv komma-gc.log ../../memory/${MEM}/
 cd ../..
 
 clear_repository
@@ -90,7 +91,7 @@ clear_repository
 echo "RDFBeans"
 cd rdfbeans-benchmark/target
 ${JAVA} -cp rdfbeans-benchmark.jar -Dlogback.configurationFile=${LOGFILE} -Xms${MEM} -Xmx${MEM} -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:rdfbeans-gc.log cz.cvut.kbss.benchmark.rdfbeans.RdfBeansMemoryBenchmark
-mv rdfbeans-gc.log ../../
+mv rdfbeans-gc.log ../../memory/${MEM}/
 cd ../..
 
 clear_repository
