@@ -1,6 +1,6 @@
-# oom-benchmark
+# OTM Benchmark
 
-Benchmark of OOM libraries.
+Performance/memory benchmark of OTM (object-triple mapping) libraries.
 
 Currently supported libraries:
 * [AliBaba](https://bitbucket.org/openrdf/alibaba/)
@@ -9,12 +9,12 @@ Currently supported libraries:
 * [KOMMA](https://github.com/komma/komma)
 * [RDFBeans](https://rdfbeans.github.io/)
 
-The benchmark is executed against a locally running RDF4J server.
+The benchmark is executed against a locally running GraphDB (but any RDF4J-compatible triple store can be used without the need to modify anything).
 
 
 ### Specification
 
-The following types of operations are benchmarked (each separately):
+The following types of operations are supported:
 * Create
 * Batch create
 * Retrieve
@@ -38,7 +38,7 @@ system processes reports exported from another system.
 
 ##### Retrieve
 
-Retrieve benchmark retrieves all the reports, checking for their attributes and some attributes of the referenced entities (e.g. contacts
+Retrieve benchmark retrieves all the reports one by one using their identifier, checking for their attributes and some attributes of the referenced entities (e.g. contacts
 of the report's author and last editor, name of the reported occurrence).
 
 ##### Retrieve all
