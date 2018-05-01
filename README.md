@@ -3,6 +3,7 @@
 Performance/memory benchmark of OTM (object-triple mapping) libraries.
 
 Currently supported libraries:
+
 * [AliBaba](https://bitbucket.org/openrdf/alibaba/)
 * [Empire](https://github.com/mhgrove/Empire)
 * [JOPA](https://github.com/kbss-cvut/jopa)
@@ -15,6 +16,7 @@ The benchmark is executed against a locally running GraphDB (but any RDF4J-compa
 ### Specification
 
 The following types of operations are supported:
+
 * Create
 * Batch create
 * Retrieve
