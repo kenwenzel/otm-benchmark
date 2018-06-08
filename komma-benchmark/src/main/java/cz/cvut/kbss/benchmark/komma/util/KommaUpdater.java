@@ -6,6 +6,7 @@ import cz.cvut.kbss.benchmark.util.Constants;
 import net.enilink.komma.core.IEntityManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -28,10 +29,11 @@ public class KommaUpdater {
                 continue;
             }
             final OccurrenceReport toUpdate = generator.getReports().get(i);
-            updateReport(toUpdate, generator);
             em.getTransaction().begin();
-            em.merge(toUpdate);
-            em.merge(toUpdate.getAuthor());
+//            em.merge(toUpdate);
+//            em.merge(toUpdate.getAuthor());
+// updateReport does directly modify the RDF data and hence needs to be run within the transaction
+            updateReport(toUpdate, generator);
             em.getTransaction().commit();
             updated.add(toUpdate);
         }
@@ -45,7 +47,7 @@ public class KommaUpdater {
         lastModUpdated.setTimeInMillis(System.currentTimeMillis() + 10000);
         toUpdate.setLastModified(BenchmarkUtil.datatypeFactory().newXMLGregorianCalendar(lastModUpdated));
         toUpdate.setRevision(toUpdate.getRevision() + 1);
-        toUpdate.getAuthor().getContacts().remove(toUpdate.getAuthor().getContacts().iterator().next());
+//        toUpdate.getAuthor().getContacts().remove(toUpdate.getAuthor().getContacts().iterator().next());
         toUpdate.getAttachments().add(generator.generateAttachment());
     }
 
