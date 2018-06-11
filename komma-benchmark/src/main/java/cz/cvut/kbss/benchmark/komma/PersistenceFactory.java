@@ -21,6 +21,7 @@ import net.enilink.komma.core.IEntityManager;
 import net.enilink.komma.core.IEntityManagerFactory;
 import net.enilink.komma.core.KommaModule;
 import net.enilink.komma.dm.change.DataChangeTracker;
+import net.enilink.komma.em.util.KommaUtil;
 
 public class PersistenceFactory {
 
@@ -39,6 +40,9 @@ public class PersistenceFactory {
         repository.initialize();
         Injector injector = Guice.createInjector(new BenchmarkModule(repository, new KommaModule() {
             {
+                // include core module for unmapped data access and RDF containers/collections
+                includeModule(KommaUtil.getCoreModule());
+
                 addConcept(Person.class);
                 addConcept(Event.class);
                 addConcept(Occurrence.class);
