@@ -13,6 +13,8 @@ public class KommaFinder {
     }
 
     public OccurrenceReport find(URI uri) {
-        return em.find(uri, OccurrenceReport.class);
+        return em.createQuery("construct { ?r a <komma:Result> . ?s ?p ?o } where { ?r (!<:>|<:>)* ?s . ?s ?p ?o }")
+		    .setParameter("r", uri).getSingleResult(OccurrenceReport.class);
+//         return em.find(uri, OccurrenceReport.class);
     }
 }

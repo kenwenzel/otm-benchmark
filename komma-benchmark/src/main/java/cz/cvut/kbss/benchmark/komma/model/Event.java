@@ -2,7 +2,7 @@ package cz.cvut.kbss.benchmark.komma.model;
 
 import cz.cvut.kbss.benchmark.model.Vocabulary;
 import net.enilink.composition.annotations.Iri;
-import net.enilink.komma.core.URI;
+import net.enilink.komma.core.IReference;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Set;
@@ -26,9 +26,9 @@ public interface Event {
     void setEnd(XMLGregorianCalendar end);
 
     @Iri(Vocabulary.s_p_has_event_type)
-    URI getEventType();
+    IReference getEventType();
 
-    void setEventType(URI eventType);
+    void setEventType(IReference eventType);
 
     @Iri(Vocabulary.s_p_has_part)
     Set<Event> getSubEvents();
